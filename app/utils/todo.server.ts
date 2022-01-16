@@ -66,7 +66,7 @@ export async function getUserTodo(type: TodoTypeEnum, userId: string) {
 export async function addUserTodo(
   type: TodoTypeEnum,
   userId: string,
-  todoName: string,
+  name: string,
   expire: number,
 ) {
   const repository = await getTodoRepo(type)
@@ -74,7 +74,7 @@ export async function addUserTodo(
 
   const userTodo = repository.createEntity()
   userTodo.user_id = userId
-  userTodo.complete = [todoName]
+  userTodo.complete = [name]
 
   const id = await repository.save(userTodo)
   await setTodoTTL(type, id, expire)
@@ -85,18 +85,18 @@ export async function setUserTodo(
   type: TodoTypeEnum,
   dataId: string,
   userId: string,
-  todoName: string,
+  name: string,
   expire: number,
 ) {
   const repository = await getTodoRepo(type)
 
   const userTodo = await repository.fetch(dataId)
   if (!userTodo.user_id) {
-    const id = await addUserTodo(type, userId, todoName, expire)
+    const id = await addUserTodo(type, userId, name, expire)
     return id
   }
 
-  userTodo.complete.push(todoName)
+  userTodo.complete.push(name)
   const id = await repository.save(userTodo)
 
   await setTodoTTL(type, id, expire)
@@ -106,7 +106,7 @@ export async function setUserTodo(
 export async function removeUserTodoEntry(
   type: TodoTypeEnum,
   dataId: string,
-  todoName: string,
+  name: string,
   expire: number,
 ) {
   const repository = await getTodoRepo(type)
@@ -117,7 +117,7 @@ export async function removeUserTodoEntry(
     )
   }
 
-  const indexOfTodoName = userTodo.complete.indexOf(todoName)
+  const indexOfTodoName = userTodo.complete.indexOf(name)
   if (indexOfTodoName === -1) {
     throw new Error(
       'You should refresh the page, your todo data not sync properly with the server',

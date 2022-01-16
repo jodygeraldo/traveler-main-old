@@ -12,8 +12,6 @@ export const action: ActionFunction = async ({ request }) => {
     status: string
   }
 
-  console.log(_action)
-
   // TODO: should get this from user session
   const user = {
     id: 'user2',
