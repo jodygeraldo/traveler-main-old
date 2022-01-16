@@ -1,25 +1,16 @@
-/* This example requires Tailwind CSS v2.0+ */
 import { Dialog, Transition } from '@headlessui/react'
-import {
-  ArchiveIcon,
-  CalendarIcon,
-  CogIcon,
-  HomeIcon,
-  MenuIcon,
-  UsersIcon,
-  XIcon,
-} from '@heroicons/react/outline'
+import { MenuIcon, XIcon } from '@heroicons/react/outline'
 import clsx from 'clsx'
 import { Fragment, ReactNode, useState } from 'react'
 import { NavLink, useLocation } from 'remix'
 
 const navigation = [
-  { name: 'Tavern', href: '/', icon: HomeIcon },
-  { name: 'Character', href: '/character', icon: UsersIcon },
-  { name: 'Inventory', href: '/inventory', icon: ArchiveIcon },
-  { name: 'Achievement', href: '/achievement', icon: ArchiveIcon },
-  { name: 'Schedule', href: '/schedule', icon: CalendarIcon },
-  { name: 'Setting', href: '/setting', icon: CogIcon },
+  { name: 'Paimon', href: '/', icon: 'paimon_menu.png' },
+  { name: 'Character', href: '/character', icon: 'character.png' },
+  { name: 'Inventory', href: '/inventory', icon: 'inventory.png' },
+  { name: 'Achievement', href: '/achievement', icon: 'achievement.png' },
+  { name: 'Schedule', href: '/schedule', icon: 'quest.png' },
+  { name: 'Setting', href: '/setting', icon: 'setting.png' },
 ]
 
 export default function Layout({ children }: { children: ReactNode }) {
@@ -101,20 +92,12 @@ export default function Layout({ children }: { children: ReactNode }) {
                           )
                         }
                       >
-                        {({ isActive }) => (
-                          <>
-                            <item.icon
-                              className={clsx(
-                                isActive
-                                  ? 'text-primary-300'
-                                  : 'text-primary-400 group-hover:text-primary-300',
-                                'mr-4 flex-shrink-0 h-6 w-6',
-                              )}
-                              aria-hidden="true"
-                            />
-                            {item.name}
-                          </>
-                        )}
+                        <img
+                          src={`../assets/images/menus/${item.icon}`}
+                          className="mr-3 flex-shrink-0 h-6 w-6"
+                          alt=""
+                        />
+                        {item.name}
                       </NavLink>
                     ))}
                   </nav>
@@ -156,23 +139,12 @@ export default function Layout({ children }: { children: ReactNode }) {
                       )
                     }
                   >
-                    {({ isActive }) => (
-                      <>
-                        <item.icon
-                          className={clsx(
-                            isActive ||
-                              (item.href === '/' &&
-                                (location.pathname === '/weekly' ||
-                                  location.pathname === '/others'))
-                              ? 'text-primary-300'
-                              : 'text-primary-400 group-hover:text-primary-300',
-                            'mr-3 flex-shrink-0 h-6 w-6',
-                          )}
-                          aria-hidden="true"
-                        />
-                        {item.name}
-                      </>
-                    )}
+                    <img
+                      src={`../assets/images/menus/${item.icon}`}
+                      className="mr-3 flex-shrink-0 h-6 w-6"
+                      alt=""
+                    />
+                    {item.name}
                   </NavLink>
                 ))}
               </nav>
