@@ -1,0 +1,369 @@
+{
+  "name": "Common Ascension Materials",
+  "type": {
+    "common": [
+      {
+        "group": "Slime",
+        "items": [
+          {
+            "name": "Slime Condesate",
+            "rarity": 1,
+            "image": "slime_condensate.png"
+          },
+          {
+            "name": "Slime Secretions",
+            "rarity": 2,
+            "image": "slime_secretions.png"
+          },
+          {
+            "name": "Slime Concentrate",
+            "rarity": 3,
+            "image": "slime_concentrate.png"
+          }
+        ]
+      },
+      {
+        "group": "Hilichurl Masks",
+        "items": [
+          {
+            "name": "Damaged Mask",
+            "rarity": 1,
+            "image": "damaged_mask.png"
+          },
+          {
+            "name": "Stained Mask",
+            "rarity": 2,
+            "image": "stained_mask.png"
+          },
+          {
+            "name": "Ominous Mask",
+            "rarity": 3,
+            "image": "ominous_mask.png"
+          }
+        ]
+      },
+      {
+        "group": "Samachurl Scrolls",
+        "items": [
+          {
+            "name": "Divining Scroll",
+            "rarity": 1,
+            "image": "divining_scroll.png"
+          },
+          {
+            "name": "Sealed Scroll",
+            "rarity": 2,
+            "image": "sealed_scroll.png"
+          },
+          {
+            "name": "Forbidden Curse Scroll",
+            "rarity": 3,
+            "image": "forbidden_curse_scroll.png"
+          }
+        ]
+      },
+      {
+        "group": "Hilichurl Arrowheads",
+        "items": [
+          {
+            "name": "Firm Arrowhead",
+            "rarity": 1,
+            "image": "firm_arrowhead.png"
+          },
+          {
+            "name": "Sharp Arrowhead",
+            "rarity": 2,
+            "image": "sharp_arrowhead.png"
+          },
+          {
+            "name": "Weathered Arrowhead",
+            "rarity": 3,
+            "image": "weathered_arrowhead.png"
+          }
+        ]
+      },
+      {
+        "group": "Fatui Insignia",
+        "items": [
+          {
+            "name": "Recruit's Insignia",
+            "rarity": 1,
+            "image": "recruits_insignia.png"
+          },
+          {
+            "name": "Sergeant's Insignia",
+            "rarity": 2,
+            "image": "sergeants_insignia.png"
+          },
+          {
+            "name": "Lieutenant's Insignia",
+            "rarity": 3,
+            "image": "lieutenants_insignia.png"
+          }
+        ]
+      },
+      {
+        "group": "Treasure Hoarder Insignias",
+        "items": [
+          {
+            "name": "Treasure Hoarder Insignia",
+            "rarity": 1,
+            "image": "treasure_hoarder_insignia.png"
+          },
+          {
+            "name": "Silver Raven Insignia",
+            "rarity": 2,
+            "image": "silver_raven_insignia.png"
+          },
+          {
+            "name": "Golden Raven Insignia",
+            "rarity": 3,
+            "image": "golden_raven_insignia.png"
+          }
+        ]
+      },
+      {
+        "group": "Whopperflower Nectar",
+        "items": [
+          {
+            "name": "Whopperflower Nectar",
+            "rarity": 1,
+            "image": "whopperflower_nectar.png"
+          },
+          {
+            "name": "Shimmering Nectar",
+            "rarity": 2,
+            "image": "shimmering_nectar.png"
+          },
+          {
+            "name": "Energy Nectar",
+            "rarity": 3,
+            "image": "energy_nectar.png"
+          }
+        ]
+      },
+      {
+        "group": "Nobushi Handguards",
+        "items": [
+          {
+            "name": "Old Handguard",
+            "rarity": 1,
+            "image": "old_handguard.png"
+          },
+          {
+            "name": "Kageuchi Handguard",
+            "rarity": 2,
+            "image": "kageuchi_handguard.png"
+          },
+          {
+            "name": "Famed Handguard",
+            "rarity": 3,
+            "image": "famed_handguard.png"
+          }
+        ]
+      },
+      {
+        "group": "Spectral Cores",
+        "items": [
+          {
+            "name": "Spectral Husk",
+            "rarity": 1,
+            "image": "spectral_husk.png"
+          },
+          {
+            "name": "Spectral Heart",
+            "rarity": 2,
+            "image": "spectral_heart.png"
+          },
+          {
+            "name": "Spectral Nucleus",
+            "rarity": 3,
+            "image": "spectral_nucleus.png"
+          }
+        ]
+      }
+    ],
+    "elite": [
+      {
+        "group": "Hilichurl Horns",
+        "items": [
+          {
+            "name": "Heavy Horn",
+            "rarity": 2,
+            "image": "heavy_horn.png"
+          },
+          {
+            "name": "Black Bronze Horn",
+            "rarity": 3,
+            "image": "black_bronze_horn.png"
+          },
+          {
+            "name": "Black Crystal Horn",
+            "rarity": 4,
+            "image": "black_crystal_horn.png"
+          }
+        ]
+      },
+      {
+        "group": "Ley Lines",
+        "items": [
+          {
+            "name": "Dead Ley Line Branch",
+            "rarity": 2,
+            "image": "dead_ley_line_branch.png"
+          },
+          {
+            "name": "Dead Ley Line Leaves",
+            "rarity": 3,
+            "image": "dead_ley_line_leaves.png"
+          },
+          {
+            "name": "Ley Line Sprout",
+            "rarity": 4,
+            "image": "ley_line_sprout.png"
+          }
+        ]
+      },
+      {
+        "group": "Chaos Parts",
+        "items": [
+          {
+            "name": "Chaos Device",
+            "rarity": 2,
+            "image": "chaos_device.png"
+          },
+          {
+            "name": "Chaos Circuit",
+            "rarity": 3,
+            "image": "chaos_circuit.png"
+          },
+          {
+            "name": "Chaos Core",
+            "rarity": 4,
+            "image": "chaos_gear.png"
+          }
+        ]
+      },
+      {
+        "group": "Mist Grass",
+        "items": [
+          {
+            "name": "Mist Grass Pollen",
+            "rarity": 2,
+            "image": "mist_grass_pollen.png"
+          },
+          {
+            "name": "Mist Grass",
+            "rarity": 3,
+            "image": "mist_grass.png"
+          },
+          {
+            "name": "Mist Grass Wick",
+            "rarity": 4,
+            "image": "mist_grass_wick.png"
+          }
+        ]
+      },
+      {
+        "group": "Sacrificial Knifes",
+        "items": [
+          {
+            "name": "Hunter's Sacrificial Knife",
+            "rarity": 2,
+            "image": "hunters_sacrificial_knife.png"
+          },
+          {
+            "name": "Agent's Sacrificial Knife",
+            "rarity": 3,
+            "image": "agents_sacrificial_knife.png"
+          },
+          {
+            "name": "Inspector's Sacrificial Knife",
+            "rarity": 4,
+            "image": "inspectors_sacrificial_knife.png"
+          }
+        ]
+      },
+      {
+        "group": "Bone Shards",
+        "items": [
+          {
+            "name": "Fragile Bone Shard",
+            "rarity": 2,
+            "image": "fragile_bone_shard.png"
+          },
+          {
+            "name": "Sturdy Bone Shard",
+            "rarity": 3,
+            "image": "sturdy_bone_shard.png"
+          },
+          {
+            "name": "Fossilized Bone Shard",
+            "rarity": 4,
+            "image": "fossilized_bone_shard.png"
+          }
+        ]
+      },
+      {
+        "group": "Sentinel Chaos Parts",
+        "items": [
+          {
+            "name": "Chaos Gear",
+            "rarity": 2,
+            "image": "chaos_gear.png"
+          },
+          {
+            "name": "Chaos Axis",
+            "rarity": 3,
+            "image": "chaos_axis.png"
+          },
+          {
+            "name": "Chaos Oculus",
+            "rarity": 4,
+            "image": "chaos_oculus.png"
+          }
+        ]
+      },
+      {
+        "group": "Prisms",
+        "items": [
+          {
+            "name": "Dismal Prism",
+            "rarity": 2,
+            "image": "dismalchaos_gear_prism.png"
+          },
+          {
+            "name": "Crystal Prism",
+            "rarity": 3,
+            "image": "crystal_prism.png"
+          },
+          {
+            "name": "Polarizing Prism",
+            "rarity": 4,
+            "image": "polarizing_prism.png"
+          }
+        ]
+      },
+      {
+        "group": "Concealed Rifthound Claws",
+        "items": [
+          {
+            "name": "Concealed Claw",
+            "rarity": 2,
+            "image": "concealed_claw.png"
+          },
+          {
+            "name": "Concealed Unguis",
+            "rarity": 3,
+            "image": "concealed_unguis.png"
+          },
+          {
+            "name": "Concealed Talon",
+            "rarity": 4,
+            "image": "concealed_talon.png"
+          }
+        ]
+      }
+    ]
+  }
+}

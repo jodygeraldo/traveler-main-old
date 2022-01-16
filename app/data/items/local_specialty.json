@@ -1,0 +1,136 @@
+{
+  "name": "Local Specialty",
+  "region": {
+    "mondstadt": [
+      {
+        "name": "Calla Lily",
+        "rarity": 1,
+        "image": "calla_lily.png"
+      },
+      {
+        "name": "Cecilia",
+        "rarity": 1,
+        "image": "cecilia.png"
+      },
+      {
+        "name": "Dandelion Seed",
+        "rarity": 1,
+        "image": "dandelion_seed.png"
+      },
+      {
+        "name": "Philanemo Mushroom",
+        "rarity": 1,
+        "image": "philanemo_mushroom.png"
+      },
+      {
+        "name": "Small Lamp Grass",
+        "rarity": 1,
+        "image": "Small_lamp_grass.png"
+      },
+      {
+        "name": "Valberry",
+        "rarity": 1,
+        "image": "valberry.png"
+      },
+      {
+        "name": "Windwheel Aster",
+        "rarity": 1,
+        "image": "Windwheel_aster.png"
+      },
+      {
+        "name": "Wolfhook",
+        "rarity": 1,
+        "image": "wolfhook.png"
+      }
+    ],
+    "liyue": [
+      {
+        "name": "Cor Lapis",
+        "rarity": 1,
+        "image": "cor_lapis.png"
+      },
+      {
+        "name": "Glaze Lily",
+        "rarity": 1,
+        "image": "glaze_lily.png"
+      },
+      {
+        "name": "Jueyun Chili",
+        "rarity": 1,
+        "image": "jueyun_chili.png"
+      },
+      {
+        "name": "Noctilucous Jade",
+        "rarity": 1,
+        "image": "Noctilucous_jade.png"
+      },
+      {
+        "name": "Qingxin",
+        "rarity": 1,
+        "image": "qiingxin.png"
+      },
+      {
+        "name": "Silk Flower",
+        "rarity": 1,
+        "image": "Silk_flower.png"
+      },
+      {
+        "name": "Starconch",
+        "rarity": 1,
+        "image": "starconch.png"
+      },
+      {
+        "name": "Violetgrass",
+        "rarity": 1,
+        "image": "violetgrass.png"
+      }
+    ],
+    "inazuma": [
+      {
+        "name": "Amakumo Fruit",
+        "rarity": 1,
+        "image": "amakumo_fruit.png"
+      },
+      {
+        "name": "Crystal Marrow",
+        "rarity": 1,
+        "image": "crystal_marrow.png"
+      },
+      {
+        "name": "Dendrobium",
+        "rarity": 1,
+        "image": "dendrobium.png"
+      },
+      {
+        "name": "Fluorescent Fungus",
+        "rarity": 1,
+        "image": "fluorescent_fungus.png"
+      },
+      {
+        "name": "Naku Weed",
+        "rarity": 1,
+        "image": "naku_weed.png"
+      },
+      {
+        "name": "Onikabuto",
+        "rarity": 1,
+        "image": "onikabuto.png"
+      },
+      {
+        "name": "Sakura Bloom",
+        "rarity": 1,
+        "image": "sakura_bloom.png"
+      },
+      {
+        "name": "Sango Pearl",
+        "rarity": 1,
+        "image": "sango_pearl.png"
+      },
+      {
+        "name": "Sea Ganoderma",
+        "rarity": 1,
+        "image": "sea_ganoderma.png"
+      }
+    ]
+  }
+}

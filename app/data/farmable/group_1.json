@@ -1,0 +1,95 @@
+{
+  "days": ["Sunday", "Monday", "Thursday"],
+  "talent_book": [
+    {
+      "name": "Freedom",
+      "image": "freedom_philosophies.png",
+      "characters": [
+        {
+          "name": "Aloy",
+          "image": "close/aloy.png"
+        },
+        {
+          "name": "Amber",
+          "image": "close/amber.png"
+        },
+        {
+          "name": "Barbara",
+          "image": "close/barbara.png"
+        },
+        {
+          "name": "Diona",
+          "image": "close/diona.png"
+        },
+        {
+          "name": "Klee",
+          "image": "close/klee.png"
+        },
+        {
+          "name": "Sucrose",
+          "image": "close/sucrose.png"
+        },
+        {
+          "name": "Tartaglia",
+          "image": "close/tartaglia.png"
+        },
+        {
+          "name": "Anemo Traveler",
+          "image": "close/traveler.png"
+        }
+      ]
+    },
+    {
+      "name": "Prosperity",
+      "image": "prosperity_philosophies.png",
+      "characters": [
+        {
+          "name": "Keqing",
+          "image": "close/keqing.png"
+        },
+        {
+          "name": "Ningguang",
+          "image": "close/ningguang.png"
+        },
+        {
+          "name": "Qiqi",
+          "image": "close/qiqi.png"
+        },
+        {
+          "name": "Shenhe",
+          "image": "close/shenhe.png"
+        },
+        {
+          "name": "Geo Traveler",
+          "image": "close/traveler.png"
+        },
+        {
+          "name": "Xiao",
+          "image": "close/xiao.png"
+        }
+      ]
+    },
+    {
+      "name": "Transience",
+      "image": "transience_philosophies.png",
+      "characters": [
+        {
+          "name": "Sangonomiya Kokomi",
+          "image": "close/sangonomiya_kokomi.png"
+        },
+        {
+          "name": "Thoma",
+          "image": "close/thoma.png"
+        },
+        {
+          "name": "Electro Traveler",
+          "image": "close/traveler.png"
+        },
+        {
+          "name": "Yoimiya",
+          "image": "close/yoimiya.png"
+        }
+      ]
+    }
+  ]
+}

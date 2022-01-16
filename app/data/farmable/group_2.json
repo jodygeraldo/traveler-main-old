@@ -1,0 +1,87 @@
+{
+  "days": ["Sunday", "Tuesday", "Friday"],
+  "talent_book": [
+    {
+      "name": "Elegance",
+      "image": "elegance_philosophies.png",
+      "characters": [
+        {
+          "name": "Arataki Itto",
+          "image": "close/arataki_itto.png"
+        },
+        {
+          "name": "Kamisato Ayaka",
+          "image": "close/kamisato_ayaka.png"
+        },
+        {
+          "name": "Kujou Sara",
+          "image": "close/kujou_sara.png"
+        }
+      ]
+    },
+    {
+      "name": "Resistance",
+      "image": "resistance_philosophies.png",
+      "characters": [
+        {
+          "name": "Bennett",
+          "image": "close/bennett.png"
+        },
+        {
+          "name": "Diluc",
+          "image": "close/diluc.png"
+        },
+        {
+          "name": "Eula",
+          "image": "close/eula.png"
+        },
+        {
+          "name": "Jean",
+          "image": "close/jean.png"
+        },
+        {
+          "name": "Mona",
+          "image": "close/mona.png"
+        },
+        {
+          "name": "Noelle",
+          "image": "close/noelle.png"
+        },
+        {
+          "name": "Razor",
+          "image": "close/razor.png"
+        }
+      ]
+    },
+    {
+      "name": "Diligence",
+      "image": "diligence_philosophies.png",
+      "characters": [
+        {
+          "name": "Chongyun",
+          "image": "close/chongyun.png"
+        },
+        {
+          "name": "Ganyu",
+          "image": "close/ganyu.png"
+        },
+        {
+          "name": "Hu Tao",
+          "image": "close/hu_tao.png"
+        },
+        {
+          "name": "Kaedehara Kazuha",
+          "image": "close/kaedehara_kazuha.png"
+        },
+        {
+          "name": "Xiangling",
+          "image": "close/xiangling.png"
+        },
+        {
+          "name": "Yun Jin",
+          "image": "close/yun_jin.png"
+        }
+      ]
+    }
+  ]
+}

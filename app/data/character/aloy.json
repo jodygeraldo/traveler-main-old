@@ -1,0 +1,23 @@
+{
+  "name": "Aloy",
+  "vision": "Cryo",
+  "rarity": "aloy",
+  "weapon_type": "Bow",
+  "image": {
+    "close": "close/aloy.png",
+    "full": "full/aloy.png"
+  },
+  "materials": {
+    "talent": {
+      "book": "Freedom",
+      "boss": "Molten Moment"
+    },
+    "ascension": {
+      "material": "Shivada Jade",
+      "boss": "Crystalline Bloom",
+      "local": "Crystal Marrow",
+      "common": "Spectral Core"
+    }
+  },
+  "path": "/aloy"
+}

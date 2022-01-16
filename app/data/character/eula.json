@@ -1,0 +1,23 @@
+{
+  "name": "Eula",
+  "vision": "Cryo",
+  "rarity": 5,
+  "weapon_type": "Claymore",
+  "image": {
+    "close": "close/eula.png",
+    "full": "full/eula.png"
+  },
+  "materials": {
+    "talent": {
+      "book": "Resistance",
+      "boss": "Dragon Lord's Crown"
+    },
+    "ascension": {
+      "material": "Shivada Jade",
+      "boss": "Crystalline Bloom",
+      "local": "Dandelion",
+      "common": "Hilichurl Mask"
+    }
+  },
+  "path": "/eula"
+}

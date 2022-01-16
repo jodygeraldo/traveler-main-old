@@ -1,0 +1,33 @@
+{
+  "name": "Traveler",
+  "vision": ["Anemo", "Geo", "Electro"],
+  "rarity": 5,
+  "weapon_type": "Sword",
+  "image": {
+    "close": "close/traveler.png",
+    "fullMale": "full/traveler_male.png",
+    "fullFemale": "full/traveler_female.png"
+  },
+  "materials": {
+    "talent": {
+      "anemo": {
+        "book": "Freedom",
+        "boss": "Dvalin's Sigh"
+      },
+      "geo": {
+        "book": "Prosperity",
+        "boss": "Tail of Boreas"
+      },
+      "electro": {
+        "book": "Transience",
+        "boss": "Dragon Lord's Crown"
+      }
+    },
+    "ascension": {
+      "material": "Brilliant Diamond",
+      "local": "Windwheel Aster",
+      "common": "Hilichurl Mask"
+    }
+  },
+  "path": "/"
+}

@@ -1,0 +1,23 @@
+{
+  "name": "Ganyu",
+  "vision": "Cryo",
+  "rarity": 5,
+  "weapon_type": "Bow",
+  "image": {
+    "close": "close/ganyu.png",
+    "full": "full/ganyu.png"
+  },
+  "materials": {
+    "talent": {
+      "book": "Diligence",
+      "boss": "Shadow of the Warrior"
+    },
+    "ascension": {
+      "material": "Shivada Jade",
+      "boss": "Hoarfrost Core",
+      "local": "Qingxin",
+      "common": "Whopperflower Nectar"
+    }
+  },
+  "path": "/ganyu"
+}

@@ -1,0 +1,23 @@
+{
+  "name": "Amber",
+  "vision": "Pyro",
+  "rarity": 4,
+  "weapon_type": "Bow",
+  "image": {
+    "close": "close/amber.png",
+    "full": "full/amber.png"
+  },
+  "materials": {
+    "talent": {
+      "book": "Freedom",
+      "boss": "Dvalin's Sigh"
+    },
+    "ascension": {
+      "material": "Agnidus Agate",
+      "boss": "Everflame Seed",
+      "local": "Small Lamp Grass",
+      "common": "Hilichurl Arrowhead"
+    }
+  },
+  "path": "/amber"
+}

@@ -1,0 +1,23 @@
+{
+  "name": "Kujou Sara",
+  "vision": "Electro",
+  "rarity": 4,
+  "weapon_type": "Bow",
+  "image": {
+    "close": "close/kujou_sara.png",
+    "full": "full/kujou_sara.png"
+  },
+  "materials": {
+    "talent": {
+      "book": "Elegance",
+      "boss": "Ashen Heart"
+    },
+    "ascension": {
+      "material": "Vajrada Amethyst",
+      "boss": "Storm Beads",
+      "local": "Dendrobium",
+      "common": "Hilichurl Mask"
+    }
+  },
+  "path": "/kujou_sara"
+}

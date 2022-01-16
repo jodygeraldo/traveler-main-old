@@ -1,0 +1,23 @@
+{
+  "name": "Ningguang",
+  "vision": "Geo",
+  "rarity": 4,
+  "weapon_type": "Catalyst",
+  "image": {
+    "close": "close/ningguang.png",
+    "full": "full/ningguang.png"
+  },
+  "materials": {
+    "talent": {
+      "book": "Prosperity",
+      "boss": "Spirit Locket of Boreas"
+    },
+    "ascension": {
+      "material": "Prithiva Topaz",
+      "boss": "Basalt Pillar",
+      "local": "Glaze Lily",
+      "common": "Fatui Insignia"
+    }
+  },
+  "path": "/ningguang"
+}

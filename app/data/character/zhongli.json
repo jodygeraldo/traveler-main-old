@@ -1,0 +1,23 @@
+{
+  "name": "Zhongli",
+  "vision": "Geo",
+  "rarity": 5,
+  "weapon_type": "Polearm",
+  "image": {
+    "close": "close/zhongli.png",
+    "full": "full/zhongli.png"
+  },
+  "materials": {
+    "talent": {
+      "book": "Gold",
+      "boss": "Tusk of Monoceros Caeli"
+    },
+    "ascension": {
+      "material": "Prithiva Topaz",
+      "boss": "Basalt Pillar",
+      "local": "Cor Lapis",
+      "common": "Slime"
+    }
+  },
+  "path": "/zhongli"
+}

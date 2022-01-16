@@ -1,0 +1,23 @@
+{
+  "name": "Xiao",
+  "vision": "Anemo",
+  "rarity": 5,
+  "weapon_type": "Polearm",
+  "image": {
+    "close": "close/xiao.png",
+    "full": "full/xiao.png"
+  },
+  "materials": {
+    "talent": {
+      "book": "Prosperity",
+      "boss": "Shadow of the Warrior"
+    },
+    "ascension": {
+      "material": "Vayuda Turquoise",
+      "boss": "Juvenile Jade",
+      "local": "Qingxin",
+      "common": "Slime"
+    }
+  },
+  "path": "/xiao"
+}

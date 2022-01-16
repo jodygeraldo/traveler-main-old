@@ -1,0 +1,23 @@
+{
+  "name": "Gorou",
+  "vision": "Geo",
+  "rarity": 4,
+  "weapon_type": "Sword",
+  "image": {
+    "close": "close/gorou.png",
+    "full": "full/gorou.png"
+  },
+  "materials": {
+    "talent": {
+      "book": "Light",
+      "boss": "Molten Moment"
+    },
+    "ascension": {
+      "material": "Prithiva Topaz",
+      "boss": "Perpetual Heart",
+      "local": "Sango Pearl",
+      "common": "Spectral Core"
+    }
+  },
+  "path": "/gorou"
+}

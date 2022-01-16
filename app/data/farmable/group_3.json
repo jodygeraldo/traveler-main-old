@@ -1,0 +1,79 @@
+{
+  "days": ["Sunday", "Wednesday", "Saturday"],
+  "talent_book": [
+    {
+      "name": "Ballad",
+      "image": "ballad_philosophies.png",
+      "characters": [
+        {
+          "name": "Albedo",
+          "image": "close/albedo.png"
+        },
+        {
+          "name": "Fischl",
+          "image": "close/fischl.png"
+        },
+        {
+          "name": "Kaeya",
+          "image": "close/kaeya.png"
+        },
+        {
+          "name": "Lisa",
+          "image": "close/lisa.png"
+        },
+        {
+          "name": "Rosaria",
+          "image": "close/rosaria.png"
+        },
+        {
+          "name": "Venti",
+          "image": "close/venti.png"
+        }
+      ]
+    },
+    {
+      "name": "Gold",
+      "image": "gold_philosophies.png",
+      "characters": [
+        {
+          "name": "Beidou",
+          "image": "close/beidou.png"
+        },
+        {
+          "name": "Xingqiu",
+          "image": "close/xingqiu.png"
+        },
+        {
+          "name": "Xinyan",
+          "image": "close/xinyan.png"
+        },
+        {
+          "name": "Yanfei",
+          "image": "close/yanfei.png"
+        },
+        {
+          "name": "Zhongli",
+          "image": "close/zhongli.png"
+        }
+      ]
+    },
+    {
+      "name": "Light",
+      "image": "light_philosophies.png",
+      "characters": [
+        {
+          "name": "Gorou",
+          "image": "close/gorou.png"
+        },
+        {
+          "name": "Raiden Shogun",
+          "image": "close/raiden_shogun.png"
+        },
+        {
+          "name": "Sayu",
+          "image": "close/sayu.png"
+        }
+      ]
+    }
+  ]
+}

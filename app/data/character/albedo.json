@@ -1,0 +1,23 @@
+{
+  "name": "Albedo",
+  "vision": "Geo",
+  "rarity": 5,
+  "weapon_type": "Sword",
+  "image": {
+    "close": "close/albedo.png",
+    "full": "full/albedo.png"
+  },
+  "materials": {
+    "talent": {
+      "book": "Ballad",
+      "boss": "Tusk of Monoceros Caeli"
+    },
+    "ascension": {
+      "material": "Prithiva Topaz",
+      "boss": "Basalt Pillar",
+      "local": "Cecilia",
+      "common": "Samachurl Scroll"
+    }
+  },
+  "path": "/albedo"
+}

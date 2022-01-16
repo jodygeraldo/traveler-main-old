@@ -1,0 +1,23 @@
+{
+  "name": "Mona",
+  "vision": "Hydro",
+  "rarity": 5,
+  "weapon_type": "Catalyst",
+  "image": {
+    "close": "close/mona.png",
+    "full": "full/mona.png"
+  },
+  "materials": {
+    "talent": {
+      "book": "Resistance",
+      "boss": "Ring of Boreas"
+    },
+    "ascension": {
+      "material": "Varunada Lazurite",
+      "boss": "Cleansing Heart",
+      "local": "Philanemo Mushroom",
+      "common": "Whopperflower Nectar"
+    }
+  },
+  "path": "/mona"
+}

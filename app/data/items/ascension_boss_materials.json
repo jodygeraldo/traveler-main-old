@@ -1,0 +1,80 @@
+{
+  "name": "Boss Ascension Materials",
+  "material": [
+    {
+      "name": "Hurricane Seed",
+      "rarity": 4,
+      "image": "hurricane_seed.png"
+    },
+    {
+      "name": "Lightning Prism",
+      "rarity": 4,
+      "image": "lightning_prism.png"
+    },
+    {
+      "name": "Basalt Pillar",
+      "rarity": 4,
+      "image": "basalt_pillar.png"
+    },
+    {
+      "name": "Hoarfrost Core",
+      "rarity": 4,
+      "image": "hoarfrost_core.png"
+    },
+    {
+      "name": "Everflame Seed",
+      "rarity": 4,
+      "image": "everflame_seed.png"
+    },
+    {
+      "name": "Cleansing Heart",
+      "rarity": 4,
+      "image": "cleansing_heart.png"
+    },
+    {
+      "name": "Juvenile Jade",
+      "rarity": 4,
+      "image": "juvenile_jade.png"
+    },
+    {
+      "name": "Crystalline Bloom",
+      "rarity": 4,
+      "image": "crystalline_bloom.png"
+    },
+    {
+      "name": "Marionette Core",
+      "rarity": 4,
+      "image": "marionette_core.png"
+    },
+    {
+      "name": "Perpetual Heart",
+      "rarity": 4,
+      "image": "perpetual_heart.png"
+    },
+    {
+      "name": "Smoldering Pearl",
+      "rarity": 4,
+      "image": "smoldering_pearl.png"
+    },
+    {
+      "name": "Dew of Repudiation",
+      "rarity": 4,
+      "image": "dew_of_repudiation.png"
+    },
+    {
+      "name": "Storm Beads",
+      "rarity": 4,
+      "image": "storm_beads.png"
+    },
+    {
+      "name": "Riftborn Regalia",
+      "rarity": 4,
+      "image": "riftborn_regalia.png"
+    },
+    {
+      "name": "Dragonheir's False Fin",
+      "rarity": 4,
+      "image": "dragonheirs_false_fin.png"
+    }
+  ]
+}

@@ -1,0 +1,21 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer components {
+  .scrollbar::-webkit-scrollbar {
+    @apply w-3 h-3;
+  }
+
+  .scrollbar::-webkit-scrollbar-track {
+    @apply bg-primary-700 rounded-full;
+  }
+
+  .scrollbar::-webkit-scrollbar-thumb {
+    @apply bg-primary-800 rounded-full border-2 border-solid border-primary-600;
+  }
+
+  .scrollbar::-webkit-scrollbar-thumb:hover {
+    @apply bg-primary-900;
+  }
+}

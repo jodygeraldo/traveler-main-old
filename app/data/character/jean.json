@@ -1,0 +1,23 @@
+{
+  "name": "Jean",
+  "vision": "Anemo",
+  "rarity": 5,
+  "weapon_type": "Sword",
+  "image": {
+    "close": "close/jean.png",
+    "full": "full/jean.png"
+  },
+  "materials": {
+    "talent": {
+      "book": "Resistance",
+      "boss": "Dvalin's Plume"
+    },
+    "ascension": {
+      "material": "Vayuda Turquoise",
+      "boss": "Hurricane Seed",
+      "local": "Dandelion",
+      "common": "Hilichurl Mask"
+    }
+  },
+  "path": "/jean"
+}

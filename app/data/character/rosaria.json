@@ -1,0 +1,23 @@
+{
+  "name": "Rosaria",
+  "vision": "Cryo",
+  "rarity": 4,
+  "weapon_type": "Polearm",
+  "image": {
+    "close": "close/rosaria.png",
+    "full": "full/rosaria.png"
+  },
+  "materials": {
+    "talent": {
+      "book": "Ballad",
+      "boss": "Shadow of the Warrior"
+    },
+    "ascension": {
+      "material": "Shivada Jade",
+      "boss": "Hoarfrost Core",
+      "local": "Valberry",
+      "common": "Treasure Hoarder Insignia"
+    }
+  },
+  "path": "/rosaria"
+}

@@ -1,0 +1,23 @@
+{
+  "name": "Chongyun",
+  "vision": "Cryo",
+  "rarity": 4,
+  "weapon_type": "Claymore",
+  "image": {
+    "close": "close/chongyun.png",
+    "full": "full/chongyun.png"
+  },
+  "materials": {
+    "talent": {
+      "book": "Diligence",
+      "boss": "Dvalin's Sigh"
+    },
+    "ascension": {
+      "material": "Shivada Jade",
+      "boss": "Hoarfrost Core",
+      "local": "Cor Lapis",
+      "common": "Hilichurl Mask"
+    }
+  },
+  "path": "/chongyun"
+}

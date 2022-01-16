@@ -1,0 +1,23 @@
+{
+  "name": "Sayu",
+  "vision": "Anemo",
+  "rarity": 4,
+  "weapon_type": "Claymore",
+  "image": {
+    "close": "close/sayu.png",
+    "full": "full/sayu.png"
+  },
+  "materials": {
+    "talent": {
+      "book": "Light",
+      "boss": "Gilded Scale"
+    },
+    "ascension": {
+      "material": "Vayuda Turquoise",
+      "boss": "Marionette Core",
+      "local": "Crystal Marrow",
+      "common": "Whopperflower Nectar"
+    }
+  },
+  "path": "/sayu"
+}

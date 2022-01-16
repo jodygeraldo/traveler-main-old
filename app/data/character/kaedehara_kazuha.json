@@ -1,0 +1,23 @@
+{
+  "name": "Kaedehara Kazuha",
+  "vision": "Anemo",
+  "rarity": 5,
+  "weapon_type": "Sword",
+  "image": {
+    "close": "close/kaedehara_kazuha.png",
+    "full": "full/kaedehara_kazuha.png"
+  },
+  "materials": {
+    "talent": {
+      "book": "Diligence",
+      "boss": "Gilded Scale"
+    },
+    "ascension": {
+      "material": "Vayuda Turquoise",
+      "boss": "Marionette Core",
+      "local": "Sea Ganoderma",
+      "common": "Treasure Hoarder Insignia"
+    }
+  },
+  "path": "/kaedehara_kazuha"
+}

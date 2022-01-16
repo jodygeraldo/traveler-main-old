@@ -1,0 +1,23 @@
+{
+  "name": "Kamisato Ayaka",
+  "vision": "Cryo",
+  "rarity": 5,
+  "weapon_type": "Sword",
+  "image": {
+    "close": "close/kamisato_ayaka.png",
+    "full": "full/kamisato_ayaka.png"
+  },
+  "materials": {
+    "talent": {
+      "book": "Elegance",
+      "boss": "Bloodjade Branch"
+    },
+    "ascension": {
+      "material": "Shivada Jade",
+      "boss": "Perpetual Heart",
+      "local": "Sakura Bloom",
+      "common": "Nobushi Handguards"
+    }
+  },
+  "path": "/kamisato_ayaka"
+}

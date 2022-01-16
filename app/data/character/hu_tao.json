@@ -1,0 +1,23 @@
+{
+  "name": "Hu Tao",
+  "vision": "Pyro",
+  "rarity": 5,
+  "weapon_type": "Polearm",
+  "image": {
+    "close": "close/hu_tao.png",
+    "full": "full/hu_tao.png"
+  },
+  "materials": {
+    "talent": {
+      "book": "Diligence",
+      "boss": "Shard of a Foul Legacy"
+    },
+    "ascension": {
+      "material": "Agnidus Agate",
+      "boss": "Juvenile Jade",
+      "local": "Silk Flower",
+      "common": "Whopperflower Nectar"
+    }
+  },
+  "path": "/hu_tao"
+}
