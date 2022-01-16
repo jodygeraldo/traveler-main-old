@@ -1,11 +1,11 @@
 import type { FC } from 'react'
 
-import type { ICharacter } from '~/types/character'
+import type { ICharacter, ITraveler } from '~/types/character'
 
 import CharacterItem from './CharacterItem'
 
 interface Props {
-  characters: ICharacter[]
+  characters: Array<ITraveler | ICharacter>
 }
 
 const CharacterList: FC<Props> = ({ characters }) => {

@@ -2,16 +2,32 @@ import type { LoaderFunction } from 'remix'
 import { Outlet, useLoaderData } from 'remix'
 
 import CharacterList from '~/components/Character/CharacterList'
-import type { ICharacter } from '~/types/character'
-import { getCharacters } from '~/utils/character.server'
+import type { ICharacter, ITraveler } from '~/types/character'
+import {
+  getCharacters,
+  getUserCharacterOwnership,
+} from '~/utils/character.server'
 
 interface LoaderData {
-  characters: ICharacter[]
+  characters: Array<ITraveler | ICharacter>
 }
 
 export const loader: LoaderFunction = async (): Promise<LoaderData> => {
   const characters = await getCharacters()
-  return { characters }
+
+  // Todo get this from the session
+  const userId = 'user2'
+  const characterOwnership = await getUserCharacterOwnership(userId)
+  if (!characterOwnership) return { characters }
+
+  const updatedCharaters = characters.map(character => {
+    if (characterOwnership.includes(character.name)) {
+      character.owned = true
+    }
+    return character
+  })
+
+  return { characters: updatedCharaters }
 }
 
 export default function CharacterPage() {

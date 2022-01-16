@@ -9,7 +9,7 @@ import {
 
 export enum CharacterTypeEnum {
   Traveler = 'TRAVELER',
-  Others = 'OTHERS',
+  Character = 'CHARACTER',
 }
 
 export type CharacterName =
@@ -111,7 +111,7 @@ export interface ITraveler {
   weapon_type: WeaponType
   image: {
     close: string
-    fullMale: string
+    full: string
     fullFemale: string
   }
   materials: {
@@ -141,9 +141,9 @@ export interface ITraveler {
     character: number
     ascension: number
     talent: {
-      Anemo: [number, number, number]
-      Geo: [number, number, number]
-      Electro: [number, number, number]
+      anemo: [number, number, number]
+      geo: [number, number, number]
+      electro: [number, number, number]
     }
   }
 }

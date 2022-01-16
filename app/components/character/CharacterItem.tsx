@@ -3,10 +3,10 @@ import { motion } from 'framer-motion'
 import type { FC } from 'react'
 import { NavLink } from 'remix'
 
-import type { ICharacter } from '~/types/character'
+import type { ICharacter, ITraveler } from '~/types/character'
 
 interface Props {
-  character: ICharacter
+  character: ITraveler | ICharacter
 }
 
 const backgoundColor: Record<ICharacter['rarity'], string> = {
