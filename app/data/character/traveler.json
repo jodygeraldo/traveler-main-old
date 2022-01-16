@@ -5,7 +5,7 @@
   "weapon_type": "Sword",
   "image": {
     "close": "close/traveler.png",
-    "fullMale": "full/traveler_male.png",
+    "full": "full/traveler_male.png",
     "fullFemale": "full/traveler_female.png"
   },
   "materials": {
