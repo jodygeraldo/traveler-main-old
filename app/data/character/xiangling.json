@@ -19,5 +19,6 @@
       "common": "Slime"
     }
   },
-  "path": "/xiangling"
+  "path": "/xiangling",
+  "owned": true
 }

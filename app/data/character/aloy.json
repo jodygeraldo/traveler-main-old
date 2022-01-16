@@ -19,5 +19,6 @@
       "common": "Spectral Core"
     }
   },
-  "path": "/aloy"
+  "path": "/aloy",
+  "owned": false
 }

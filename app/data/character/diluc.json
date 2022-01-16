@@ -19,5 +19,6 @@
       "common": "Fatui Insignia"
     }
   },
-  "path": "/diluc"
+  "path": "/diluc",
+  "owned": false
 }

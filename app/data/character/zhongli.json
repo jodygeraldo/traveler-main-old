@@ -19,5 +19,6 @@
       "common": "Slime"
     }
   },
-  "path": "/zhongli"
+  "path": "/zhongli",
+  "owned": false
 }

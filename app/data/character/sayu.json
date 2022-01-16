@@ -19,5 +19,6 @@
       "common": "Whopperflower Nectar"
     }
   },
-  "path": "/sayu"
+  "path": "/sayu",
+  "owned": false
 }

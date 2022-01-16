@@ -19,5 +19,6 @@
       "common": "Samachurl Scroll"
     }
   },
-  "path": "/barbara"
+  "path": "/barbara",
+  "owned": true
 }

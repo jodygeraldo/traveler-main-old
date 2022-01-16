@@ -19,5 +19,6 @@
       "common": "Slime"
     }
   },
-  "path": "/arataki_itto"
+  "path": "/arataki_itto",
+  "owned": false
 }

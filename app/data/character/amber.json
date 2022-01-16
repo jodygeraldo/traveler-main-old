@@ -19,5 +19,6 @@
       "common": "Hilichurl Arrowhead"
     }
   },
-  "path": "/amber"
+  "path": "/amber",
+  "owned": true
 }

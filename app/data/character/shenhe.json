@@ -19,5 +19,6 @@
       "common": "Whopperflower Nectar"
     }
   },
-  "path": "/shenhe"
+  "path": "/shenhe",
+  "owned": false
 }

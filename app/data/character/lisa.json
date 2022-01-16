@@ -19,5 +19,6 @@
       "common": "Slime"
     }
   },
-  "path": "/lisa"
+  "path": "/lisa",
+  "owned": true
 }

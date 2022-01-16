@@ -19,5 +19,6 @@
       "common": "Treasure Hoarder Insignia"
     }
   },
-  "path": "/rosaria"
+  "path": "/rosaria",
+  "owned": false
 }

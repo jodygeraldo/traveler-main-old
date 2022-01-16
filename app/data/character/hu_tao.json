@@ -19,5 +19,6 @@
       "common": "Whopperflower Nectar"
     }
   },
-  "path": "/hu_tao"
+  "path": "/hu_tao",
+  "owned": false
 }

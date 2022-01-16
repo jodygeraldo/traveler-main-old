@@ -19,5 +19,6 @@
       "common": "Treasure Hoarder Insignia"
     }
   },
-  "path": "/thoma"
+  "path": "/thoma",
+  "owned": false
 }

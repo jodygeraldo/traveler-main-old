@@ -19,5 +19,6 @@
       "common": "Treasure Hoarder Insignia"
     }
   },
-  "path": "/kaeya"
+  "path": "/kaeya",
+  "owned": true
 }

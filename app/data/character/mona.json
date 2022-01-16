@@ -19,5 +19,6 @@
       "common": "Whopperflower Nectar"
     }
   },
-  "path": "/mona"
+  "path": "/mona",
+  "owned": false
 }

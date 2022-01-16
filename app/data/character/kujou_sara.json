@@ -19,5 +19,6 @@
       "common": "Hilichurl Mask"
     }
   },
-  "path": "/kujou_sara"
+  "path": "/kujou_sara",
+  "owned": false
 }

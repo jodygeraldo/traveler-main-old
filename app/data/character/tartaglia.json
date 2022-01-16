@@ -19,5 +19,6 @@
       "common": "Fatui Insignia"
     }
   },
-  "path": "/tartaglia"
+  "path": "/tartaglia",
+  "owned": false
 }

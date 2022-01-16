@@ -19,5 +19,6 @@
       "common": "Nobushi Handguards"
     }
   },
-  "path": "/raiden_shogun"
+  "path": "/raiden_shogun",
+  "owned": false
 }

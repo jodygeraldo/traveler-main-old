@@ -19,5 +19,6 @@
       "common": "Hilichurl Mask"
     }
   },
-  "path": "/chongyun"
+  "path": "/chongyun",
+  "owned": false
 }

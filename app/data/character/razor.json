@@ -19,5 +19,6 @@
       "common": "Hilichurl Mask"
     }
   },
-  "path": "/razor"
+  "path": "/razor",
+  "owned": false
 }

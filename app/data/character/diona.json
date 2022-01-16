@@ -19,5 +19,6 @@
       "common": "Hilichurl Arrowhead"
     }
   },
-  "path": "/diona"
+  "path": "/diona",
+  "owned": false
 }

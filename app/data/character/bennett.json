@@ -19,5 +19,6 @@
       "common": "Treasure Hoarder Insignia"
     }
   },
-  "path": "/bennett"
+  "path": "/bennett",
+  "owned": false
 }

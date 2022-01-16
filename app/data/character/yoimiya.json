@@ -19,5 +19,6 @@
       "common": "Samachurl Scroll"
     }
   },
-  "path": "/yoimiya"
+  "path": "/yoimiya",
+  "owned": false
 }

@@ -19,5 +19,6 @@
       "common": "Slime"
     }
   },
-  "path": "/venti"
+  "path": "/venti",
+  "owned": false
 }

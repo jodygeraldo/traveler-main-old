@@ -19,5 +19,6 @@
       "common": "Treasure Hoarder Insignia"
     }
   },
-  "path": "/beidou"
+  "path": "/beidou",
+  "owned": false
 }

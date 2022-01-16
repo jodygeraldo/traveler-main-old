@@ -19,5 +19,6 @@
       "common": "Treasure Hoarder Insignia"
     }
   },
-  "path": "/xinyan"
+  "path": "/xinyan",
+  "owned": false
 }

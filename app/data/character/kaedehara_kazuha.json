@@ -19,5 +19,6 @@
       "common": "Treasure Hoarder Insignia"
     }
   },
-  "path": "/kaedehara_kazuha"
+  "path": "/kaedehara_kazuha",
+  "owned": false
 }

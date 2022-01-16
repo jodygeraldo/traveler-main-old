@@ -19,5 +19,6 @@
       "common": "Fatui Insignia"
     }
   },
-  "path": "/ningguang"
+  "path": "/ningguang",
+  "owned": false
 }

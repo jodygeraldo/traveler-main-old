@@ -19,5 +19,6 @@
       "common": "Whopperflower Nectar"
     }
   },
-  "path": "/ganyu"
+  "path": "/ganyu",
+  "owned": false
 }

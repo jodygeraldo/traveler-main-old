@@ -19,5 +19,6 @@
       "common": "Samachurl Scroll"
     }
   },
-  "path": "/albedo"
+  "path": "/albedo",
+  "owned": false
 }

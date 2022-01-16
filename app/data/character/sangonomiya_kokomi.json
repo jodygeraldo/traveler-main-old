@@ -19,5 +19,6 @@
       "common": "Spectral Core"
     }
   },
-  "path": "/sangonomiya_kokomi"
+  "path": "/sangonomiya_kokomi",
+  "owned": false
 }

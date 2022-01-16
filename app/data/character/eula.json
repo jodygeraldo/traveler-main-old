@@ -19,5 +19,6 @@
       "common": "Hilichurl Mask"
     }
   },
-  "path": "/eula"
+  "path": "/eula",
+  "owned": false
 }

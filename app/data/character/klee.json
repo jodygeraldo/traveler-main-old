@@ -19,5 +19,6 @@
       "common": "Samachurl Scroll"
     }
   },
-  "path": "/klee"
+  "path": "/klee",
+  "owned": false
 }

@@ -19,5 +19,6 @@
       "common": "Whopperflower Nectar"
     }
   },
-  "path": "/sucrose"
+  "path": "/sucrose",
+  "owned": false
 }

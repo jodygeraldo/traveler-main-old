@@ -19,5 +19,6 @@
       "common": "Samachurl Scroll"
     }
   },
-  "path": "/qiqi"
+  "path": "/qiqi",
+  "owned": false
 }
