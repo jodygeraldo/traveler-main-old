@@ -1,7 +1,7 @@
 import type { LoaderFunction } from 'remix'
 import { useCatch, useMatches, useParams } from 'remix'
 
-import CharacterView from '~/components/character/CharacterView'
+import CharacterView from '~/components/Character/CharacterView'
 import { ICharacter } from '~/types/character'
 import { getCharacters } from '~/utils/character.server'
 

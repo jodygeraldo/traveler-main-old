@@ -7,9 +7,9 @@ import {
   useSubmit,
 } from 'remix'
 
-import FarmableCard from '~/components/farmable/FarmableCard'
-import TodoList from '~/components/todo/TodoList'
-import Tabs from '~/components/ui/Tabs'
+import FarmableCard from '~/components/Farmable/FarmableCard'
+import TodoList from '~/components/Todo/TodoList'
+import Tabs from '~/components/UI/Tabs'
 import type { IFarmable } from '~/types/farmable'
 import type { ITab } from '~/types/global'
 import type { ITodo } from '~/types/todo'

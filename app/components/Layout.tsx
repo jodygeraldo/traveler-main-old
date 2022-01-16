@@ -14,10 +14,11 @@ import { Fragment, ReactNode, useState } from 'react'
 import { NavLink, useLocation } from 'remix'
 
 const navigation = [
-  { name: 'Home', href: '/', icon: HomeIcon },
+  { name: 'Tavern', href: '/', icon: HomeIcon },
   { name: 'Character', href: '/character', icon: UsersIcon },
-  { name: 'Schedule', href: '/schedule', icon: CalendarIcon },
   { name: 'Inventory', href: '/inventory', icon: ArchiveIcon },
+  { name: 'Achievement', href: '/achievement', icon: ArchiveIcon },
+  { name: 'Schedule', href: '/schedule', icon: CalendarIcon },
   { name: 'Setting', href: '/setting', icon: CogIcon },
 ]
 

@@ -1,7 +1,7 @@
 import type { LoaderFunction } from 'remix'
 import { useLoaderData } from 'remix'
 
-import CharacterView from '~/components/character/CharacterView'
+import CharacterView from '~/components/Character/CharacterView'
 import type { ITraveler } from '~/types/character'
 import { getCharacter } from '~/utils/character.server'
 

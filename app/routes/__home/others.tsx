@@ -1,6 +1,6 @@
 import { LoaderFunction, useLoaderData } from 'remix'
 
-import TodoList from '~/components/todo/TodoList'
+import TodoList from '~/components/Todo/TodoList'
 import type { ITodo } from '~/types/todo'
 import { TodoTypeEnum } from '~/types/todo'
 import { getUserTodo } from '~/utils/todo.server'

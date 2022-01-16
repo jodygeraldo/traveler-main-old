@@ -1,7 +1,7 @@
 import type { LoaderFunction } from 'remix'
 import { Outlet, useLoaderData } from 'remix'
 
-import CharacterList from '~/components/character/CharacterList'
+import CharacterList from '~/components/Character/CharacterList'
 import type { ICharacter } from '~/types/character'
 import { getCharacters } from '~/utils/character.server'
 
