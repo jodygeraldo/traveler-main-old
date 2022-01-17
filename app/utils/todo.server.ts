@@ -40,7 +40,7 @@ async function setTodoTTL(type: TodoTypeEnum, id: string, expire: number) {
   await client.execute(['EXPIRE', `${schemaKey[type]}:${id}`, expire])
 }
 
-async function updateIndex(type: TodoTypeEnum) {
+export async function updateIndex(type: TodoTypeEnum) {
   const repository = await getTodoRepo(type)
   await repository.dropIndex()
   await repository.createIndex()
