@@ -35,7 +35,6 @@ const FarmableItem: FC<Props> = ({ item }) => {
               />
               {character.name.includes('Traveler') ? (
                 <img
-                  key={character.name}
                   className="w-8 h-8 absolute top-0 left-0 right-0 mx-auto shadow-md"
                   src={`../assets/images/elements/${
                     // @ts-ignore
