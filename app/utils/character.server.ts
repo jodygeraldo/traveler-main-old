@@ -9,6 +9,8 @@ import {
   updateCharacterIndex,
   updateCharacterOwnershipIndex,
 } from './redis/redis-character-schema.server'
+import { getUserRepo } from './redis/redis-user-schema.server'
+import { setUserData } from './user.server'
 
 /*
  * CHARACTER JSON READ FUNCTIONS *
@@ -97,6 +99,9 @@ export async function addUserCharacter(
   }
 
   const id = await repository.save(userCharacter)
+
+  await setUserData({ data_id: name, value: id }, userId)
+
   return id
 }
 
@@ -131,8 +136,8 @@ export async function setUserCharacter(
     userCharacter.character_talent_geo = talent.geo
     userCharacter.character_talent_electro = talent.electro
   }
-  const id = await repository.save(userCharacter)
-  return id
+  await repository.save(userCharacter)
+  return null
 }
 
 /*
@@ -161,6 +166,9 @@ export async function addUserCharacterOwnership(name: string, userId: string) {
   userCharacterOwnership.characters = [name]
 
   const id = await repository.save(userCharacterOwnership)
+
+  await setUserData({ data_id: name, value: id }, userId)
+
   return id
 }
 
@@ -178,8 +186,8 @@ export async function setUserCharacterOwnership(
 
   const userCharacterOwnership = await repository.fetch(dataId)
   userCharacterOwnership.characters.push(name)
-  const id = await repository.save(userCharacterOwnership)
-  return id
+  await repository.save(userCharacterOwnership)
+  return null
 }
 
 export async function removeUserCharacterOwnershipEntry(
@@ -200,6 +208,5 @@ export async function removeUserCharacterOwnershipEntry(
   }
 
   userCharacterOwnership.characters.splice(indexOfName, 1)
-  const id = await repository.save(userCharacterOwnership)
-  return id
+  await repository.save(userCharacterOwnership)
 }

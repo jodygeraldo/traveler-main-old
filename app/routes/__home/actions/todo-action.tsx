@@ -37,7 +37,8 @@ export const action: ActionFunction = async ({ request }) => {
       name,
       timeUntilReset,
     )
-    // TODO: put ID in user session
+    // if id already in user session then do nothing
+    // TODO: put ID in user session if not already there
     return null
   } else {
     const id = await removeUserTodoEntry(
@@ -46,7 +47,8 @@ export const action: ActionFunction = async ({ request }) => {
       name,
       timeUntilReset,
     )
-    // TODO: put ID in user session
+    // if id already in user session then do nothing
+    // TODO: put ID in user session if not already there
 
     return null
   }

@@ -1,12 +1,13 @@
 {
   "private": true,
-  "name": "remix-app-template",
+  "name": "traveler-main",
   "description": "",
   "license": "",
   "scripts": {
     "build": "npm run build:css && remix build",
     "build:css": "tailwindcss -i ./styles/tailwind.css -o ./app/tailwind.css --minify",
-    "dev": "concurrently \"npm run dev:css\" \"remix dev\"",
+    "dev": "concurrently \"npm run dev:css\" \"npm run dev:remix\"",
+    "dev:remix": "node -r dotenv/config node_modules/@remix-run/dev/cli.js",
     "dev:css": "tailwindcss -i ./app/styles/tailwind.css -o ./app/tailwind.css --watch",
     "postinstall": "remix setup node",
     "deploy": "fly deploy --remote-only",
@@ -19,6 +20,7 @@
     "@heroicons/react": "^1.0.5",
     "@remix-run/react": "^1.1.1",
     "@remix-run/serve": "^1.1.1",
+    "@supabase/supabase-js": "^1.29.2",
     "clsx": "^1.1.1",
     "date-fns": "^2.28.0",
     "date-fns-tz": "^1.2.2",
@@ -28,6 +30,8 @@
     "redis": "^4.0.1",
     "redis-om": "^0.1.7",
     "remix": "^1.1.1",
+    "remix-auth": "^3.2.1",
+    "remix-auth-supabase": "^3.0.2",
     "tiny-invariant": "^1.2.0"
   },
   "devDependencies": {
@@ -39,6 +43,7 @@
     "@types/react-dom": "^17.0.9",
     "@typescript-eslint/parser": "^5.9.0",
     "concurrently": "^7.0.0",
+    "dotenv": "^14.2.0",
     "eslint": "^8.6.0",
     "eslint-config-kentcdodds": "^20.0.1",
     "eslint-plugin-simple-import-sort": "^7.0.0",

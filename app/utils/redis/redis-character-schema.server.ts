@@ -2,9 +2,6 @@ import { Entity, Repository, Schema } from 'redis-om'
 
 import { redisOmConnect } from '../redis.server'
 
-/*
- * Character Ownership Schema
- */
 interface CharacterOwnership {
   user_id: string
   characters: string[]

@@ -1,11 +1,11 @@
-import type { ActionFunction, LoaderFunction } from 'remix'
-import { useLoaderData } from 'remix'
+import { ActionFunction, LoaderFunction, redirect, useLoaderData } from 'remix'
 import invariant from 'tiny-invariant'
 
 import CharacterLevel from '~/components/Character/CharacterLevel/CharacterLevel'
 import CharacterLevelManual from '~/components/Character/CharacterLevel/CharacterLevelManual/CharacterLevelManual'
 import CharacterView from '~/components/Character/CharacterView'
 import { CharacterActionTypeEnum, ITraveler } from '~/types/character'
+import { supabaseStrategy } from '~/utils/auth.server'
 import {
   getCharacter,
   getUserCharacter,
@@ -68,7 +68,13 @@ export const action: ActionFunction = async ({ request }) => {
         user.id,
         user.travelerDataId,
       )
-      return id
+
+      if (!id) {
+        return redirect(request.url)
+      }
+
+      // TODO: put ID in user session
+      return redirect(request.url, { headers: { 'Set-Cookie': '' } })
     }
     case CharacterActionTypeEnum.Automatic: {
       break
@@ -84,6 +90,11 @@ type LoaderData = {
   character: ITraveler
 }
 export const loader: LoaderFunction = async ({ request }) => {
+  const session = await supabaseStrategy.checkSession(request, {
+    failureRedirect: '/login',
+  })
+  invariant(typeof session.user?.id === 'string', 'This should never throw')
+
   const character = await getCharacter('traveler')
 
   character.level = {
@@ -96,10 +107,7 @@ export const loader: LoaderFunction = async ({ request }) => {
     },
   }
 
-  // Todo get this from session
-  const userId = 'user2'
-  const characterData = await getUserCharacter(character.name, userId)
-  console.log(characterData)
+  const characterData = await getUserCharacter(character.name, session.user.id)
 
   if (!characterData) return { character }
 

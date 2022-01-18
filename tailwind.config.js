@@ -12,7 +12,6 @@ module.exports = {
       primary: colors.slate,
       secondary: colors.red,
       tertiary: colors.amber,
-      gray: colors.gray,
       black: colors.black,
       white: colors.white,
       rarity: {

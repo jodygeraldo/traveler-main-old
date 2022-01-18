@@ -5,6 +5,8 @@ import {
   setTodoTTL,
   updateTodoIndex,
 } from './redis/redis-todo-schema.server'
+import { getUserRepo } from './redis/redis-user-schema.server'
+import { setUserData } from './user.server'
 
 export async function getUserTodo(type: TodoTypeEnum, userId: string) {
   const repository = await getTodoRepo(type)
@@ -38,6 +40,9 @@ export async function addUserTodo(
 
   const id = await repository.save(userTodo)
   await setTodoTTL(type, id, expire)
+
+  await setUserData({ data_id: type, value: id }, userId, type)
+
   return id
 }
 

@@ -1,23 +1,34 @@
-import type { LoaderFunction } from 'remix'
+import type { ActionFunction, LoaderFunction } from 'remix'
 import { Outlet, useLoaderData } from 'remix'
+import invariant from 'tiny-invariant'
 
 import CharacterList from '~/components/Character/CharacterList'
 import type { ICharacter, ITraveler } from '~/types/character'
+import { authenticator, supabaseStrategy } from '~/utils/auth.server'
 import {
   getCharacters,
   getUserCharacterOwnership,
 } from '~/utils/character.server'
+import { getUserDataSession } from '~/utils/user-data.server'
 
 interface LoaderData {
   characters: Array<ITraveler | ICharacter>
 }
 
-export const loader: LoaderFunction = async (): Promise<LoaderData> => {
+export const loader: LoaderFunction = async ({
+  request,
+}): Promise<LoaderData> => {
+  const session = await supabaseStrategy.checkSession(request, {
+    failureRedirect: '/login',
+  })
+  invariant(typeof session.user?.id === 'string', 'This should never throw')
+
+  const userDataSession = await getUserDataSession(request)
+  console.log(userDataSession.get('userData'))
+
   const characters = await getCharacters()
 
-  // Todo get this from the session
-  const userId = 'user2'
-  const characterOwnership = await getUserCharacterOwnership(userId)
+  const characterOwnership = await getUserCharacterOwnership(session.user.id)
   if (!characterOwnership) return { characters }
 
   const updatedCharaters = characters.map(character => {

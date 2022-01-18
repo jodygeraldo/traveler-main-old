@@ -1,9 +1,11 @@
 import type { ActionFunction } from 'remix'
 import { LoaderFunction, useLoaderData } from 'remix'
+import invariant from 'tiny-invariant'
 
 import TodoList from '~/components/Todo/TodoList'
 import type { ITodo } from '~/types/todo'
 import { TodoTypeEnum } from '~/types/todo'
+import { supabaseStrategy } from '~/utils/auth.server'
 import { getUserTodo } from '~/utils/todo.server'
 
 type LoaderData = {
@@ -12,8 +14,10 @@ type LoaderData = {
 export const loader: LoaderFunction = async ({
   request,
 }): Promise<LoaderData> => {
-  // Todo: should get this from user session
-  const userId = 'user2'
+  const session = await supabaseStrategy.checkSession(request, {
+    failureRedirect: '/login',
+  })
+  invariant(typeof session.user?.id === 'string', 'This should never throw')
 
   const todos: ITodo[] = [
     {
@@ -48,7 +52,7 @@ export const loader: LoaderFunction = async ({
     },
   ]
 
-  const todoCompletion = await getUserTodo(TodoTypeEnum.Weekly, userId)
+  const todoCompletion = await getUserTodo(TodoTypeEnum.Weekly, session.user.id)
 
   if (!todoCompletion) return { todos }
 

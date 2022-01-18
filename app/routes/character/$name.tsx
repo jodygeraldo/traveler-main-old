@@ -17,6 +17,7 @@ import {
   ICharacter,
   ITraveler,
 } from '~/types/character'
+import { supabaseStrategy } from '~/utils/auth.server'
 import {
   getCharacters,
   getUserCharacter,
@@ -64,15 +65,19 @@ export const action: ActionFunction = async ({ request }) => {
           user.id,
           user.ownershipDataId,
         )
-        // Todo set new session to header
+
+        if (!id) {
+          return redirect(request.url)
+        }
+
+        // TODO: put ID in user session
         return redirect(request.url, { headers: { 'Set-Cookie': '' } })
       } else {
-        const id = await removeUserCharacterOwnershipEntry(
+        await removeUserCharacterOwnershipEntry(
           characterName,
           user.ownershipDataId,
         )
-        // Todo set new session to header
-        return redirect(request.url, { headers: { 'Set-Cookie': '' } })
+        return redirect(request.url)
       }
 
     default:
@@ -83,7 +88,12 @@ export const action: ActionFunction = async ({ request }) => {
 type LoaderData = {
   level: ICharacter['level']
 }
-export const loader: LoaderFunction = async ({ params }) => {
+export const loader: LoaderFunction = async ({ request, params }) => {
+  const session = await supabaseStrategy.checkSession(request, {
+    failureRedirect: '/login',
+  })
+  invariant(typeof session.user?.id === 'string', 'This should never throw')
+
   const { name } = params
   const character = (await getCharacters()).find(
     c => c.path.replace('/', '') === name,
@@ -92,9 +102,7 @@ export const loader: LoaderFunction = async ({ params }) => {
     throw new Response('Character not found', { status: 404 })
   }
 
-  // Todo get this from session
-  const userId = 'user2'
-  const characterData = await getUserCharacter(userId, character.name)
+  const characterData = await getUserCharacter(session.user.id, character.name)
 
   // Todo get this from db
   const level = {
@@ -133,8 +141,8 @@ export default function CharacterRoute() {
       {/* Should hide this until characters is owned */}
       {character.owned ? (
         <>
-          <CharacterLevelManual level={level} />
-          <CharacterLevel level={level} />
+          <CharacterLevelManual level={level} name={character.name} />
+          <CharacterLevel level={level} name={character.name} />
         </>
       ) : null}
       <img src={`../assets/images/characters/${character.image.full}`} alt="" />

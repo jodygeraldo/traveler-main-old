@@ -2,9 +2,6 @@ import { Entity, Repository, Schema } from 'redis-om'
 
 import { redisOmConnect } from '../redis.server'
 
-/*
- * User Schema
- */
 interface User {
   id: string
   data_ids: Array<{ data_id: string; value: string }>

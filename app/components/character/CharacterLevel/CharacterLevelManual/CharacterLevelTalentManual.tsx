@@ -63,7 +63,7 @@ const CharacterLevelTalentManual: FC<Props> = ({ level }) => {
       ) : (
         <>
           {travelerTalent.map(type => (
-            <>
+            <div key={type}>
               <h2 className="text-2xl bg-primary-800 capitalize">{type}</h2>
               <div className="grid grid-cols-6 gap-4">
                 <div className="col-span-2">
@@ -124,7 +124,7 @@ const CharacterLevelTalentManual: FC<Props> = ({ level }) => {
                   />
                 </div>
               </div>{' '}
-            </>
+            </div>
           ))}
         </>
       )}
