@@ -1,7 +1,12 @@
 import type { FC } from 'react'
 import { Form, useTransition } from 'remix'
 
-import type { CharacterName, ICharacter, ITraveler } from '~/types/character'
+import {
+  CharacterActionTypeEnum,
+  CharacterName,
+  ICharacter,
+  ITraveler,
+} from '~/types/character'
 
 interface Props {
   character: ICharacter | ITraveler
@@ -26,9 +31,10 @@ const CharacterView: FC<Props> = ({ character }) => {
       {og7character.includes(character.name) ? null : (
         <Form method="post">
           <input type="hidden" name="name" value={character.name} />
+          <input type="hidden" name="owned" value={`${!character.owned}`} />
           <button
-            name="mark-character"
-            value={`${!character.owned}`}
+            name="_action"
+            value={CharacterActionTypeEnum.Ownership}
             className="bg-primary-400 rounded-md shadow-md shadow-primary-800 px-4 py-2 "
           >
             {transition.submission

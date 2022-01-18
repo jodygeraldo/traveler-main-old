@@ -40,11 +40,11 @@ type LoaderData = {
 }
 export const loader: LoaderFunction = async (): Promise<LoaderData> => {
   const day = getCurrentDay('AS')
-  const timeUntilReset = getDailyResetTime('AS')
 
-  const farmable = await getFarmable(getFileName(day))
-
-  return { farmable, timeUntilReset: timeUntilReset * 1000 }
+  return {
+    farmable: await getFarmable(getFileName(day)),
+    timeUntilReset: getDailyResetTime('AS') * 1000,
+  }
 }
 
 export default function Index() {

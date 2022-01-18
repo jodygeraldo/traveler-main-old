@@ -1,23 +1,18 @@
 import fs from 'fs/promises'
 import path from 'path'
-import { Repository, Schema } from 'redis-om'
+import { Repository } from 'redis-om'
 
-import type {
-  CharacterTypeEnum,
-  ICharacter,
-  ITraveler,
-} from '~/types/character'
+import type { ICharacter, ITraveler } from '~/types/character'
 
 import { redisOmConnect } from './redis.server'
 import {
-  Character,
-  CharacterOwnership,
   characterOwnershipSchema,
   characterSchema,
-  Traveler,
-  travelerSchema,
 } from './redis-schema.server'
 
+/*
+ * CHARACTER JSON READ FUNCTIONS *
+ */
 const charactersPath = path.join(__dirname, '../app/data/character')
 
 export async function getCharacter(
@@ -43,60 +38,139 @@ export async function getCharacters(): Promise<Array<ITraveler | ICharacter>> {
 //   return characters
 // }
 
-const schema: Record<CharacterTypeEnum, Schema<Character | Traveler>> = {
-  TRAVELER: travelerSchema,
-  CHARACTER: characterSchema,
+/*
+ * CHARACTER FUNCTIONS *
+ */
+const getCharacterRepo = async () =>
+  new Repository(characterSchema, await redisOmConnect())
+
+export async function updateCharacterIndex() {
+  const repository = await getCharacterRepo()
+  await repository.dropIndex()
+  await repository.createIndex()
 }
 
-const schemaKey: Record<CharacterTypeEnum, 'Traveler' | 'Character'> = {
-  TRAVELER: 'Traveler',
-  CHARACTER: 'Character',
+export async function getUserCharacter(name: string, userId: string) {
+  const repository = await getCharacterRepo()
+  const character = await repository
+    .search()
+    .where('user_id')
+    .equal(userId)
+    .and('name')
+    .equal(name)
+    .first()
+
+  // this is possible if the search function doesn't find the given userId
+  // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
+  if (!character) return null
+
+  const characterData = {
+    name: character.name,
+    level: character.character_level,
+    ascension: character.character_ascension,
+    talent: character.character_talent,
+    talent_anemo: character.character_talent_anemo,
+    talent_geo: character.character_talent_geo,
+    talent_electro: character.character_talent_electro,
+  }
+  return characterData
 }
 
+export async function addUserCharacter(
+  name: string,
+  level: number,
+  ascension: number,
+  talent:
+    | [number, number, number]
+    | {
+        anemo: [number, number, number]
+        geo: [number, number, number]
+        electro: [number, number, number]
+      },
+  userId: string,
+) {
+  const repository = await getCharacterRepo()
+  await updateCharacterIndex()
+
+  const userCharacter = repository.createEntity()
+  userCharacter.user_id = userId
+  userCharacter.name = name
+  userCharacter.character_level = level
+  userCharacter.character_ascension = ascension
+  if (Array.isArray(talent)) {
+    userCharacter.character_talent = talent
+  } else {
+    userCharacter.character_talent_anemo = talent.anemo
+    userCharacter.character_talent_geo = talent.geo
+    userCharacter.character_talent_electro = talent.electro
+  }
+
+  const id = await repository.save(userCharacter)
+  return id
+}
+
+export async function setUserCharacter(
+  name: string,
+  level: number,
+  ascension: number,
+  talent:
+    | [number, number, number]
+    | {
+        anemo: [number, number, number]
+        geo: [number, number, number]
+        electro: [number, number, number]
+      },
+  userId: string,
+  dataId?: string,
+) {
+  const repository = await getCharacterRepo()
+
+  if (!dataId) {
+    const id = await addUserCharacter(name, level, ascension, talent, userId)
+    return id
+  }
+
+  const userCharacter = await repository.fetch(dataId)
+  userCharacter.character_level = level
+  userCharacter.character_ascension = ascension
+  if (Array.isArray(talent)) {
+    userCharacter.character_talent = talent
+  } else {
+    userCharacter.character_talent_anemo = talent.anemo
+    userCharacter.character_talent_geo = talent.geo
+    userCharacter.character_talent_electro = talent.electro
+  }
+  const id = await repository.save(userCharacter)
+  return id
+}
+
+/*
+ * CHARACTER OWNERSHIP FUNCTIONS *
+ */
 const getCharacterOwnershipRepo = async () =>
   new Repository(characterOwnershipSchema, await redisOmConnect())
 
-async function updateCharacterOwnershipIndex() {
+export async function updateCharacterOwnershipIndex() {
   const repository = await getCharacterOwnershipRepo()
   await repository.dropIndex()
   await repository.createIndex()
 }
 
-const getCharacterRepo = async (type: CharacterTypeEnum) =>
-  new Repository(schema[type], await redisOmConnect())
-
-async function updateCharacterIndex(type: CharacterTypeEnum) {
-  const repository = await getCharacterRepo(type)
-  await repository.dropIndex()
-  await repository.createIndex()
-}
-
-export async function getUserCharacter(
-  type: CharacterTypeEnum,
-  userId: string,
-): Promise<Character | Traveler | null> {
-  const repository = await getCharacterRepo(type)
-  const character = await repository
-    .search()
-    .where('user_id')
-    .equal(userId)
-    .first()
-  return character
-}
-
-export async function getUserCharacterOwnership(
-  userId: string,
-): Promise<string[] | null> {
+export async function getUserCharacterOwnership(userId: string) {
   const repository = await getCharacterOwnershipRepo()
   const characterOwnership = await repository
     .search()
     .where('user_id')
     .equal(userId)
     .first()
+
+  // this is possible if the search function doesn't find the given userId
+  // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
+  if (!characterOwnership) return null
   return characterOwnership.characters
 }
 
-export async function addUserCharacterOwnership(userId: string, name: string) {
+export async function addUserCharacterOwnership(name: string, userId: string) {
   const repository = await getCharacterOwnershipRepo()
   await updateCharacterOwnershipIndex()
 
@@ -116,7 +190,7 @@ export async function setUserCharacterOwnership(
   const repository = await getCharacterOwnershipRepo()
 
   if (!dataId) {
-    const id = await addUserCharacterOwnership(userId, name)
+    const id = await addUserCharacterOwnership(name, userId)
     return id
   }
 
@@ -133,9 +207,7 @@ export async function removeUserCharacterOwnershipEntry(
   const repository = await getCharacterOwnershipRepo()
   const userCharacterOwnership = await repository.fetch(dataId)
   if (!userCharacterOwnership.user_id) {
-    throw new Error(
-      'You should refresh the page, your todo data not sync properly with the server',
-    )
+    throw new Error('This is should never happen, contact me if you see this!')
   }
 
   const indexOfName = userCharacterOwnership.characters.indexOf(name)

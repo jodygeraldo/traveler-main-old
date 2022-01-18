@@ -7,11 +7,6 @@ import {
   TalentBossMaterial,
 } from './item'
 
-export enum CharacterTypeEnum {
-  Traveler = 'TRAVELER',
-  Character = 'CHARACTER',
-}
-
 export type CharacterName =
   | 'Albedo'
   | 'Aloy'
@@ -146,4 +141,10 @@ export interface ITraveler {
       electro: [number, number, number]
     }
   }
+}
+
+export enum CharacterActionTypeEnum {
+  Ownership = 'OWNERSHIP',
+  Munual = 'MUNUAL',
+  Automatic = 'AUTOMATIC',
 }

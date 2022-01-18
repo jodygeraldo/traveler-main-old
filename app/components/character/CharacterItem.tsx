@@ -43,6 +43,7 @@ const CharacterItem: FC<Props> = ({ character }) => {
       className={({ isActive }) =>
         clsx(
           'flex flex-1 flex-col rounded transition-all',
+          !character.owned && 'opacity-50',
           hoverRingColor[character.rarity],
           isActive && ringColor[character.rarity],
         )
