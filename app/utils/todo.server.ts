@@ -65,9 +65,9 @@ export async function getUserTodo(type: TodoTypeEnum, userId: string) {
 
 export async function addUserTodo(
   type: TodoTypeEnum,
-  userId: string,
   name: string,
   expire: number,
+  userId: string,
 ) {
   const repository = await getTodoRepo(type)
   await updateIndex(type)
@@ -92,7 +92,7 @@ export async function setUserTodo(
 
   const userTodo = await repository.fetch(dataId)
   if (!userTodo.user_id) {
-    const id = await addUserTodo(type, userId, name, expire)
+    const id = await addUserTodo(type, name, expire, userId)
     return id
   }
 
