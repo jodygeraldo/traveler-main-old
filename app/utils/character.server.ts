@@ -1,14 +1,14 @@
 import fs from 'fs/promises'
 import path from 'path'
-import { Repository } from 'redis-om'
 
 import type { ICharacter, ITraveler } from '~/types/character'
 
-import { redisOmConnect } from './redis.server'
 import {
-  characterOwnershipSchema,
-  characterSchema,
-} from './redis-schema.server'
+  getCharacterOwnershipRepo,
+  getCharacterRepo,
+  updateCharacterIndex,
+  updateCharacterOwnershipIndex,
+} from './redis/redis-character-schema.server'
 
 /*
  * CHARACTER JSON READ FUNCTIONS *
@@ -41,15 +41,6 @@ export async function getCharacters(): Promise<Array<ITraveler | ICharacter>> {
 /*
  * CHARACTER FUNCTIONS *
  */
-const getCharacterRepo = async () =>
-  new Repository(characterSchema, await redisOmConnect())
-
-export async function updateCharacterIndex() {
-  const repository = await getCharacterRepo()
-  await repository.dropIndex()
-  await repository.createIndex()
-}
-
 export async function getUserCharacter(name: string, userId: string) {
   const repository = await getCharacterRepo()
   const character = await repository
@@ -147,15 +138,6 @@ export async function setUserCharacter(
 /*
  * CHARACTER OWNERSHIP FUNCTIONS *
  */
-const getCharacterOwnershipRepo = async () =>
-  new Repository(characterOwnershipSchema, await redisOmConnect())
-
-export async function updateCharacterOwnershipIndex() {
-  const repository = await getCharacterOwnershipRepo()
-  await repository.dropIndex()
-  await repository.createIndex()
-}
-
 export async function getUserCharacterOwnership(userId: string) {
   const repository = await getCharacterOwnershipRepo()
   const characterOwnership = await repository

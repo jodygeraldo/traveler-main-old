@@ -1,50 +1,10 @@
-import { Repository, Schema } from 'redis-om'
-
 import { TodoTypeEnum } from '~/types/todo'
 
-import { redisOmConnect } from './redis.server'
 import {
-  DailyTodo,
-  dailyTodoSchema,
-  OthersTodo,
-  othersTodoSchema,
-  WeeklyTodo,
-  weeklyTodoSchema,
-} from './redis-schema.server'
-
-const schema: Record<
-  TodoTypeEnum,
-  Schema<DailyTodo | WeeklyTodo | OthersTodo>
-> = {
-  DAILY: dailyTodoSchema,
-  WEEKLY: weeklyTodoSchema,
-  OTHERS: othersTodoSchema,
-}
-
-const schemaKey: Record<
-  TodoTypeEnum,
-  'DailyTodo' | 'WeeklyTodo' | 'OthersTodo'
-> = {
-  DAILY: 'DailyTodo',
-  WEEKLY: 'WeeklyTodo',
-  OTHERS: 'OthersTodo',
-}
-
-async function getTodoRepo(type: TodoTypeEnum) {
-  const client = await redisOmConnect()
-  return new Repository(schema[type], client)
-}
-
-async function setTodoTTL(type: TodoTypeEnum, id: string, expire: number) {
-  const client = await redisOmConnect()
-  await client.execute(['EXPIRE', `${schemaKey[type]}:${id}`, expire])
-}
-
-export async function updateIndex(type: TodoTypeEnum) {
-  const repository = await getTodoRepo(type)
-  await repository.dropIndex()
-  await repository.createIndex()
-}
+  getTodoRepo,
+  setTodoTTL,
+  updateTodoIndex,
+} from './redis/redis-todo-schema.server'
 
 export async function getUserTodo(type: TodoTypeEnum, userId: string) {
   const repository = await getTodoRepo(type)
@@ -70,7 +30,7 @@ export async function addUserTodo(
   userId: string,
 ) {
   const repository = await getTodoRepo(type)
-  await updateIndex(type)
+  await updateTodoIndex(type)
 
   const userTodo = repository.createEntity()
   userTodo.user_id = userId
