@@ -44,7 +44,7 @@ export default function LoginPage() {
   const transition = useTransition()
 
   return (
-    <Form method="post">
+    <Form replace method="post">
       <Link to={'/signup'} className="bg-primary-500 px-4 py-2 rounded-md">
         Go to Signup
       </Link>

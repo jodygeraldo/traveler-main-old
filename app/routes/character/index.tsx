@@ -1,4 +1,4 @@
-import { ActionFunction, LoaderFunction, redirect, useLoaderData } from 'remix'
+import { ActionFunction, json, LoaderFunction, useLoaderData } from 'remix'
 import invariant from 'tiny-invariant'
 
 import CharacterLevel from '~/components/Character/CharacterLevel/CharacterLevel'
@@ -11,77 +11,87 @@ import {
   getUserCharacter,
   setUserCharacter,
 } from '~/utils/character.server'
-import { getFormHackMessage } from '~/utils/message'
+import { parseStringFormData } from '~/utils/http'
+import type { User } from '~/utils/redis/redis-user-schema.server'
+import { getDataId, getUserData } from '~/utils/user.server'
+import { commitSession, getUserDataSession } from '~/utils/user-data.server'
 
 export const action: ActionFunction = async ({ request }) => {
-  const formData = await request.formData()
-  const $action = formData.get('_action')
-  const name = formData.get('character-name')
-  const level = formData.get('character-level')
-  const ascension = formData.get('character-ascension')
-  const talentAnemoNormal = formData.get('anemo-talent-normal')
-  const talentAnemoSkill = formData.get('anemo-talent-skill')
-  const talentAnemoBurst = formData.get('anemo-talent-burst')
-  const talentGeoNormal = formData.get('geo-talent-normal')
-  const talentGeoSkill = formData.get('geo-talent-skill')
-  const talentGeoBurst = formData.get('geo-talent-burst')
-  const talentElectroNormal = formData.get('electro-talent-normal')
-  const talentElectroSkill = formData.get('electro-talent-skill')
-  const talentElectroBurst = formData.get('electro-talent-burst')
+  const session = await supabaseStrategy.checkSession(request, {
+    failureRedirect: '/login',
+  })
+  invariant(typeof session.user?.id === 'string', 'This should never throw')
 
-  const user = {
-    id: 'user2',
-    // Todo get this from the session
-    travelerDataId: '01FSM3XZQ142DAKMZB1HPA1FB0',
+  interface formPostData {
+    _action: CharacterActionTypeEnum
+    characterName: string
+    characterLevel: string
+    characterAscension: string
+    anemoTalentNormal: string
+    anemoTalentSkill: string
+    anemoTalentBurst: string
+    geoTalentNormal: string
+    geoTalentSkill: string
+    geoTalentBurst: string
+    electroTalentNormal: string
+    electroTalentSkill: string
+    electroTalentBurst: string
   }
 
-  invariant(typeof $action === 'string', getFormHackMessage())
-  invariant(typeof name === 'string', getFormHackMessage())
-  invariant(typeof level === 'string', getFormHackMessage())
-  invariant(typeof ascension === 'string', getFormHackMessage())
+  const data = (await parseStringFormData(request)) as formPostData
+  const anemoTalent: [number, number, number] = [
+    +data.anemoTalentNormal,
+    +data.anemoTalentSkill,
+    +data.anemoTalentBurst,
+  ]
+  const geoTalent: [number, number, number] = [
+    +data.geoTalentNormal,
+    +data.geoTalentSkill,
+    +data.geoTalentBurst,
+  ]
+  const electroTalent: [number, number, number] = [
+    +data.electroTalentNormal,
+    +data.electroTalentSkill,
+    +data.electroTalentBurst,
+  ]
 
-  switch ($action as CharacterActionTypeEnum) {
+  const userDataSession = await getUserDataSession(request)
+  const userDataIds = userDataSession.get('userData') as User['data_ids']
+  const travelerDataId = getDataId(userDataIds, data.characterName)
+
+  switch (data._action) {
     case CharacterActionTypeEnum.Munual: {
-      invariant(typeof talentAnemoNormal === 'string', getFormHackMessage())
-      invariant(typeof talentAnemoSkill === 'string', getFormHackMessage())
-      invariant(typeof talentAnemoBurst === 'string', getFormHackMessage())
-      invariant(typeof talentGeoNormal === 'string', getFormHackMessage())
-      invariant(typeof talentGeoSkill === 'string', getFormHackMessage())
-      invariant(typeof talentGeoBurst === 'string', getFormHackMessage())
-      invariant(typeof talentElectroNormal === 'string', getFormHackMessage())
-      invariant(typeof talentElectroSkill === 'string', getFormHackMessage())
-      invariant(typeof talentElectroBurst === 'string', getFormHackMessage())
-
       const id = await setUserCharacter(
-        name,
-        +level,
-        +ascension,
+        data.characterName,
+        +data.characterLevel,
+        +data.characterAscension,
         {
-          anemo: [+talentAnemoNormal, +talentAnemoSkill, +talentAnemoBurst],
-          geo: [+talentGeoNormal, +talentGeoSkill, +talentGeoBurst],
-          electro: [
-            +talentElectroNormal,
-            +talentElectroSkill,
-            +talentElectroBurst,
-          ],
+          anemo: anemoTalent,
+          geo: geoTalent,
+          electro: electroTalent,
         },
-        user.id,
-        user.travelerDataId,
+        session.user.id,
+        travelerDataId,
       )
 
       if (!id) {
-        return redirect(request.url)
+        return json(null, { status: 200 })
       }
 
-      // TODO: put ID in user session
-      return redirect(request.url, { headers: { 'Set-Cookie': '' } })
+      const userData = await getUserData(session.user.id)
+      userDataSession.set('userData', userData)
+
+      return json(request.url, {
+        status: 201,
+        headers: { 'Set-Cookie': await commitSession(userDataSession) },
+      })
     }
     case CharacterActionTypeEnum.Automatic: {
       break
     }
 
     default: {
-      return null
+      return json(null, { status: 204 })
     }
   }
 }

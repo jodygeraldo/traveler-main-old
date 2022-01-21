@@ -1,15 +1,14 @@
-import type { ActionFunction, LoaderFunction } from 'remix'
+import type { LoaderFunction } from 'remix'
 import { Outlet, useLoaderData } from 'remix'
 import invariant from 'tiny-invariant'
 
 import CharacterList from '~/components/Character/CharacterList'
 import type { ICharacter, ITraveler } from '~/types/character'
-import { authenticator, supabaseStrategy } from '~/utils/auth.server'
+import { supabaseStrategy } from '~/utils/auth.server'
 import {
   getCharacters,
   getUserCharacterOwnership,
 } from '~/utils/character.server'
-import { getUserDataSession } from '~/utils/user-data.server'
 
 interface LoaderData {
   characters: Array<ITraveler | ICharacter>
@@ -22,9 +21,6 @@ export const loader: LoaderFunction = async ({
     failureRedirect: '/login',
   })
   invariant(typeof session.user?.id === 'string', 'This should never throw')
-
-  const userDataSession = await getUserDataSession(request)
-  console.log(userDataSession.get('userData'))
 
   const characters = await getCharacters()
 

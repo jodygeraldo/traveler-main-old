@@ -2,14 +2,14 @@ import { Entity, Repository, Schema } from 'redis-om'
 
 import { redisOmConnect } from '../redis.server'
 
-interface User {
+export interface User {
   id: string
-  data_ids: Array<{ data_id: string; value: string }>
+  data_ids: string[]
 }
 
-class User extends Entity {}
+export class User extends Entity {}
 
-const userSchema = new Schema(User, {
+export const userSchema = new Schema(User, {
   id: { type: 'string' },
   data_ids: { type: 'array' },
 })

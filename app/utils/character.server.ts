@@ -167,7 +167,7 @@ export async function addUserCharacterOwnership(name: string, userId: string) {
 
   const id = await repository.save(userCharacterOwnership)
 
-  await setUserData({ data_id: name, value: id }, userId)
+  await setUserData({ data_id: 'characterOwnership', value: id }, userId)
 
   return id
 }

@@ -1,7 +1,7 @@
 import {
   ActionFunction,
+  json,
   LoaderFunction,
-  redirect,
   useCatch,
   useLoaderData,
   useMatches,
@@ -22,66 +22,114 @@ import {
   getCharacters,
   getUserCharacter,
   removeUserCharacterOwnershipEntry,
+  setUserCharacter,
   setUserCharacterOwnership,
 } from '~/utils/character.server'
+import { getFormHackMessage } from '~/utils/message'
+import { User } from '~/utils/redis/redis-user-schema.server'
+import { getDataId, getUserData } from '~/utils/user.server'
+import { commitSession, getUserDataSession } from '~/utils/user-data.server'
 
 export const action: ActionFunction = async ({ request }) => {
+  const session = await supabaseStrategy.checkSession(request, {
+    failureRedirect: '/login',
+  })
+  invariant(typeof session.user?.id === 'string', 'This should never throw')
+  const userId = session.user.id
+
   const formData = await request.formData()
-  const $action = formData.get('_action')
-  const characterName = formData.get('name')
-  const characterOwnership = formData.get('owned')
-  const name = formData.get('name')
-  const level = formData.get('level')
-  const ascension = formData.get('ascension')
+  const _action = formData.get('_action')
+  const name = formData.get('character-name')
+  const level = formData.get('character-level')
+  const ascension = formData.get('character-ascension')
+  const ownership = formData.get('owned')
   const talentNormal = formData.get('talent-normal')
   const talentSkill = formData.get('talent-skill')
   const talentBurst = formData.get('talent-burst')
 
-  const user = {
-    id: 'user2',
-    // Todo get this from the session
-    ownershipDataId: '01FSHGGW48KBXHMW0TZ47CZK35',
-    characterDataId: '',
-  }
+  const userDataSession = await getUserDataSession(request)
+  const userDataIds = userDataSession.get('userData') as User['data_ids']
 
   invariant(
-    typeof $action === 'string',
+    typeof _action === 'string',
     "This is shouldn't happen if you don't hack the form",
   )
+  invariant(typeof name === 'string', getFormHackMessage())
 
-  switch ($action as CharacterActionTypeEnum) {
-    case CharacterActionTypeEnum.Ownership:
-      invariant(
-        typeof characterName === 'string',
-        'What you just did is not right',
-      )
-      invariant(
-        typeof characterOwnership === 'string',
-        'What you just did is not right',
-      )
-      if (characterOwnership === 'true') {
+  switch (_action as CharacterActionTypeEnum) {
+    case CharacterActionTypeEnum.Ownership: {
+      invariant(typeof ownership === 'string', getFormHackMessage())
+
+      const ownershipDataId = getDataId(userDataIds, 'characterOwnership')
+      if (ownership === 'true') {
         const id = await setUserCharacterOwnership(
-          characterName,
-          user.id,
-          user.ownershipDataId,
+          name,
+          userId,
+          ownershipDataId,
         )
 
         if (!id) {
-          return redirect(request.url)
+          return json(null, { status: 200 })
         }
 
-        // TODO: put ID in user session
-        return redirect(request.url, { headers: { 'Set-Cookie': '' } })
-      } else {
-        await removeUserCharacterOwnershipEntry(
-          characterName,
-          user.ownershipDataId,
-        )
-        return redirect(request.url)
+        const userData = await getUserData(session.user.id)
+        userDataSession.set('userData', userData)
+
+        return json(request.url, {
+          status: 201,
+          headers: { 'Set-Cookie': await commitSession(userDataSession) },
+        })
       }
 
+      // this is should have never happened unless data not synced properly with the database
+      // TODO: throw some error here IDK what for now
+      if (!ownershipDataId) {
+        return json(null, { status: 400 })
+      }
+
+      await removeUserCharacterOwnershipEntry(name, ownershipDataId)
+
+      return json(null, { status: 200 })
+    }
+    case CharacterActionTypeEnum.Munual: {
+      invariant(typeof level === 'string', getFormHackMessage())
+      invariant(typeof ascension === 'string', getFormHackMessage())
+      invariant(typeof talentNormal === 'string', getFormHackMessage())
+      invariant(typeof talentSkill === 'string', getFormHackMessage())
+      invariant(typeof talentBurst === 'string', getFormHackMessage())
+
+      const characterDataId = getDataId(userDataIds, name)
+
+      const talent: [number, number, number] = [
+        +talentNormal,
+        +talentSkill,
+        +talentBurst,
+      ]
+
+      const id = await setUserCharacter(
+        name,
+        +level,
+        +ascension,
+        talent,
+        session.user.id,
+        characterDataId,
+      )
+
+      if (!id) {
+        return json(null, { status: 200 })
+      }
+
+      const userData = await getUserData(session.user.id)
+      userDataSession.set('userData', userData)
+
+      return json(request.url, {
+        status: 201,
+        headers: { 'Set-Cookie': await commitSession(userDataSession) },
+      })
+    }
+
     default:
-      return null
+      return json(null, { status: 204 })
   }
 }
 
@@ -102,7 +150,7 @@ export const loader: LoaderFunction = async ({ request, params }) => {
     throw new Response('Character not found', { status: 404 })
   }
 
-  const characterData = await getUserCharacter(session.user.id, character.name)
+  const characterData = await getUserCharacter(character.name, session.user.id)
 
   // Todo get this from db
   const level = {

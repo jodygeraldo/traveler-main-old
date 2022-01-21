@@ -75,6 +75,9 @@ export const supabaseStrategy = new SupabaseStrategy(
         typeof sessionData.user?.id === 'string',
         'This should never throw',
       )
+      // sessionData.user.user_metadata = {
+      //   key: 'string'
+      // }
       await initUserData(sessionData.user.id)
 
       return data as Session

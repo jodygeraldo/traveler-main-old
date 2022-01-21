@@ -5,5 +5,5 @@ import { clearUserDataSession } from '~/utils/user-data.server'
 export const loader: LoaderFunction = async ({ request }) => {
   // it's fine i guess
   // eslint-disable-next-line
-  await clearUserDataSession(request)
+  return await clearUserDataSession(request)
 }

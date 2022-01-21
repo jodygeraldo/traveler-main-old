@@ -21,6 +21,7 @@ const TodoItem: FC<Props> = ({ todo, type }) => {
       {
         method: 'post',
         action: '/actions/todo-action',
+        replace: true,
       },
     )
   }

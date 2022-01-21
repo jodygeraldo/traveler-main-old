@@ -29,8 +29,8 @@ const CharacterView: FC<Props> = ({ character }) => {
     <div className="flex justify-between items-start">
       <h1 className="text-6xl">{character.name}</h1>
       {og7character.includes(character.name) ? null : (
-        <Form method="post">
-          <input type="hidden" name="name" value={character.name} />
+        <Form replace method="post">
+          <input type="hidden" name="character-name" value={character.name} />
           <input type="hidden" name="owned" value={`${!character.owned}`} />
           <button
             name="_action"

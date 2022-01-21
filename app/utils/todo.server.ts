@@ -5,7 +5,6 @@ import {
   setTodoTTL,
   updateTodoIndex,
 } from './redis/redis-todo-schema.server'
-import { getUserRepo } from './redis/redis-user-schema.server'
 import { setUserData } from './user.server'
 
 export async function getUserTodo(type: TodoTypeEnum, userId: string) {
@@ -41,17 +40,17 @@ export async function addUserTodo(
   const id = await repository.save(userTodo)
   await setTodoTTL(type, id, expire)
 
-  await setUserData({ data_id: type, value: id }, userId, type)
+  await setUserData({ data_id: type, value: id }, userId)
 
   return id
 }
 
 export async function setUserTodo(
   type: TodoTypeEnum,
-  dataId: string,
   userId: string,
   name: string,
   expire: number,
+  dataId = '',
 ) {
   const repository = await getTodoRepo(type)
 
@@ -62,17 +61,17 @@ export async function setUserTodo(
   }
 
   userTodo.complete.push(name)
-  const id = await repository.save(userTodo)
+  await repository.save(userTodo)
 
-  await setTodoTTL(type, id, expire)
-  return id
+  await setTodoTTL(type, dataId, expire)
+  return null
 }
 
 export async function removeUserTodoEntry(
   type: TodoTypeEnum,
-  dataId: string,
   name: string,
   expire: number,
+  dataId = '',
 ) {
   const repository = await getTodoRepo(type)
   const userTodo = await repository.fetch(dataId)
@@ -90,8 +89,8 @@ export async function removeUserTodoEntry(
   }
 
   userTodo.complete.splice(indexOfTodoName, 1)
-  const id = await repository.save(userTodo)
+  await repository.save(userTodo)
 
-  await setTodoTTL(type, id, expire)
-  return id
+  await setTodoTTL(type, dataId, expire)
+  return null
 }

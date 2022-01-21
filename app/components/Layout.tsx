@@ -100,7 +100,7 @@ export default function Layout({ children }: { children: ReactNode }) {
                         {item.name}
                       </NavLink>
                     ))}
-                    <Form method="post" action="/logout">
+                    <Form replace method="post" action="/logout">
                       <button
                         type="submit"
                         className="text-primary-300 hover:bg-primary-700 hover:text-white group flex items-center px-2 py-2 text-sm font-medium rounded-md"

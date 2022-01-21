@@ -11,8 +11,8 @@ export const loader: LoaderFunction = async ({ request }) => {
   })
 
   invariant(typeof session.user?.id === 'string', 'This should never throw')
-  const userData = await getUserData(session.user.id)
   const userDataSession = await getUserDataSession(request)
+  const userData = await getUserData(session.user.id)
   userDataSession.set('userData', userData)
 
   return redirect('/', {

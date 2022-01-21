@@ -24,7 +24,8 @@ export async function parseStringFormData<T>(
   const obj: { [key: string]: string | undefined } = {}
   for (const [key, val] of formData.entries()) {
     invariant(typeof val === 'string', `expected string in for ${key}`)
-    obj[key] = val
+    // if key is kebab case change it to camel case
+    obj[key.replace(/-([a-z])/g, (_, g) => (g as string).toUpperCase())] = val
   }
   return obj
 }

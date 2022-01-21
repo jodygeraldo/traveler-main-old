@@ -16,7 +16,7 @@ interface Props {
 
 const CharacterLevelManual: FC<Props> = ({ level, name }) => {
   return (
-    <Form method="post">
+    <Form replace method="post">
       <div className="grid grid-cols-6 gap-4">
         <input type="hidden" name="character-name" value={name} />
         <div className="col-span-3">
