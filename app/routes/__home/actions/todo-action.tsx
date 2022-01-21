@@ -28,7 +28,7 @@ export const action: ActionFunction = async ({ request }) => {
 
   const user = {
     id: session.user.id,
-    region: 'AS' as 'EU' | 'NA' | 'AS',
+    region: session.user.user_metadata.server as 'EU' | 'NA' | 'AS' | undefined,
   }
   const userDataSession = await getUserDataSession(request)
   const userDataIds = userDataSession.get('userData') as User['data_ids']

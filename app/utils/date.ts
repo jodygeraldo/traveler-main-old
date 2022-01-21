@@ -5,7 +5,7 @@ import { DayOfWeek } from '~/types/farmable'
 
 type Region = 'EU' | 'NA' | 'AS'
 
-function getCurrentTime(region: Region) {
+function getCurrentTime(region: Region = 'AS') {
   const regionTz: Record<Region, string> = {
     NA: 'EST',
     EU: 'CET',
@@ -15,7 +15,7 @@ function getCurrentTime(region: Region) {
   return utcToZonedTime(new Date(), regionTz[region])
 }
 
-export function getDailyResetTime(region: Region) {
+export function getDailyResetTime(region: Region = 'AS') {
   const time = getCurrentTime(region)
   const nextReset = set(time, {
     hours: 4,
@@ -30,7 +30,7 @@ export function getDailyResetTime(region: Region) {
   return diffSec
 }
 
-export function getWeeklyResetTime(region: Region) {
+export function getWeeklyResetTime(region: Region = 'AS') {
   const time = getCurrentTime(region)
   const nextMondayTime = nextMonday(time)
   const nextReset = set(nextMondayTime, {
@@ -46,7 +46,7 @@ export function getWeeklyResetTime(region: Region) {
   return diffSec
 }
 
-export function getCurrentDay(region: Region) {
+export function getCurrentDay(region: Region = 'AS') {
   const time = getCurrentTime(region)
 
   const day = getDay(time)

@@ -30,7 +30,7 @@ export const supabaseStrategy = new SupabaseStrategy(
 
   async ({ req, supabaseClient }) => {
     const form = await req.formData()
-    const $action = form.get('_action')
+    const _action = form.get('_action')
     const email = form.get('email')
     const password = form.get('password')
 
@@ -49,7 +49,7 @@ export const supabaseStrategy = new SupabaseStrategy(
       )
     }
 
-    if ($action === 'login') {
+    if (_action === 'login') {
       const { data, error } = await supabaseClient.auth.api.signInWithEmail(
         email,
         password,
@@ -60,28 +60,32 @@ export const supabaseStrategy = new SupabaseStrategy(
       }
 
       return data
-    } else {
-      const { data, error } = await supabaseClient.auth.api.signUpWithEmail(
-        email,
-        password,
-      )
-
-      if (error || !data) {
-        throw new AuthorizationError(error?.message ?? '')
-      }
-
-      const sessionData = data as Session
-      invariant(
-        typeof sessionData.user?.id === 'string',
-        'This should never throw',
-      )
-      // sessionData.user.user_metadata = {
-      //   key: 'string'
-      // }
-      await initUserData(sessionData.user.id)
-
-      return data as Session
     }
+
+    const server = form.get('server')
+    if (typeof server !== 'string') {
+      throw new AuthorizationError('Server not selected correctly')
+    }
+
+    const { data, error } = await supabaseClient.auth.api.signUpWithEmail(
+      email,
+      password,
+      { data: { server } },
+    )
+
+    if (error || !data) {
+      throw new AuthorizationError(error?.message ?? '')
+    }
+
+    const sessionData = data as Session
+    invariant(
+      typeof sessionData.user?.id === 'string',
+      'This should never throw',
+    )
+
+    await initUserData(sessionData.user.id)
+
+    return data as Session
   },
 )
 

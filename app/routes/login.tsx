@@ -59,16 +59,11 @@ export default function LoginPage() {
           <label htmlFor="password">Password</label>
           <input type="password" name="password" id="password" />
         </div>
-      </fieldset>
 
-      <button
-        type="submit"
-        name="_action"
-        value="login"
-        disabled={transition.state === 'submitting'}
-      >
-        {transition.state === 'submitting' ? 'Sign you in...' : 'Login'}
-      </button>
+        <button type="submit" name="_action" value="login">
+          {transition.state === 'submitting' ? 'Sign you in...' : 'Login'}
+        </button>
+      </fieldset>
     </Form>
   )
 }

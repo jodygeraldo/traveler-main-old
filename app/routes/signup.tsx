@@ -59,18 +59,32 @@ export default function SignupPage() {
           <label htmlFor="password">Password</label>
           <input type="password" name="password" id="password" />
         </div>
-      </fieldset>
 
-      <button
-        type="submit"
-        name="_action"
-        value="signup"
-        disabled={transition.state === 'submitting'}
-      >
-        {transition.state === 'submitting'
-          ? 'Creating your account...'
-          : 'Sign Up'}
-      </button>
+        <div>
+          <label
+            htmlFor="server"
+            className="block text-sm font-medium text-gray-700"
+          >
+            Server
+          </label>
+          <select
+            id="server"
+            name="server"
+            className="mt-1 block w-full pl-3 pr-10 py-2 text-base border-gray-300 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm rounded-md"
+            defaultValue="Canada"
+          >
+            <option value="AS">Asia</option>
+            <option value="NA">America</option>
+            <option value="EU">Europe</option>
+          </select>
+        </div>
+
+        <button type="submit" name="_action" value="signup">
+          {transition.state === 'submitting'
+            ? 'Creating your account...'
+            : 'Sign Up'}
+        </button>
+      </fieldset>
     </Form>
   )
 }
