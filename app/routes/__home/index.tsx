@@ -2,6 +2,7 @@ import { LoaderFunction, useLoaderData } from 'remix'
 import invariant from 'tiny-invariant'
 
 import TodoList from '~/components/Todo/TodoList'
+import { getItems } from '~/data/items'
 import type { ITodo } from '~/types/todo'
 import { TodoTypeEnum } from '~/types/todo'
 import { supabaseStrategy } from '~/utils/auth.server'

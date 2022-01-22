@@ -4,6 +4,7 @@ import type { FC } from 'react'
 import { NavLink } from 'remix'
 
 import type { ICharacter, ITraveler } from '~/types/character'
+import { stringToLowerSnake } from '~/utils/string'
 
 interface Props {
   character: ITraveler | ICharacter
@@ -43,7 +44,7 @@ const CharacterItem: FC<Props> = ({ character }) => {
       className={({ isActive }) =>
         clsx(
           'flex flex-1 flex-col rounded transition-all',
-          !character.owned && 'opacity-50',
+          !character.own && 'opacity-50',
           hoverRingColor[character.rarity],
           isActive && ringColor[character.rarity],
         )
@@ -59,8 +60,10 @@ const CharacterItem: FC<Props> = ({ character }) => {
           whileHover={{ scale: 1.05 }}
           whileTap={{ scale: 0.95 }}
           className="w-full h-full"
-          src={`../assets/images/characters/${character.image.close}`}
-          alt=""
+          src={`../assets/images/characters/close/${stringToLowerSnake(
+            character.name,
+          )}.png`}
+          alt={`${character.name} image`}
         />
       </div>
       <div className="bg-primary-400 rounded-b-md py-1">

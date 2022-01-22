@@ -1,4 +1,5 @@
 import type { FC } from 'react'
+import invariant from 'tiny-invariant'
 
 import { ICharacter, ITraveler } from '~/types/character'
 
@@ -9,6 +10,11 @@ interface Props {
 const travelerTalent: ['anemo', 'geo', 'electro'] = ['anemo', 'geo', 'electro']
 
 const CharacterLevelTalentManual: FC<Props> = ({ level }) => {
+  invariant(
+    level,
+    'This should never happen, unless I forget to pass the level',
+  )
+
   return (
     <div className="space-y-4">
       <h2 className="text-primary-500 text-2xl">Talent</h2>
@@ -79,7 +85,9 @@ const CharacterLevelTalentManual: FC<Props> = ({ level }) => {
                     id={`${type}-talent-normal`}
                     className="shadow-sm focus:ring-primary-500 focus:border-primary-500 block w-full sm:text-sm border-primary-300 rounded-md bg-primary-600"
                     defaultValue={
-                      (level.talent as ITraveler['level']['talent'])[type][0]
+                      Array.isArray(level.talent)
+                        ? undefined
+                        : `${level.talent[type][0]}`
                     }
                     min={1}
                     max={10}
@@ -98,7 +106,9 @@ const CharacterLevelTalentManual: FC<Props> = ({ level }) => {
                     id={`${type}-talent-skill`}
                     className="shadow-sm focus:ring-primary-500 focus:border-primary-500 block w-full sm:text-sm border-primary-300 rounded-md bg-primary-600"
                     defaultValue={
-                      (level.talent as ITraveler['level']['talent'])[type][1]
+                      Array.isArray(level.talent)
+                        ? undefined
+                        : `${level.talent[type][1]}`
                     }
                     min={1}
                     max={13}
@@ -117,7 +127,9 @@ const CharacterLevelTalentManual: FC<Props> = ({ level }) => {
                     id={`${type}-talent-burst`}
                     className="shadow-sm focus:ring-primary-500 focus:border-primary-500 block w-full sm:text-sm border-primary-300 rounded-md bg-primary-600"
                     defaultValue={
-                      (level.talent as ITraveler['level']['talent'])[type][2]
+                      Array.isArray(level.talent)
+                        ? undefined
+                        : `${level.talent[type][2]}`
                     }
                     min={1}
                     max={13}

@@ -1,20 +1,14 @@
 import { useEffect } from 'react'
-import {
-  ActionFunction,
-  LoaderFunction,
-  Outlet,
-  useLoaderData,
-  useSubmit,
-} from 'remix'
+import { json, LoaderFunction, Outlet, useLoaderData, useSubmit } from 'remix'
+import invariant from 'tiny-invariant'
 
 import FarmableCard from '~/components/Farmable/FarmableCard'
-import TodoList from '~/components/Todo/TodoList'
 import Tabs from '~/components/UI/Tabs'
-import type { IFarmable } from '~/types/farmable'
+import { farmable, getFarmables } from '~/data/farmable.server'
+import { FarmableType, FarmDayTypeEnum } from '~/types/farmable'
 import type { ITab } from '~/types/global'
-import type { ITodo } from '~/types/todo'
+import { supabaseStrategy } from '~/utils/auth.server'
 import { getCurrentDay, getDailyResetTime } from '~/utils/date'
-import { getFarmable, getFileName } from '~/utils/farmable.server'
 
 const tabs: ITab[] = [
   {
@@ -36,19 +30,52 @@ const tabs: ITab[] = [
 
 type LoaderData = {
   timeUntilReset: number
-  farmable: IFarmable
+  todayFarmable: FarmableType
 }
-export const loader: LoaderFunction = async (): Promise<LoaderData> => {
-  const day = getCurrentDay('AS')
+export const loader: LoaderFunction = async ({ request }) => {
+  const session = await supabaseStrategy.checkSession(request, {
+    failureRedirect: '/login',
+  })
+  invariant(typeof session.user?.id === 'string', 'This should never throw')
+  const region = session.user.user_metadata.server as
+    | 'EU'
+    | 'NA'
+    | 'AS'
+    | undefined
 
-  return {
-    farmable: await getFarmable(getFileName(day)),
-    timeUntilReset: getDailyResetTime('AS') * 1000,
+  const day = getCurrentDay(region)
+
+  let todayFarmable: FarmableType | undefined
+
+  switch (day) {
+    case 'Monday':
+    case 'Thursday':
+      todayFarmable = farmable.get(FarmDayTypeEnum.MT)
+      break
+    case 'Tuesday':
+    case 'Friday':
+      todayFarmable = farmable.get(FarmDayTypeEnum.TF)
+      break
+    case 'Wednesday':
+    case 'Saturday':
+      todayFarmable = farmable.get(FarmDayTypeEnum.WS)
+      break
+    default:
+      return json<LoaderData>({
+        todayFarmable: getFarmables(),
+        timeUntilReset: getDailyResetTime('AS') * 1000,
+      })
   }
+  invariant(todayFarmable, 'This should never throw')
+
+  return json<LoaderData>({
+    todayFarmable,
+    timeUntilReset: getDailyResetTime('AS') * 1000,
+  })
 }
 
 export default function Index() {
-  const { farmable, timeUntilReset } = useLoaderData<LoaderData>()
+  const { todayFarmable, timeUntilReset } = useLoaderData<LoaderData>()
   const submit = useSubmit()
 
   useEffect(() => {
@@ -65,8 +92,7 @@ export default function Index() {
         <Tabs tabs={tabs} />
         <Outlet />
       </div>
-      <FarmableCard farmable={farmable} />
-      {/* <TodoList todos={todos} /> */}
+      <FarmableCard farmable={todayFarmable} />
     </div>
   )
 }

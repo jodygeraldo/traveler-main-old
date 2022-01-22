@@ -3,12 +3,10 @@ import { Outlet, useLoaderData } from 'remix'
 import invariant from 'tiny-invariant'
 
 import CharacterList from '~/components/Character/CharacterList'
+import { getCharacters } from '~/data/characters.server'
 import type { ICharacter, ITraveler } from '~/types/character'
 import { supabaseStrategy } from '~/utils/auth.server'
-import {
-  getCharacters,
-  getUserCharacterOwnership,
-} from '~/utils/character.server'
+import { getUserCharacterOwnership } from '~/utils/character.server'
 
 interface LoaderData {
   characters: Array<ITraveler | ICharacter>
@@ -22,14 +20,14 @@ export const loader: LoaderFunction = async ({
   })
   invariant(typeof session.user?.id === 'string', 'This should never throw')
 
-  const characters = await getCharacters()
+  const characters = getCharacters()
 
   const characterOwnership = await getUserCharacterOwnership(session.user.id)
   if (!characterOwnership) return { characters }
 
   const updatedCharaters = characters.map(character => {
     if (characterOwnership.includes(character.name)) {
-      character.owned = true
+      character.own = true
     }
     return character
   })

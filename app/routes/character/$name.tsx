@@ -4,7 +4,6 @@ import {
   LoaderFunction,
   useCatch,
   useLoaderData,
-  useMatches,
   useParams,
 } from 'remix'
 import invariant from 'tiny-invariant'
@@ -12,14 +11,15 @@ import invariant from 'tiny-invariant'
 import CharacterLevel from '~/components/Character/CharacterLevel/CharacterLevel'
 import CharacterLevelManual from '~/components/Character/CharacterLevel/CharacterLevelManual/CharacterLevelManual'
 import CharacterView from '~/components/Character/CharacterView'
+import { characters } from '~/data/characters.server'
 import {
   CharacterActionTypeEnum,
+  CharacterName,
   ICharacter,
   ITraveler,
 } from '~/types/character'
 import { supabaseStrategy } from '~/utils/auth.server'
 import {
-  getCharacters,
   getUserCharacter,
   removeUserCharacterOwnershipEntry,
   setUserCharacter,
@@ -27,6 +27,7 @@ import {
 } from '~/utils/character.server'
 import { getFormHackMessage } from '~/utils/message'
 import { User } from '~/utils/redis/redis-user-schema.server'
+import { stringToCapitalized, stringToLowerSnake } from '~/utils/string'
 import { getDataId, getUserData } from '~/utils/user.server'
 import { commitSession, getUserDataSession } from '~/utils/user-data.server'
 
@@ -134,6 +135,7 @@ export const action: ActionFunction = async ({ request }) => {
 }
 
 type LoaderData = {
+  character: ICharacter | ITraveler
   level: ICharacter['level']
 }
 export const loader: LoaderFunction = async ({ request, params }) => {
@@ -143,61 +145,58 @@ export const loader: LoaderFunction = async ({ request, params }) => {
   invariant(typeof session.user?.id === 'string', 'This should never throw')
 
   const { name } = params
-  const character = (await getCharacters()).find(
-    c => c.path.replace('/', '') === name,
-  )
+  invariant(typeof name === 'string', 'params is empty')
+  const character = characters.get(stringToCapitalized(name) as CharacterName)
   if (!character) {
     throw new Response('Character not found', { status: 404 })
   }
 
   const characterData = await getUserCharacter(character.name, session.user.id)
 
-  // Todo get this from db
-  const level = {
-    character: 1,
-    ascension: 0,
-    talent: [1, 1, 1],
+  if (!characterData) {
+    return json<LoaderData>({
+      character,
+      level: {
+        character: 1,
+        ascension: 0,
+        talent: [1, 1, 1],
+      },
+    })
   }
 
-  if (!characterData) return { level }
-
-  return {
+  return json<LoaderData>({
+    character,
     level: {
       character: characterData.level,
       ascension: characterData.ascension,
       talent: characterData.talent,
     },
-  }
+  })
 }
 
 export default function CharacterRoute() {
-  const { level } = useLoaderData<LoaderData>()
-  const characters = useMatches().find(m => m.pathname === '/character')?.data
-    .characters as Array<ITraveler | ICharacter>
-
-  const params = useParams()
-  const character = characters.find(
-    c => c.path.replace('/', '') === params.name,
-  )
-  if (!character) {
-    throw new Error('This should not ever thrown')
-  }
+  const { character, level } = useLoaderData<LoaderData>()
 
   return (
     <div>
       <CharacterView character={character} />
       {/* Should hide this until characters is owned */}
-      {character.owned ? (
+      {character.own ? (
         <>
           <CharacterLevelManual level={level} name={character.name} />
           <CharacterLevel level={level} name={character.name} />
         </>
       ) : null}
-      <img src={`../assets/images/characters/${character.image.full}`} alt="" />
       <img
+        src={`../assets/images/characters/full/${stringToLowerSnake(
+          character.name,
+        )}.png`}
+        alt={`${character.name} potrait`}
+      />
+      {/* <img
         src={`../assets/images/elements/${character.vision.toLowerCase()}.png`}
         alt="Pyro Vision"
-      />
+      /> */}
       <img
         src={`../assets/images/weapon_types/${character.weapon_type.toLowerCase()}.png`}
         alt="Sword Weapon Type"

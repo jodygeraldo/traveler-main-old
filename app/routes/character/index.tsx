@@ -4,13 +4,10 @@ import invariant from 'tiny-invariant'
 import CharacterLevel from '~/components/Character/CharacterLevel/CharacterLevel'
 import CharacterLevelManual from '~/components/Character/CharacterLevel/CharacterLevelManual/CharacterLevelManual'
 import CharacterView from '~/components/Character/CharacterView'
+import { characters } from '~/data/characters.server'
 import { CharacterActionTypeEnum, ITraveler } from '~/types/character'
 import { supabaseStrategy } from '~/utils/auth.server'
-import {
-  getCharacter,
-  getUserCharacter,
-  setUserCharacter,
-} from '~/utils/character.server'
+import { getUserCharacter, setUserCharacter } from '~/utils/character.server'
 import { parseStringFormData } from '~/utils/http'
 import type { User } from '~/utils/redis/redis-user-schema.server'
 import { getDataId, getUserData } from '~/utils/user.server'
@@ -105,7 +102,8 @@ export const loader: LoaderFunction = async ({ request }) => {
   })
   invariant(typeof session.user?.id === 'string', 'This should never throw')
 
-  const character = await getCharacter('traveler')
+  const character = characters.get('Traveler')
+  invariant(character, 'This should never throw')
 
   character.level = {
     character: 1,
@@ -149,12 +147,12 @@ export default function CharacterDefaultRoute() {
 
       <div className="flex">
         <img
-          src={`../assets/images/characters/${character.image.full}`}
-          alt=""
+          src={`../assets/images/characters/full/traveler_male.png`}
+          alt="Aether image"
         />
         <img
-          src={`../assets/images/characters/${character.image.fullFemale}`}
-          alt=""
+          src={`../assets/images/characters/full/traveler_female.png`}
+          alt="Lumine image"
         />
       </div>
 

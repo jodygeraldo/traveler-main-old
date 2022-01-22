@@ -1,8 +1,10 @@
 import type { FC } from 'react'
 import { Form } from 'remix'
+import invariant from 'tiny-invariant'
 
 import {
   CharacterActionTypeEnum,
+  CharacterName,
   ICharacter,
   ITraveler,
 } from '~/types/character'
@@ -11,10 +13,15 @@ import CharacterLevelTalentManual from './CharacterLevelTalentManual'
 
 interface Props {
   level: ITraveler['level'] | ICharacter['level']
-  name: ITraveler['name'] | ICharacter['name']
+  name: CharacterName
 }
 
 const CharacterLevelManual: FC<Props> = ({ level, name }) => {
+  invariant(
+    level,
+    'This should never happen, unless I forget to pass the level',
+  )
+
   return (
     <Form replace method="post">
       <div className="grid grid-cols-6 gap-4">

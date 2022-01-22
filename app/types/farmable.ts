@@ -10,19 +10,15 @@ export type DayOfWeek =
   | 'Friday'
   | 'Saturday'
 
-export interface IFarmableItem {
-  name: TalentBook
-  image: string
-  characters: Array<{
-    name: CharacterName
-    image: string
-  }>
+export enum FarmDayTypeEnum {
+  MT = 'MondayThursday',
+  TF = 'TuesdayFriday',
+  WS = 'WednesdaySaturday',
 }
 
-export interface IFarmable {
-  days:
-    | ['Sunday', 'Monday', 'Thursday']
-    | ['Sunday', 'Tuesday', 'Friday']
-    | ['Sunday', 'Wednesday', 'Saturday']
-  talent_book: Array<IFarmableItem>
+export type FarmableItemType = {
+  name: TalentBook
+  characters: CharacterName[]
 }
+
+export type FarmableType = FarmableItemType[]

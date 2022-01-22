@@ -1,11 +1,11 @@
 import type { FC } from 'react'
 
-import { IFarmable } from '~/types/farmable'
+import { FarmableType } from '~/types/farmable'
 
 import FarmableList from './FarmableList'
 
 interface Props {
-  farmable: IFarmable
+  farmable: FarmableType
 }
 
 const FarmableCard: FC<Props> = ({ farmable }) => {

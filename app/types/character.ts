@@ -74,10 +74,6 @@ export interface ICharacter {
   vision: Vision
   rarity: 4 | 5 | 'aloy'
   weapon_type: WeaponType
-  image: {
-    close: string
-    full: string
-  }
   materials: {
     talent: {
       book: TalentBook
@@ -91,8 +87,8 @@ export interface ICharacter {
     }
   }
   path: string
-  owned: boolean
-  level: {
+  own: boolean
+  level?: {
     character: number
     ascension: number
     talent: [number, number, number]
@@ -101,25 +97,20 @@ export interface ICharacter {
 
 export interface ITraveler {
   name: 'Traveler'
-  vision: Vision
+  vision: Vision[]
   rarity: 5
   weapon_type: WeaponType
-  image: {
-    close: string
-    full: string
-    fullFemale: string
-  }
   materials: {
     talent: {
-      Anemo: {
+      anemo: {
         book: 'Freedom'
         boss: "Dvalin's Sigh"
       }
-      Geo: {
+      geo: {
         book: 'Prosperity'
         boss: 'Tail of Boreas'
       }
-      Electro: {
+      electro: {
         book: 'Transience'
         boss: "Dragon Lord's Crown"
       }
@@ -131,8 +122,8 @@ export interface ITraveler {
     }
   }
   path: string
-  owned: boolean
-  level: {
+  own: boolean
+  level?: {
     character: number
     ascension: number
     talent: {

@@ -1,3 +1,5 @@
+import { GenshinRegion } from './general'
+
 export type TalentBook =
   | 'Freedom'
   | 'Prosperity'
@@ -98,3 +100,82 @@ export type AscensionCommonMaterial =
   | 'Sentinel Chaos Parts'
   | 'Prisms'
   | 'Concealed Rifthound Claws'
+
+export type ItemCategory =
+  | 'TalentCrown'
+  | 'TalentBook'
+  | 'TalentBossMaterial'
+  | 'AscensionGem'
+  | 'AscensionBossMaterial'
+  | 'LocalSpecialty'
+  | 'AscensionCommonMaterial'
+
+export interface ITalentCrown {
+  id: number
+  name: 'Crown of Insight'
+}
+
+export interface ITalentBook {
+  id: number
+  name: TalentBook
+  region: GenshinRegion
+}
+
+export interface ITalentBossMaterial {
+  id: number
+  name: TalentBossMaterial
+  region: GenshinRegion
+}
+
+export interface IAscensionGem {
+  id: number
+  name: AscensionGem
+}
+
+export interface IAscensionBossMaterial {
+  id: number
+  name: AscensionBossMaterial
+  region: GenshinRegion
+}
+
+export interface IAscensionCommonMaterial {
+  id: number
+  name: AscensionCommonMaterial
+  isElite: boolean
+}
+
+export interface ILocalSpecialty {
+  id: number
+  name: LocalSpecialty
+  region: GenshinRegion
+}
+
+export type ItemType =
+  | {
+      name: 'Crown of Insight'
+      material: ITalentCrown[]
+    }
+  | {
+      name: 'Talent Book'
+      material: ITalentBook[]
+    }
+  | {
+      name: 'Talent Boss Material'
+      material: ITalentBossMaterial[]
+    }
+  | {
+      name: 'Ascension Gem'
+      material: IAscensionGem[]
+    }
+  | {
+      name: 'Ascension Boss Material'
+      material: IAscensionBossMaterial[]
+    }
+  | {
+      name: 'Local Specialty'
+      material: ILocalSpecialty[]
+    }
+  | {
+      name: 'Ascension Common Material'
+      material: IAscensionCommonMaterial[]
+    }

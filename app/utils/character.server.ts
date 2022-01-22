@@ -1,44 +1,10 @@
-import fs from 'fs/promises'
-import path from 'path'
-
-import type { ICharacter, ITraveler } from '~/types/character'
-
 import {
   getCharacterOwnershipRepo,
   getCharacterRepo,
   updateCharacterIndex,
   updateCharacterOwnershipIndex,
 } from './redis/redis-character-schema.server'
-import { getUserRepo } from './redis/redis-user-schema.server'
 import { setUserData } from './user.server'
-
-/*
- * CHARACTER JSON READ FUNCTIONS *
- */
-const charactersPath = path.join(__dirname, '../app/data/character')
-
-export async function getCharacter(
-  name: string,
-): Promise<ICharacter | ITraveler> {
-  const filepath = path.join(charactersPath, `${name}.json`)
-  const data = await fs.readFile(filepath, 'utf8')
-  const character = JSON.parse(data) as ICharacter
-  return character
-}
-
-export async function getCharacters(): Promise<Array<ITraveler | ICharacter>> {
-  const files = await fs.readdir(charactersPath)
-  const filesWithoutExtension = files.map(file => file.replace('.json', ''))
-  const characters = await Promise.all(filesWithoutExtension.map(getCharacter))
-  return characters
-}
-
-// export async function getCharactersRedis() {
-//   const client = await redisConnect()
-//   const characters = await client.json.get('characters')
-//   await redisQuit()
-//   return characters
-// }
 
 /*
  * CHARACTER FUNCTIONS *

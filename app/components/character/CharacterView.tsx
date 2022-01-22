@@ -31,7 +31,7 @@ const CharacterView: FC<Props> = ({ character }) => {
       {og7character.includes(character.name) ? null : (
         <Form replace method="post">
           <input type="hidden" name="character-name" value={character.name} />
-          <input type="hidden" name="owned" value={`${!character.owned}`} />
+          <input type="hidden" name="owned" value={`${!character.own}`} />
           <button
             name="_action"
             value={CharacterActionTypeEnum.Ownership}
@@ -39,7 +39,7 @@ const CharacterView: FC<Props> = ({ character }) => {
           >
             {transition.submission
               ? 'Saving...'
-              : character.owned
+              : character.own
               ? 'Mark as Unowned'
               : 'Mark as Owned'}
           </button>

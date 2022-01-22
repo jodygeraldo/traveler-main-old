@@ -1,17 +1,17 @@
 import type { FC } from 'react'
 
-import { IFarmable } from '~/types/farmable'
+import { FarmableType } from '~/types/farmable'
 
 import FarmableItem from './FarmableItem'
 
 interface Props {
-  farmable: IFarmable
+  farmable: FarmableType
 }
 
 const FarmableList: FC<Props> = ({ farmable }) => {
   return (
     <ul role="list" className="divide-y divide-gray-200">
-      {farmable.talent_book.map(item => (
+      {farmable.map(item => (
         <FarmableItem key={item.name} item={item} />
       ))}
     </ul>
