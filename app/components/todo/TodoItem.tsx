@@ -20,13 +20,13 @@ const TodoItem: FC<Props> = ({ todo, type }) => {
       },
       {
         method: 'post',
-        action: '/actions/todo-action',
+        action: '/toggle',
         replace: true,
       },
     )
   }
   return (
-    <fetcher.Form className="relative flex items-start">
+    <div className="relative flex items-start">
       <div className="flex items-center h-5">
         <input
           onChange={handleCheckboxChange}
@@ -56,7 +56,7 @@ const TodoItem: FC<Props> = ({ todo, type }) => {
           </p>
         )}
       </div>
-    </fetcher.Form>
+    </div>
   )
 }
 

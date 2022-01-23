@@ -2,7 +2,7 @@ export interface ITodo {
   title: string
   description: string
   link?: string
-  completed: boolean
+  completed?: boolean
 }
 
 export enum TodoTypeEnum {

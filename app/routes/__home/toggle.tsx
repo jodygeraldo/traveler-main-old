@@ -1,35 +1,28 @@
-import { ActionFunction, json } from 'remix'
-import invariant from 'tiny-invariant'
+import type { ActionFunction } from 'remix'
+import { json } from 'remix'
 
 import { TodoTypeEnum } from '~/types/todo'
-import { supabaseStrategy } from '~/utils/auth.server'
+import { requireUserSession } from '~/utils/auth.server'
+import type { Region } from '~/utils/date'
 import { getDailyResetTime } from '~/utils/date'
 import { parseStringFormData } from '~/utils/http'
-import { User } from '~/utils/redis/redis-user-schema.server'
+import type { User } from '~/utils/redis/redis-user-schema.server'
 import { removeUserTodoEntry, setUserTodo } from '~/utils/todo.server'
 import { getDataId, getUserData } from '~/utils/user.server'
 import { commitSession, getUserDataSession } from '~/utils/user-data.server'
 
 export const action: ActionFunction = async ({ request }) => {
-  const session = await supabaseStrategy.checkSession(request, {
-    failureRedirect: '/login',
-  })
-  invariant(typeof session.user?.id === 'string', 'This should never throw')
+  const user = await requireUserSession(request)
+  const { _action, name, status } = (await parseStringFormData(
+    request,
+  )) as TodoFormData
 
-  interface formPostData {
+  interface TodoFormData {
     _action: TodoTypeEnum
     name: string
     status: string
   }
 
-  const { _action, name, status } = (await parseStringFormData(
-    request,
-  )) as formPostData
-
-  const user = {
-    id: session.user.id,
-    region: session.user.user_metadata.server as 'EU' | 'NA' | 'AS' | undefined,
-  }
   const userDataSession = await getUserDataSession(request)
   const userDataIds = userDataSession.get('userData') as User['data_ids']
   const todoDataId: Record<TodoTypeEnum, string | undefined> = {
@@ -37,8 +30,7 @@ export const action: ActionFunction = async ({ request }) => {
     WEEKLY: getDataId(userDataIds, TodoTypeEnum.Weekly),
     OTHERS: getDataId(userDataIds, TodoTypeEnum.Others),
   }
-
-  const timeUntilReset = getDailyResetTime(user.region)
+  const timeUntilReset = getDailyResetTime(user.user_metadata.server as Region)
 
   if (status === 'true') {
     const id = await setUserTodo(
@@ -53,7 +45,7 @@ export const action: ActionFunction = async ({ request }) => {
       return json(null, { status: 200 })
     }
 
-    const userData = await getUserData(session.user.id)
+    const userData = await getUserData(user.id)
     userDataSession.set('userData', userData)
 
     return json(request.url, {

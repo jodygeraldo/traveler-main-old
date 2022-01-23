@@ -24,7 +24,7 @@ export async function getUserTodo(type: TodoTypeEnum, userId: string) {
   return userTodos.complete
 }
 
-export async function addUserTodo(
+async function addUserTodo(
   type: TodoTypeEnum,
   name: string,
   expire: number,

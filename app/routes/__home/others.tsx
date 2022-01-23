@@ -1,59 +1,38 @@
-import { LoaderFunction, useLoaderData } from 'remix'
+import type { LoaderFunction } from 'remix'
+import { json, useLoaderData } from 'remix'
 import invariant from 'tiny-invariant'
 
 import TodoList from '~/components/Todo/TodoList'
+import { todos } from '~/data/todos.server'
 import type { ITodo } from '~/types/todo'
 import { TodoTypeEnum } from '~/types/todo'
-import { supabaseStrategy } from '~/utils/auth.server'
+import { requireUserSession } from '~/utils/auth.server'
 import { getUserTodo } from '~/utils/todo.server'
 
-type LoaderData = {
-  todos: ITodo[]
-}
-export const loader: LoaderFunction = async ({
-  request,
-}): Promise<LoaderData> => {
-  const session = await supabaseStrategy.checkSession(request, {
-    failureRedirect: '/login',
-  })
-  invariant(typeof session.user?.id === 'string', 'This should never throw')
+export const loader: LoaderFunction = async ({ request }) => {
+  const user = await requireUserSession(request)
 
-  const todos: ITodo[] = [
-    {
-      title: 'Spiral Abbys',
-      description: 'Spiral Abbys description',
-      completed: false,
-    },
-    {
-      title: 'Events',
-      description: 'Events description',
-      completed: false,
-    },
-    {
-      title: 'Teapot Garden(?)',
-      description: 'Teapot Garden(?) description',
-      completed: false,
-    },
-  ]
+  const todo = todos.get(TodoTypeEnum.Others)
+  invariant(todo, 'This should never throw')
 
-  const todoCompletion = await getUserTodo(TodoTypeEnum.Others, session.user.id)
+  const todoCompletion = await getUserTodo(TodoTypeEnum.Others, user.id)
 
-  if (!todoCompletion) return { todos }
+  if (!todoCompletion) return json<ITodo[]>(todo)
 
-  const updatedTodo = todos.map(todo => {
-    if (todoCompletion.includes(todo.title)) {
-      todo.completed = true
+  const updatedTodo = todo.map(t => {
+    if (todoCompletion.includes(t.title)) {
+      t.completed = true
     }
-    return todo
+    return t
   })
 
-  return { todos: updatedTodo }
+  return json<ITodo[]>(updatedTodo)
 }
 
 export default function OthersRoute() {
-  const { todos } = useLoaderData<LoaderData>()
+  const todo = useLoaderData<ITodo[]>()
 
   return (
-    <TodoList heading="others todos" todos={todos} type={TodoTypeEnum.Others} />
+    <TodoList heading="others todos" todos={todo} type={TodoTypeEnum.Others} />
   )
 }

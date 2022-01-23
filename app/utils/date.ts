@@ -3,7 +3,7 @@ import { getTimezoneOffset, utcToZonedTime, zonedTimeToUtc } from 'date-fns-tz'
 
 import { DayOfWeek } from '~/types/farmable'
 
-type Region = 'EU' | 'NA' | 'AS'
+export type Region = 'EU' | 'NA' | 'AS'
 
 function getCurrentTime(region: Region = 'AS') {
   const regionTz: Record<Region, string> = {

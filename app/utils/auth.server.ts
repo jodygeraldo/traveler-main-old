@@ -3,13 +3,11 @@ import { Authenticator, AuthorizationError } from 'remix-auth'
 import { SupabaseStrategy } from 'remix-auth-supabase'
 import invariant from 'tiny-invariant'
 
-import type { Session, User } from './supabase.server'
+import type { Session } from './supabase.server'
 import { sbClient } from './supabase.server'
-import { getUserData, initUserData } from './user.server'
+import { initUserData } from './user.server'
 
-if (!process.env.AUTH_COOKIE_SECRET) {
-  throw new Error('AUTH_COOKIE_SECRET is required')
-}
+invariant(process.env.AUTH_COOKIE_SECRET, 'AUTH_COOKIE_SECRET is required')
 
 export const sessionStorage = createCookieSessionStorage({
   cookie: {
@@ -77,15 +75,15 @@ export const supabaseStrategy = new SupabaseStrategy(
       throw new AuthorizationError(error?.message ?? '')
     }
 
+    // data retuned by supabase will always be Session object
+    // because there's no email confirmation that will trigger
+    // return of User object instead of Session object
     const sessionData = data as Session
-    invariant(
-      typeof sessionData.user?.id === 'string',
-      'This should never throw',
-    )
+    invariant(sessionData.user, 'This should never throw')
 
     await initUserData(sessionData.user.id)
 
-    return data as Session
+    return sessionData
   },
 )
 
@@ -95,3 +93,11 @@ export const authenticator = new Authenticator<Session>(sessionStorage, {
 })
 
 authenticator.use(supabaseStrategy)
+
+export async function requireUserSession(request: Request) {
+  const session = await supabaseStrategy.checkSession(request, {
+    failureRedirect: '/login',
+  })
+  invariant(session.user, 'This should never throw')
+  return session.user
+}
