@@ -30,7 +30,9 @@ export const action: ActionFunction = async ({ request }) => {
     WEEKLY: getDataId(userDataIds, TodoTypeEnum.Weekly),
     OTHERS: getDataId(userDataIds, TodoTypeEnum.Others),
   }
-  const timeUntilReset = getDailyResetTime(user.user_metadata.server as Region)
+  const timeUntilReset = getDailyResetTime(
+    user.user_metadata.server as Region | undefined,
+  )
 
   if (status === 'true') {
     const id = await setUserTodo(

@@ -1,25 +1,28 @@
-import { ActionFunction, json, LoaderFunction, useLoaderData } from 'remix'
+import type { ActionFunction, LoaderFunction } from 'remix'
+import { json, useLoaderData } from 'remix'
 import invariant from 'tiny-invariant'
 
 import CharacterLevel from '~/components/Character/CharacterLevel/CharacterLevel'
 import CharacterLevelManual from '~/components/Character/CharacterLevel/CharacterLevelManual/CharacterLevelManual'
 import CharacterView from '~/components/Character/CharacterView'
 import { characters } from '~/data/characters.server'
-import { CharacterActionTypeEnum, ITraveler } from '~/types/character'
-import { supabaseStrategy } from '~/utils/auth.server'
-import { getUserCharacter, setUserCharacter } from '~/utils/character.server'
+import type { ITraveler } from '~/types/character'
+import { CharacterActionTypeEnum } from '~/types/character'
+import { requireUserSession } from '~/utils/auth.server'
+import {
+  getUserCharacter,
+  parseTalentToNumberArray,
+  setUserCharacter,
+} from '~/utils/character.server'
 import { parseStringFormData } from '~/utils/http'
 import type { User } from '~/utils/redis/redis-user-schema.server'
 import { getDataId, getUserData } from '~/utils/user.server'
 import { commitSession, getUserDataSession } from '~/utils/user-data.server'
 
 export const action: ActionFunction = async ({ request }) => {
-  const session = await supabaseStrategy.checkSession(request, {
-    failureRedirect: '/login',
-  })
-  invariant(typeof session.user?.id === 'string', 'This should never throw')
+  const user = await requireUserSession(request)
 
-  interface formPostData {
+  interface TravelerFormData {
     _action: CharacterActionTypeEnum
     characterName: string
     characterLevel: string
@@ -35,22 +38,23 @@ export const action: ActionFunction = async ({ request }) => {
     electroTalentBurst: string
   }
 
-  const data = (await parseStringFormData(request)) as formPostData
-  const anemoTalent: [number, number, number] = [
-    +data.anemoTalentNormal,
-    +data.anemoTalentSkill,
-    +data.anemoTalentBurst,
-  ]
-  const geoTalent: [number, number, number] = [
-    +data.geoTalentNormal,
-    +data.geoTalentSkill,
-    +data.geoTalentBurst,
-  ]
-  const electroTalent: [number, number, number] = [
-    +data.electroTalentNormal,
-    +data.electroTalentSkill,
-    +data.electroTalentBurst,
-  ]
+  const data = (await parseStringFormData(request)) as TravelerFormData
+
+  const anemoTalent = parseTalentToNumberArray(
+    data.anemoTalentNormal,
+    data.anemoTalentSkill,
+    data.anemoTalentBurst,
+  )
+  const geoTalent = parseTalentToNumberArray(
+    data.geoTalentNormal,
+    data.geoTalentSkill,
+    data.geoTalentBurst,
+  )
+  const electroTalent = parseTalentToNumberArray(
+    data.electroTalentNormal,
+    data.electroTalentSkill,
+    data.electroTalentBurst,
+  )
 
   const userDataSession = await getUserDataSession(request)
   const userDataIds = userDataSession.get('userData') as User['data_ids']
@@ -67,7 +71,7 @@ export const action: ActionFunction = async ({ request }) => {
           geo: geoTalent,
           electro: electroTalent,
         },
-        session.user.id,
+        user.id,
         travelerDataId,
       )
 
@@ -75,7 +79,7 @@ export const action: ActionFunction = async ({ request }) => {
         return json(null, { status: 200 })
       }
 
-      const userData = await getUserData(session.user.id)
+      const userData = await getUserData(user.id)
       userDataSession.set('userData', userData)
 
       return json(request.url, {
@@ -93,17 +97,12 @@ export const action: ActionFunction = async ({ request }) => {
   }
 }
 
-type LoaderData = {
-  character: ITraveler
-}
 export const loader: LoaderFunction = async ({ request }) => {
-  const session = await supabaseStrategy.checkSession(request, {
-    failureRedirect: '/login',
-  })
-  invariant(typeof session.user?.id === 'string', 'This should never throw')
+  const user = await requireUserSession(request)
 
-  const character = characters.get('Traveler')
+  let character = characters.get('Traveler')
   invariant(character, 'This should never throw')
+  character = character as ITraveler
 
   character.level = {
     character: 1,
@@ -115,9 +114,9 @@ export const loader: LoaderFunction = async ({ request }) => {
     },
   }
 
-  const characterData = await getUserCharacter(character.name, session.user.id)
+  const characterData = await getUserCharacter(character.name, user.id)
 
-  if (!characterData) return { character }
+  if (!characterData) return json<ITraveler>(character)
 
   const { level, ascension, talent_anemo, talent_geo, talent_electro } =
     characterData
@@ -132,11 +131,11 @@ export const loader: LoaderFunction = async ({ request }) => {
     },
   }
 
-  return { character }
+  return json<ITraveler>(character)
 }
 
 export default function CharacterDefaultRoute() {
-  const { character } = useLoaderData<LoaderData>()
+  const character = useLoaderData<ITraveler>()
 
   return (
     <div className="px-6">

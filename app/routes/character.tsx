@@ -1,29 +1,21 @@
 import type { LoaderFunction } from 'remix'
-import { Outlet, useLoaderData } from 'remix'
-import invariant from 'tiny-invariant'
+import { json, Outlet, useLoaderData } from 'remix'
 
 import CharacterList from '~/components/Character/CharacterList'
 import { getCharacters } from '~/data/characters.server'
 import type { ICharacter, ITraveler } from '~/types/character'
-import { supabaseStrategy } from '~/utils/auth.server'
+import { requireUserSession } from '~/utils/auth.server'
 import { getUserCharacterOwnership } from '~/utils/character.server'
 
-interface LoaderData {
-  characters: Array<ITraveler | ICharacter>
-}
+type LoaderData = Array<ITraveler | ICharacter>
 
-export const loader: LoaderFunction = async ({
-  request,
-}): Promise<LoaderData> => {
-  const session = await supabaseStrategy.checkSession(request, {
-    failureRedirect: '/login',
-  })
-  invariant(typeof session.user?.id === 'string', 'This should never throw')
+export const loader: LoaderFunction = async ({ request }) => {
+  const user = await requireUserSession(request)
 
   const characters = getCharacters()
 
-  const characterOwnership = await getUserCharacterOwnership(session.user.id)
-  if (!characterOwnership) return { characters }
+  const characterOwnership = await getUserCharacterOwnership(user.id)
+  if (!characterOwnership) return json<LoaderData>(characters)
 
   const updatedCharaters = characters.map(character => {
     if (characterOwnership.includes(character.name)) {
@@ -32,11 +24,11 @@ export const loader: LoaderFunction = async ({
     return character
   })
 
-  return { characters: updatedCharaters }
+  return json<LoaderData>(updatedCharaters)
 }
 
 export default function CharacterPage() {
-  const { characters } = useLoaderData<LoaderData>()
+  const characters = useLoaderData<LoaderData>()
 
   return (
     <main className="grid grid-cols-1 md:grid-cols-3 overflow-hidden">

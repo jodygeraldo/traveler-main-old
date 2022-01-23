@@ -25,7 +25,7 @@ export function getUserDataSession(request: Request) {
 export async function clearUserDataSession(request: Request) {
   const session = await getUserDataSession(request)
 
-  if (session.has('session')) {
+  if (session.has('userData')) {
     return redirect('/login', {
       headers: {
         'Set-Cookie': await destroySession(session),

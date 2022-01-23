@@ -7,8 +7,8 @@ import Tabs from '~/components/UI/Tabs'
 import { farmable, getFarmables } from '~/data/farmable.server'
 import { FarmableType, FarmDayTypeEnum } from '~/types/farmable'
 import type { ITab } from '~/types/global'
-import { supabaseStrategy } from '~/utils/auth.server'
-import { getCurrentDay, getDailyResetTime } from '~/utils/date'
+import { requireUserSession, supabaseStrategy } from '~/utils/auth.server'
+import { getCurrentDay, getDailyResetTime, Region } from '~/utils/date'
 
 const tabs: ITab[] = [
   {
@@ -37,13 +37,9 @@ export const loader: LoaderFunction = async ({ request }) => {
     failureRedirect: '/login',
   })
   invariant(typeof session.user?.id === 'string', 'This should never throw')
-  const region = session.user.user_metadata.server as
-    | 'EU'
-    | 'NA'
-    | 'AS'
-    | undefined
+  const user = await requireUserSession(request)
 
-  const day = getCurrentDay(region)
+  const day = getCurrentDay(user.user_metadata.server as Region | undefined)
 
   let todayFarmable: FarmableType | undefined
 

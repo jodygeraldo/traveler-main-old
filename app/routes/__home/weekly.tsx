@@ -9,6 +9,7 @@ import { TodoTypeEnum } from '~/types/todo'
 import { requireUserSession } from '~/utils/auth.server'
 import { getUserTodo } from '~/utils/todo.server'
 
+type LoaderData = ITodo[]
 export const loader: LoaderFunction = async ({ request }) => {
   const user = await requireUserSession(request)
 
@@ -17,7 +18,7 @@ export const loader: LoaderFunction = async ({ request }) => {
 
   const todoCompletion = await getUserTodo(TodoTypeEnum.Weekly, user.id)
 
-  if (!todoCompletion) return json<ITodo[]>(todo)
+  if (!todoCompletion) return json<LoaderData>(todo)
 
   const updatedTodo = todo.map(t => {
     if (todoCompletion.includes(t.title)) {
@@ -26,11 +27,11 @@ export const loader: LoaderFunction = async ({ request }) => {
     return t
   })
 
-  return json<ITodo[]>(updatedTodo)
+  return json<LoaderData>(updatedTodo)
 }
 
 export default function WeeklyRoute() {
-  const todo = useLoaderData<ITodo[]>()
+  const todo = useLoaderData<LoaderData>()
 
   return (
     <TodoList heading="weekly todos" todos={todo} type={TodoTypeEnum.Weekly} />

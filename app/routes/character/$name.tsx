@@ -1,42 +1,29 @@
-import {
-  ActionFunction,
-  json,
-  LoaderFunction,
-  useCatch,
-  useLoaderData,
-  useParams,
-} from 'remix'
+import type { ActionFunction, LoaderFunction } from 'remix'
+import { json, redirect, useCatch, useLoaderData, useParams } from 'remix'
 import invariant from 'tiny-invariant'
 
 import CharacterLevel from '~/components/Character/CharacterLevel/CharacterLevel'
 import CharacterLevelManual from '~/components/Character/CharacterLevel/CharacterLevelManual/CharacterLevelManual'
 import CharacterView from '~/components/Character/CharacterView'
 import { characters } from '~/data/characters.server'
-import {
-  CharacterActionTypeEnum,
-  CharacterName,
-  ICharacter,
-  ITraveler,
-} from '~/types/character'
-import { supabaseStrategy } from '~/utils/auth.server'
+import type { CharacterName, ICharacter } from '~/types/character'
+import { CharacterActionTypeEnum } from '~/types/character'
+import { requireUserSession } from '~/utils/auth.server'
 import {
   getUserCharacter,
+  parseTalentToNumberArray,
   removeUserCharacterOwnershipEntry,
   setUserCharacter,
   setUserCharacterOwnership,
 } from '~/utils/character.server'
 import { getFormHackMessage } from '~/utils/message'
-import { User } from '~/utils/redis/redis-user-schema.server'
+import type { User } from '~/utils/redis/redis-user-schema.server'
 import { stringToCapitalized, stringToLowerSnake } from '~/utils/string'
 import { getDataId, getUserData } from '~/utils/user.server'
 import { commitSession, getUserDataSession } from '~/utils/user-data.server'
 
 export const action: ActionFunction = async ({ request }) => {
-  const session = await supabaseStrategy.checkSession(request, {
-    failureRedirect: '/login',
-  })
-  invariant(typeof session.user?.id === 'string', 'This should never throw')
-  const userId = session.user.id
+  const user = await requireUserSession(request)
 
   const formData = await request.formData()
   const _action = formData.get('_action')
@@ -51,10 +38,7 @@ export const action: ActionFunction = async ({ request }) => {
   const userDataSession = await getUserDataSession(request)
   const userDataIds = userDataSession.get('userData') as User['data_ids']
 
-  invariant(
-    typeof _action === 'string',
-    "This is shouldn't happen if you don't hack the form",
-  )
+  invariant(typeof _action === 'string', getFormHackMessage())
   invariant(typeof name === 'string', getFormHackMessage())
 
   switch (_action as CharacterActionTypeEnum) {
@@ -65,7 +49,7 @@ export const action: ActionFunction = async ({ request }) => {
       if (ownership === 'true') {
         const id = await setUserCharacterOwnership(
           name,
-          userId,
+          user.id,
           ownershipDataId,
         )
 
@@ -73,7 +57,7 @@ export const action: ActionFunction = async ({ request }) => {
           return json(null, { status: 200 })
         }
 
-        const userData = await getUserData(session.user.id)
+        const userData = await getUserData(user.id)
         userDataSession.set('userData', userData)
 
         return json(request.url, {
@@ -101,18 +85,18 @@ export const action: ActionFunction = async ({ request }) => {
 
       const characterDataId = getDataId(userDataIds, name)
 
-      const talent: [number, number, number] = [
-        +talentNormal,
-        +talentSkill,
-        +talentBurst,
-      ]
+      const talent = parseTalentToNumberArray(
+        talentNormal,
+        talentSkill,
+        talentBurst,
+      )
 
       const id = await setUserCharacter(
         name,
         +level,
         +ascension,
         talent,
-        session.user.id,
+        user.id,
         characterDataId,
       )
 
@@ -120,7 +104,7 @@ export const action: ActionFunction = async ({ request }) => {
         return json(null, { status: 200 })
       }
 
-      const userData = await getUserData(session.user.id)
+      const userData = await getUserData(user.id)
       userDataSession.set('userData', userData)
 
       return json(request.url, {
@@ -135,23 +119,26 @@ export const action: ActionFunction = async ({ request }) => {
 }
 
 type LoaderData = {
-  character: ICharacter | ITraveler
+  character: ICharacter
   level: ICharacter['level']
 }
 export const loader: LoaderFunction = async ({ request, params }) => {
-  const session = await supabaseStrategy.checkSession(request, {
-    failureRedirect: '/login',
-  })
-  invariant(typeof session.user?.id === 'string', 'This should never throw')
-
   const { name } = params
   invariant(typeof name === 'string', 'params is empty')
-  const character = characters.get(stringToCapitalized(name) as CharacterName)
-  if (!character) {
-    throw new Response('Character not found', { status: 404 })
+
+  if (name.toLowerCase() === 'traveler') {
+    return redirect('/character/')
   }
 
-  const characterData = await getUserCharacter(character.name, session.user.id)
+  const user = await requireUserSession(request)
+
+  let character = characters.get(stringToCapitalized(name) as CharacterName)
+  if (!character) {
+    throw json('Character not found', { status: 404 })
+  }
+  character = character as ICharacter
+
+  const characterData = await getUserCharacter(character.name, user.id)
 
   if (!characterData) {
     return json<LoaderData>({

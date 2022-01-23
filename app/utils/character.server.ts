@@ -176,3 +176,14 @@ export async function removeUserCharacterOwnershipEntry(
   userCharacterOwnership.characters.splice(indexOfName, 1)
   await repository.save(userCharacterOwnership)
 }
+
+/*
+ * CHARACTER UTIL FUNCTIONS *
+ */
+export function parseTalentToNumberArray(
+  talentNormal: string | number = 1,
+  talentSkill: string | number = 1,
+  talentBurst: string | number = 1,
+): [number, number, number] {
+  return [Number(talentNormal), Number(talentSkill), Number(talentBurst)]
+}
