@@ -1,16 +1,25 @@
-import type { ActionFunction, LoaderFunction } from 'remix'
-import { json, redirect, useCatch, useLoaderData, useParams } from 'remix'
+import {
+  ActionFunction,
+  json,
+  LoaderFunction,
+  redirect,
+  useCatch,
+  useLoaderData,
+  useMatches,
+  useParams,
+} from 'remix'
 import invariant from 'tiny-invariant'
 
 import CharacterLevel from '~/components/Character/CharacterLevel/CharacterLevel'
 import CharacterLevelManual from '~/components/Character/CharacterLevel/CharacterLevelManual/CharacterLevelManual'
 import CharacterView from '~/components/Character/CharacterView'
 import { characters } from '~/data/characters.server'
-import type { CharacterName, ICharacter } from '~/types/character'
+import type { CharacterName, ICharacter, ITraveler } from '~/types/character'
 import { CharacterActionTypeEnum } from '~/types/character'
 import { requireUserSession } from '~/utils/auth.server'
 import {
   getUserCharacter,
+  getUserCharacterOwnership,
   parseTalentToNumberArray,
   removeUserCharacterOwnershipEntry,
   setUserCharacter,
@@ -119,8 +128,8 @@ export const action: ActionFunction = async ({ request }) => {
 }
 
 type LoaderData = {
-  character: ICharacter
-  level: ICharacter['level']
+  name: ICharacter['name']
+  level?: ICharacter['level']
 }
 export const loader: LoaderFunction = async ({ request, params }) => {
   const { name } = params
@@ -138,11 +147,33 @@ export const loader: LoaderFunction = async ({ request, params }) => {
   }
   character = character as ICharacter
 
+  const og7character: Array<CharacterName> = [
+    'Traveler',
+    'Amber',
+    'Noelle',
+    'Lisa',
+    'Kaeya',
+    'Barbara',
+    'Xiangling',
+  ]
+  const characterOwnership = await getUserCharacterOwnership(user.id)
+
+  if (!characterOwnership) {
+    return json({ name: character.name }, { status: 200 })
+  }
+
+  if (
+    !og7character.includes(character.name) &&
+    !characterOwnership.includes(character.name)
+  ) {
+    return json({ name: character.name }, { status: 200 })
+  }
+
   const characterData = await getUserCharacter(character.name, user.id)
 
   if (!characterData) {
     return json<LoaderData>({
-      character,
+      name: character.name,
       level: {
         character: 1,
         ascension: 0,
@@ -152,7 +183,7 @@ export const loader: LoaderFunction = async ({ request, params }) => {
   }
 
   return json<LoaderData>({
-    character,
+    name: character.name,
     level: {
       character: characterData.level,
       ascension: characterData.ascension,
@@ -162,13 +193,18 @@ export const loader: LoaderFunction = async ({ request, params }) => {
 }
 
 export default function CharacterRoute() {
-  const { character, level } = useLoaderData<LoaderData>()
+  const { name, level } = useLoaderData<LoaderData>()
+  const matches = useMatches()
+  const characterData = matches.find(match => match.pathname === '/character')
+    ?.data as (ICharacter | ITraveler)[]
+
+  const character = characterData.find(c => c.name === name)
+  invariant(character, 'This should never throw')
 
   return (
     <div>
       <CharacterView character={character} />
-      {/* Should hide this until characters is owned */}
-      {character.own ? (
+      {level ? (
         <>
           <CharacterLevelManual level={level} name={character.name} />
           <CharacterLevel level={level} name={character.name} />

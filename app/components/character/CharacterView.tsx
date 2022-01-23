@@ -1,5 +1,5 @@
 import type { FC } from 'react'
-import { Form, useTransition } from 'remix'
+import { Form, useLocation, useTransition } from 'remix'
 
 import {
   CharacterActionTypeEnum,
@@ -24,12 +24,13 @@ const og7character: Array<CharacterName> = [
 
 const CharacterView: FC<Props> = ({ character }) => {
   const transition = useTransition()
+  const location = useLocation()
 
   return (
     <div className="flex justify-between items-start">
       <h1 className="text-6xl">{character.name}</h1>
       {og7character.includes(character.name) ? null : (
-        <Form replace method="post">
+        <Form key={location.key} replace method="post">
           <input type="hidden" name="character-name" value={character.name} />
           <input type="hidden" name="owned" value={`${!character.own}`} />
           <button

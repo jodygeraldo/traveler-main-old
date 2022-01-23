@@ -1,5 +1,5 @@
 import type { FC } from 'react'
-import { Form } from 'remix'
+import { Form, useLocation } from 'remix'
 import invariant from 'tiny-invariant'
 
 import {
@@ -22,8 +22,10 @@ const CharacterLevelManual: FC<Props> = ({ level, name }) => {
     'This should never happen, unless I forget to pass the level',
   )
 
+  const location = useLocation()
+
   return (
-    <Form replace method="post">
+    <Form key={location.key} replace method="post">
       <div className="grid grid-cols-6 gap-4">
         <input type="hidden" name="character-name" value={name} />
         <div className="col-span-3">
