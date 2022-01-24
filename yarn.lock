@@ -274,6 +274,13 @@
     estree-walker "^2.0.1"
     picomatch "^2.2.2"
 
+"@routes-gen/remix@^0.2.10":
+  version "0.2.10"
+  resolved "https://registry.yarnpkg.com/@routes-gen/remix/-/remix-0.2.10.tgz#22c67487e7ef2b7aafcce816ff4c4ad85046705d"
+  integrity sha512-1hbE3fF65+iKJ4cEBLYtb/YDWFefELSRqM/VHh/WuMvfFQGqZiQSu5a62wgyTjy6yBW64EIzKex8Rcjb5fTSPQ==
+  dependencies:
+    routes-gen "^0.3.0"
+
 "@sindresorhus/is@^4.0.0":
   version "4.3.0"
   resolved "https://registry.yarnpkg.com/@sindresorhus/is/-/is-4.3.0.tgz#344fd9bf808a84567ba563d00cc54b2f428dbab1"
@@ -4497,6 +4504,11 @@ rimraf@^3.0.2:
   integrity sha512-JZkJMZkAGFFPP2YqXZXPbMlMBgsxzE8ILs4lMIX/2o0L9UBw9O/Y3o6wFw/i9YLapcUJWwqbi3kdxIPdC62TIA==
   dependencies:
     glob "^7.1.3"
+
+routes-gen@^0.3.0:
+  version "0.3.0"
+  resolved "https://registry.yarnpkg.com/routes-gen/-/routes-gen-0.3.0.tgz#696eb3d43bf1fa2ddf4f4b31acc4c5394e583b8f"
+  integrity sha512-rtfk5sL4vKly41lBk3rGNcmOa+Ts57uqKij4690Nb2MqIqHydSM76zUBnzzSQU0ivAmKEJWBHcQwETfafbOU6A==
 
 run-parallel@^1.1.9:
   version "1.2.0"
