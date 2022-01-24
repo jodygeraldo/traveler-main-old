@@ -1,5 +1,6 @@
 import { useOutletContext } from 'remix'
 
+import CharacterLevel from '~/components/Character/CharacterLevel/CharacterLevel'
 import { ICharacter, ITraveler } from '~/types/character'
 
 export default function CharacterEditWithInventoryRoute() {
@@ -8,9 +9,5 @@ export default function CharacterEditWithInventoryRoute() {
     level: ICharacter['level'] | ITraveler['level']
   }>()
 
-  return (
-    <div>
-      <h1>This from Character Edit With Inventory Route</h1>
-    </div>
-  )
+  return <CharacterLevel character={character} level={level} />
 }

@@ -16,12 +16,12 @@ export const loader: LoaderFunction = async ({ request }) => {
   const todo = todos.get(TodoTypeEnum.Daily)
   invariant(todo, 'This should never throw')
 
-  const todoCompletion = await getUserTodo(TodoTypeEnum.Daily, user.id)
+  const todoData = await getUserTodo(TodoTypeEnum.Daily, user.id)
 
-  if (!todoCompletion) return json<LoaderData>(todo)
+  if (!todoData) return json<LoaderData>(todo)
 
   const updatedTodo = todo.map(t => {
-    if (todoCompletion.includes(t.title)) {
+    if (todoData.includes(t.title)) {
       t.completed = true
     }
     return t

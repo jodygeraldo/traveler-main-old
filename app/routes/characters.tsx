@@ -13,16 +13,16 @@ export const loader: LoaderFunction = async ({ request }) => {
   const characters = getCharacters()
 
   const ownershipData = await getUserCharacterOwnership(user.id)
-  if (!ownershipData) return json<LoaderData>(characters)
+  if (!ownershipData) return json<LoaderData>(characters, { status: 200 })
 
   const updatedCharaters = characters.map(character => {
-    if (ownershipData.characters.includes(character.name)) {
+    if (ownershipData.includes(character.name)) {
       character.own = true
     }
     return character
   })
 
-  return json<LoaderData>(updatedCharaters)
+  return json<LoaderData>(updatedCharaters, { status: 200 })
 }
 
 export default function CharactersPage() {

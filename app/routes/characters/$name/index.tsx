@@ -5,7 +5,6 @@ import CharacterView from '~/components/Character/CharacterView'
 import { ICharacter, ITraveler } from '~/types/character'
 import { requireUserSession } from '~/utils/auth.server'
 import {
-  getUserCharacterOwnership,
   removeUserCharacterOwnershipEntry,
   setUserCharacterOwnership,
 } from '~/utils/character.server'
@@ -20,20 +19,13 @@ export const action: ActionFunction = async ({ request }) => {
   invariant(typeof name === 'string', getFormHackMessage())
   invariant(typeof own === 'string', getFormHackMessage())
 
-  const ownershipData = await getUserCharacterOwnership(user.id)
-
   if (own === 'true') {
-    const id = await setUserCharacterOwnership(name, user.id, ownershipData?.id)
-
-    if (!id) return json(null, { status: 200 })
-
-    return json(null, { status: 201 })
+    await setUserCharacterOwnership(name, user.id)
+  } else {
+    await removeUserCharacterOwnershipEntry(name, user.id)
   }
 
-  invariant(ownershipData, 'Data not sync properly')
-  await removeUserCharacterOwnershipEntry(name, ownershipData.id)
-
-  return json(null, { status: 200 })
+  return json(null, { status: 201 })
 }
 
 export default function CharacterEditManualRoute() {

@@ -4,7 +4,6 @@ import {
   updateCharacterIndex,
   updateCharacterOwnershipIndex,
 } from './redis/redis-character-schema.server'
-import { setUserData } from './user.server'
 
 /*
  * CHARACTER FUNCTIONS *
@@ -32,10 +31,26 @@ export async function getUserCharacter(name: string, userId: string) {
     talent_geo: character.character_talent_geo,
     talent_electro: character.character_talent_electro,
   }
-  return { id: character.entityId, character: characterData }
+  return characterData
 }
 
-export async function addUserCharacter(
+async function getUserCharacterEntity(name: string, userId: string) {
+  const repository = await getCharacterRepo()
+  const character = await repository
+    .search()
+    .where('user_id')
+    .equal(userId)
+    .and('name')
+    .equal(name)
+    .first()
+
+  // this is possible if the search function doesn't find the given userId
+  // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
+  if (!character) return null
+  return character
+}
+
+async function addUserCharacter(
   name: string,
   level: number,
   ascension: number,
@@ -64,11 +79,7 @@ export async function addUserCharacter(
     userCharacter.character_talent_electro = talent.electro
   }
 
-  const id = await repository.save(userCharacter)
-
-  await setUserData({ data_id: name, value: id }, userId)
-
-  return id
+  await repository.save(userCharacter)
 }
 
 export async function setUserCharacter(
@@ -83,16 +94,16 @@ export async function setUserCharacter(
         electro: [number, number, number]
       },
   userId: string,
-  dataId?: string,
 ) {
   const repository = await getCharacterRepo()
 
-  if (!dataId) {
-    const id = await addUserCharacter(name, level, ascension, talent, userId)
-    return id
+  const userCharacter = await getUserCharacterEntity(name, userId)
+
+  if (!userCharacter) {
+    await addUserCharacter(name, level, ascension, talent, userId)
+    return
   }
 
-  const userCharacter = await repository.fetch(dataId)
   userCharacter.character_level = level
   userCharacter.character_ascension = ascension
   if (Array.isArray(talent)) {
@@ -103,7 +114,6 @@ export async function setUserCharacter(
     userCharacter.character_talent_electro = talent.electro
   }
   await repository.save(userCharacter)
-  return null
 }
 
 /*
@@ -120,13 +130,24 @@ export async function getUserCharacterOwnership(userId: string) {
   // this is possible if the search function doesn't find the given userId
   // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
   if (!characterOwnership) return null
-  return {
-    id: characterOwnership.entityId,
-    characters: characterOwnership.characters,
-  }
+  return characterOwnership.characters
 }
 
-export async function addUserCharacterOwnership(name: string, userId: string) {
+async function getUserCharacterOwnershipEntity(userId: string) {
+  const repository = await getCharacterOwnershipRepo()
+  const characterOwnership = await repository
+    .search()
+    .where('user_id')
+    .equal(userId)
+    .first()
+
+  // this is possible if the search function doesn't find the given userId
+  // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
+  if (!characterOwnership) return null
+  return characterOwnership
+}
+
+async function addUserCharacterOwnership(name: string, userId: string) {
   const repository = await getCharacterOwnershipRepo()
   await updateCharacterOwnershipIndex()
 
@@ -134,46 +155,35 @@ export async function addUserCharacterOwnership(name: string, userId: string) {
   userCharacterOwnership.user_id = userId
   userCharacterOwnership.characters = [name]
 
-  const id = await repository.save(userCharacterOwnership)
-
-  await setUserData({ data_id: 'characterOwnership', value: id }, userId)
-
-  return id
+  await repository.save(userCharacterOwnership)
 }
 
-export async function setUserCharacterOwnership(
-  name: string,
-  userId: string,
-  dataId?: string,
-) {
+export async function setUserCharacterOwnership(name: string, userId: string) {
   const repository = await getCharacterOwnershipRepo()
+  const userCharacterOwnership = await getUserCharacterOwnershipEntity(userId)
 
-  if (!dataId) {
-    const id = await addUserCharacterOwnership(name, userId)
-    return id
+  if (!userCharacterOwnership) {
+    await addUserCharacterOwnership(name, userId)
+    return
   }
 
-  const userCharacterOwnership = await repository.fetch(dataId)
   userCharacterOwnership.characters.push(name)
   await repository.save(userCharacterOwnership)
-  return null
 }
 
 export async function removeUserCharacterOwnershipEntry(
   name: string,
-  dataId: string,
+  userId: string,
 ) {
   const repository = await getCharacterOwnershipRepo()
-  const userCharacterOwnership = await repository.fetch(dataId)
-  if (!userCharacterOwnership.user_id) {
-    throw new Error('This is should never happen, contact me if you see this!')
+  const userCharacterOwnership = await getUserCharacterOwnershipEntity(userId)
+  if (!userCharacterOwnership) {
+    throw new Error('Your data not sync properly with the database')
   }
 
   const indexOfName = userCharacterOwnership.characters.indexOf(name)
   if (indexOfName === -1) {
-    throw new Error(
-      'You should refresh the page, your todo data not sync properly with the server',
-    )
+    throw new Error('Your data not sync properly with the database')
   }
 
   userCharacterOwnership.characters.splice(indexOfName, 1)

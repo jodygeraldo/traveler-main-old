@@ -6,7 +6,6 @@ import CharacterLevelManual from '~/components/Character/CharacterLevel/Characte
 import { ICharacter, ITraveler } from '~/types/character'
 import { requireUserSession } from '~/utils/auth.server'
 import {
-  getUserCharacter,
   parseTalentToNumberArray,
   setUserCharacter,
 } from '~/utils/character.server'
@@ -37,8 +36,6 @@ export const action: ActionFunction = async ({ request, params }) => {
   invariant(typeof characterName === 'string', getFormHackMessage())
   invariant(typeof level === 'string', getFormHackMessage())
   invariant(typeof ascension === 'string', getFormHackMessage())
-
-  const characterData = await getUserCharacter(characterName, user.id)
 
   let talent: [number, number, number] | ITraveler['level']['talent']
 
@@ -84,7 +81,6 @@ export const action: ActionFunction = async ({ request, params }) => {
     Number(ascension),
     talent,
     user.id,
-    characterData?.id,
   )
 
   return redirect(route('/characters/:name', { name }))

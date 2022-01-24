@@ -5,7 +5,6 @@ import invariant from 'tiny-invariant'
 
 import type { Session } from './supabase.server'
 import { sbClient } from './supabase.server'
-import { initUserData } from './user.server'
 
 invariant(process.env.AUTH_COOKIE_SECRET, 'AUTH_COOKIE_SECRET is required')
 
@@ -80,8 +79,6 @@ export const supabaseStrategy = new SupabaseStrategy(
     // return of User object instead of Session object
     const sessionData = data as Session
     invariant(sessionData.user, 'This should never throw')
-
-    await initUserData(sessionData.user.id)
 
     return sessionData
   },

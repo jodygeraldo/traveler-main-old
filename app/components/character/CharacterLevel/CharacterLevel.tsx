@@ -1,5 +1,5 @@
 import type { FC } from 'react'
-import { useFetcher } from 'remix'
+import { Form, useFetcher } from 'remix'
 
 import { ICharacter, ITraveler } from '~/types/character'
 
@@ -8,21 +8,15 @@ import CharacterLevelTalent from './CharacterLevelTalent'
 
 interface Props {
   level: ITraveler['level'] | ICharacter['level']
-  name: ITraveler['name'] | ICharacter['name']
+  character: ITraveler | ICharacter
 }
 
-const CharacterLevel: FC<Props> = ({ level, name }) => {
-  const fetcher = useFetcher()
-
-  function handleSubmit() {
-    fetcher.submit({ data: 'string' })
-  }
-
+const CharacterLevel: FC<Props> = ({ level, character }) => {
   return (
-    <fetcher.Form method="post" onSubmit={handleSubmit}>
-      <input type="hidden" name="character-name" value={name} />
+    <Form method="post">
+      <input type="hidden" name="character-name" value={character.name} />
       <CharacterLevelTalent level={level} />
-    </fetcher.Form>
+    </Form>
   )
 }
 

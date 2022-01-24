@@ -131,9 +131,3 @@ export interface ITraveler {
     }
   }
 }
-
-export enum CharacterActionTypeEnum {
-  Ownership = 'OWNERSHIP',
-  Munual = 'MUNUAL',
-  Automatic = 'AUTOMATIC',
-}

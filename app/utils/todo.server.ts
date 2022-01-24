@@ -1,11 +1,13 @@
 import { TodoTypeEnum } from '~/types/todo'
 
 import {
+  DailyTodo,
   getTodoRepo,
+  OthersTodo,
   setTodoTTL,
   updateTodoIndex,
+  WeeklyTodo,
 } from './redis/redis-todo-schema.server'
-import { setUserData } from './user.server'
 
 export async function getUserTodo(type: TodoTypeEnum, userId: string) {
   const repository = await getTodoRepo(type)
@@ -24,6 +26,23 @@ export async function getUserTodo(type: TodoTypeEnum, userId: string) {
   return userTodos.complete
 }
 
+async function getUserTodoEntity(type: TodoTypeEnum, userId: string) {
+  const repository = await getTodoRepo(type)
+  const userTodos = await repository
+    .search()
+    .where('user_id')
+    .equal(userId)
+    .first()
+
+  // this is possible if the search function doesn't find the given userId
+  // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
+  if (!userTodos) {
+    return null
+  }
+
+  return userTodos
+}
+
 async function addUserTodo(
   type: TodoTypeEnum,
   name: string,
@@ -40,30 +59,27 @@ async function addUserTodo(
   const id = await repository.save(userTodo)
   await setTodoTTL(type, id, expire)
 
-  await setUserData({ data_id: type, value: id }, userId)
-
   return id
 }
 
 export async function setUserTodo(
   type: TodoTypeEnum,
-  userId: string,
   name: string,
   expire: number,
-  dataId = '',
+  userId: string,
 ) {
   const repository = await getTodoRepo(type)
+  const userTodo = await getUserTodoEntity(type, userId)
 
-  const userTodo = await repository.fetch(dataId)
-  if (!userTodo.user_id) {
+  if (!userTodo) {
     const id = await addUserTodo(type, name, expire, userId)
     return id
   }
 
   userTodo.complete.push(name)
-  await repository.save(userTodo)
+  const id = await repository.save(userTodo)
 
-  await setTodoTTL(type, dataId, expire)
+  await setTodoTTL(type, id, expire)
   return null
 }
 
@@ -71,11 +87,14 @@ export async function removeUserTodoEntry(
   type: TodoTypeEnum,
   name: string,
   expire: number,
-  dataId = '',
+  userId: string,
 ) {
   const repository = await getTodoRepo(type)
-  const userTodo = await repository.fetch(dataId)
-  if (!userTodo.user_id) {
+  const userTodo = await getUserTodoEntity(type, userId)
+
+  // this is possible
+  // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
+  if (!userTodo) {
     throw new Error(
       'You should refresh the page, your todo data not sync properly with the server',
     )
@@ -89,8 +108,8 @@ export async function removeUserTodoEntry(
   }
 
   userTodo.complete.splice(indexOfTodoName, 1)
-  await repository.save(userTodo)
+  const id = await repository.save(userTodo)
 
-  await setTodoTTL(type, dataId, expire)
+  await setTodoTTL(type, id, expire)
   return null
 }

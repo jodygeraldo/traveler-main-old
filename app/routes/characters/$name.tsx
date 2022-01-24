@@ -50,7 +50,7 @@ export const loader: LoaderFunction = async ({ request, params }) => {
 
   if (
     !og7character.includes(character.name) &&
-    !ownershipData.characters.includes(character.name)
+    !ownershipData.includes(character.name)
   ) {
     return json({ name: character.name }, { status: 200 })
   }
@@ -59,42 +59,54 @@ export const loader: LoaderFunction = async ({ request, params }) => {
 
   if (!characterData) {
     if (character.name === 'Traveler') {
-      return json<LoaderData>({ name: character.name, level: character.level })
+      return json<LoaderData>(
+        { name: character.name, level: character.level },
+        { status: 200 },
+      )
     }
 
-    return json<LoaderData>({
-      name: character.name,
-      level: {
-        character: 1,
-        ascension: 0,
-        talent: [1, 1, 1],
+    return json<LoaderData>(
+      {
+        name: character.name,
+        level: {
+          character: 1,
+          ascension: 0,
+          talent: [1, 1, 1],
+        },
       },
-    })
+      { status: 200 },
+    )
   }
 
   if (character.name === 'Traveler') {
-    return json<LoaderData>({
-      name: character.name,
-      level: {
-        character: characterData.character.level,
-        ascension: characterData.character.ascension,
-        talent: {
-          anemo: characterData.character.talent_anemo,
-          geo: characterData.character.talent_geo,
-          electro: characterData.character.talent_electro,
+    return json<LoaderData>(
+      {
+        name: character.name,
+        level: {
+          character: characterData.level,
+          ascension: characterData.ascension,
+          talent: {
+            anemo: characterData.talent_anemo,
+            geo: characterData.talent_geo,
+            electro: characterData.talent_electro,
+          },
         },
       },
-    })
+      { status: 200 },
+    )
   }
 
-  return json<LoaderData>({
-    name: character.name,
-    level: {
-      character: characterData.character.level,
-      ascension: characterData.character.ascension,
-      talent: characterData.character.talent,
+  return json<LoaderData>(
+    {
+      name: character.name,
+      level: {
+        character: characterData.level,
+        ascension: characterData.ascension,
+        talent: characterData.talent,
+      },
     },
-  })
+    { status: 200 },
+  )
 }
 
 export default function CharacterPage() {
