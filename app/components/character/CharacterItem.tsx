@@ -17,9 +17,9 @@ const backgoundColor: Record<ICharacter['rarity'], string> = {
 }
 
 const hoverRingColor: Record<ICharacter['rarity'], string> = {
-  4: 'hover:ring hover:ring-rarity-four-dark',
-  5: 'hover:ring hover:ring-rarity-five-dark',
-  aloy: 'hover:ring hover:ring-rarity-aloy-dark',
+  4: 'hover:ring-rarity-four-dark',
+  5: 'hover:ring-rarity-five-dark',
+  aloy: 'hover:ring-rarity-aloy-dark',
 }
 
 const lastnameOnlyIfTooLong = (name: string) => {
@@ -36,13 +36,13 @@ const CharacterItem: FC<Props> = ({ character }) => {
       prefetch="intent"
       to={`/characters/${stringToKebab(character.name)}`}
       className={clsx(
-        'w-20',
+        'w-20 hover:ring-4 rounded-md',
         !character.own && 'opacity-50',
         hoverRingColor[character.rarity],
       )}
     >
       <div className="flex flex-col ">
-        <div className={clsx('rounded-t-sm', backgoundColor[character.rarity])}>
+        <div className={clsx('rounded-t-md', backgoundColor[character.rarity])}>
           <motion.img
             whileHover={{ scale: 1.05 }}
             whileTap={{ scale: 0.95 }}
