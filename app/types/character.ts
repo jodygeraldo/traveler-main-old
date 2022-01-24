@@ -86,7 +86,6 @@ export interface ICharacter {
       common: AscensionCommonMaterial
     }
   }
-  path: string
   own: boolean
   level?: {
     character: number
@@ -121,9 +120,8 @@ export interface ITraveler {
       common: 'Hilichurl Mask'
     }
   }
-  path: string
   own: boolean
-  level?: {
+  level: {
     character: number
     ascension: number
     talent: {

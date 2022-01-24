@@ -2,6 +2,13 @@ export function kebabToCamel(str: string): string {
   return str.replace(/-([a-z])/g, (_, g) => (g as string).toUpperCase())
 }
 
+export function stringToKebab(str: string): string {
+  return str
+    .replace(/([a-z])([A-Z])/g, '$1-$2')
+    .replace(/[\s_]+/g, '-')
+    .toLowerCase()
+}
+
 export function stringToLowerSnake(str: string): string {
   return str.replace(/ /g, '_').toLowerCase()
 }

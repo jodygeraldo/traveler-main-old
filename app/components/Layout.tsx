@@ -6,7 +6,7 @@ import { Form, NavLink, useLocation } from 'remix'
 
 const navigation = [
   { name: 'Paimon', href: '/', icon: 'paimon_menu.png' },
-  { name: 'Character', href: '/character', icon: 'character.png' },
+  { name: 'Character', href: '/characters', icon: 'character.png' },
   { name: 'Inventory', href: '/inventory', icon: 'inventory.png' },
   { name: 'Achievement', href: '/achievement', icon: 'achievement.png' },
   { name: 'Schedule', href: '/schedule', icon: 'quest.png' },
@@ -93,7 +93,7 @@ export default function Layout({ children }: { children: ReactNode }) {
                         }
                       >
                         <img
-                          src={`../assets/images/menus/${item.icon}`}
+                          src={`/assets/images/menus/${item.icon}`}
                           className="mr-3 flex-shrink-0 h-6 w-6"
                           alt=""
                         />
@@ -148,7 +148,7 @@ export default function Layout({ children }: { children: ReactNode }) {
                     }
                   >
                     <img
-                      src={`../assets/images/menus/${item.icon}`}
+                      src={`/assets/images/menus/${item.icon}`}
                       className="mr-3 flex-shrink-0 h-6 w-6"
                       alt=""
                     />
@@ -178,18 +178,12 @@ export default function Layout({ children }: { children: ReactNode }) {
               <MenuIcon className="h-6 w-6" aria-hidden="true" />
             </button>
           </div>
-          <main className="flex-1">
-            <div className="py-6">
-              <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-                <h1 className="text-2xl font-semibold text-primary-900">
-                  Dashboard
-                </h1>
-              </div>
-              <div className="max-w-full mx-auto px-4 sm:px-6 md:px-8">
-                {/* Replace with your content */}
-                {children}
-                {/* /End replace */}
-              </div>
+
+          <main className="flex-1 py-6">
+            <div className="max-w-7xl mx-auto sm:px-6 lg:px-8">
+              {/* Replace with your content */}
+              {children}
+              {/* /End replace */}
             </div>
           </main>
         </div>

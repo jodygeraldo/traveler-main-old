@@ -32,7 +32,7 @@ export async function getUserCharacter(name: string, userId: string) {
     talent_geo: character.character_talent_geo,
     talent_electro: character.character_talent_electro,
   }
-  return characterData
+  return { id: character.entityId, character: characterData }
 }
 
 export async function addUserCharacter(
@@ -120,7 +120,10 @@ export async function getUserCharacterOwnership(userId: string) {
   // this is possible if the search function doesn't find the given userId
   // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
   if (!characterOwnership) return null
-  return characterOwnership.characters
+  return {
+    id: characterOwnership.entityId,
+    characters: characterOwnership.characters,
+  }
 }
 
 export async function addUserCharacterOwnership(name: string, userId: string) {

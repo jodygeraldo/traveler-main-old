@@ -35,6 +35,10 @@ interface Character {
   character_talent_anemo: [number, number, number]
   character_talent_geo: [number, number, number]
   character_talent_electro: [number, number, number]
+  character_talent_dendro: [number, number, number]
+  character_talent_cryo: [number, number, number]
+  character_talent_hydro: [number, number, number]
+  character_talent_pyro: [number, number, number]
 }
 
 class Character extends Entity {}
@@ -48,6 +52,10 @@ const characterSchema = new Schema(Character, {
   character_talent_anemo: { type: 'array' },
   character_talent_geo: { type: 'array' },
   character_talent_electro: { type: 'array' },
+  character_talent_dendro: { type: 'array' },
+  character_talent_cryo: { type: 'array' },
+  character_talent_hydro: { type: 'array' },
+  character_talent_pyro: { type: 'array' },
 })
 
 export const getCharacterRepo = async () =>

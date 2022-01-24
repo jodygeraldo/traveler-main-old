@@ -1,11 +1,14 @@
 import {
   ActionFunction,
   json,
+  Link,
   LoaderFunction,
+  Outlet,
   redirect,
   useCatch,
   useLoaderData,
   useMatches,
+  useOutletContext,
   useParams,
 } from 'remix'
 import invariant from 'tiny-invariant'
@@ -27,7 +30,7 @@ import {
 } from '~/utils/character.server'
 import { getFormHackMessage } from '~/utils/message'
 import type { User } from '~/utils/redis/redis-user-schema.server'
-import { stringToCapitalized, stringToLowerSnake } from '~/utils/string'
+import { stringToCapitalized } from '~/utils/string'
 import { getDataId, getUserData } from '~/utils/user.server'
 import { commitSession, getUserDataSession } from '~/utils/user-data.server'
 
@@ -128,24 +131,19 @@ export const action: ActionFunction = async ({ request }) => {
 }
 
 type LoaderData = {
-  name: ICharacter['name']
-  level?: ICharacter['level']
+  name: CharacterName
+  level?: ICharacter['level'] | ITraveler['level']
 }
 export const loader: LoaderFunction = async ({ request, params }) => {
   const { name } = params
   invariant(typeof name === 'string', 'params is empty')
 
-  if (name.toLowerCase() === 'traveler') {
-    return redirect('/character/')
-  }
-
   const user = await requireUserSession(request)
 
-  let character = characters.get(stringToCapitalized(name) as CharacterName)
+  const character = characters.get(stringToCapitalized(name) as CharacterName)
   if (!character) {
     throw json('Character not found', { status: 404 })
   }
-  character = character as ICharacter
 
   const og7character: Array<CharacterName> = [
     'Traveler',
@@ -156,15 +154,15 @@ export const loader: LoaderFunction = async ({ request, params }) => {
     'Barbara',
     'Xiangling',
   ]
-  const characterOwnership = await getUserCharacterOwnership(user.id)
+  const ownershipData = await getUserCharacterOwnership(user.id)
 
-  if (!characterOwnership) {
+  if (!ownershipData) {
     return json({ name: character.name }, { status: 200 })
   }
 
   if (
     !og7character.includes(character.name) &&
-    !characterOwnership.includes(character.name)
+    !ownershipData.characters.includes(character.name)
   ) {
     return json({ name: character.name }, { status: 200 })
   }
@@ -172,6 +170,10 @@ export const loader: LoaderFunction = async ({ request, params }) => {
   const characterData = await getUserCharacter(character.name, user.id)
 
   if (!characterData) {
+    if (character.name === 'Traveler') {
+      return json<LoaderData>({ name: character.name, level: character.level })
+    }
+
     return json<LoaderData>({
       name: character.name,
       level: {
@@ -182,51 +184,39 @@ export const loader: LoaderFunction = async ({ request, params }) => {
     })
   }
 
+  if (character.name === 'Traveler') {
+    return json<LoaderData>({
+      name: character.name,
+      level: {
+        character: characterData.character.level,
+        ascension: characterData.character.ascension,
+        talent: {
+          anemo: characterData.character.talent_anemo,
+          geo: characterData.character.talent_geo,
+          electro: characterData.character.talent_electro,
+        },
+      },
+    })
+  }
+
   return json<LoaderData>({
     name: character.name,
     level: {
-      character: characterData.level,
-      ascension: characterData.ascension,
-      talent: characterData.talent,
+      character: characterData.character.level,
+      ascension: characterData.character.ascension,
+      talent: characterData.character.talent,
     },
   })
 }
 
-export default function CharacterRoute() {
+export default function CharacterPage() {
   const { name, level } = useLoaderData<LoaderData>()
-  const matches = useMatches()
-  const characterData = matches.find(match => match.pathname === '/character')
-    ?.data as (ICharacter | ITraveler)[]
+  const characterData = useOutletContext<Array<ITraveler | ICharacter>>()
 
   const character = characterData.find(c => c.name === name)
   invariant(character, 'This should never throw')
 
-  return (
-    <div>
-      <CharacterView character={character} />
-      {level ? (
-        <>
-          <CharacterLevelManual level={level} name={character.name} />
-          <CharacterLevel level={level} name={character.name} />
-        </>
-      ) : null}
-      <img
-        src={`../assets/images/characters/full/${stringToLowerSnake(
-          character.name,
-        )}.png`}
-        alt={`${character.name} potrait`}
-      />
-      {/* <img
-        src={`../assets/images/elements/${character.vision.toLowerCase()}.png`}
-        alt="Pyro Vision"
-      /> */}
-      <img
-        src={`../assets/images/weapon_types/${character.weapon_type.toLowerCase()}.png`}
-        alt="Sword Weapon Type"
-      />
-      <pre>{JSON.stringify(character, null, 2)}</pre>
-    </div>
-  )
+  return <Outlet context={{ character, level }} />
 }
 
 export function CatchBoundary() {

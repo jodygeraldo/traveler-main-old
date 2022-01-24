@@ -28,7 +28,15 @@ characters.set('Traveler', {
       common: 'Hilichurl Mask',
     },
   },
-  path: '/',
+  level: {
+    character: 1,
+    ascension: 0,
+    talent: {
+      anemo: [1, 1, 1],
+      geo: [1, 1, 1],
+      electro: [1, 1, 1],
+    },
+  },
   own: true,
 })
 
@@ -49,7 +57,6 @@ characters.set('Albedo', {
       common: 'Samachurl Scrolls',
     },
   },
-  path: '/albedo',
   own: false,
 })
 
@@ -70,7 +77,6 @@ characters.set('Aloy', {
       common: 'Spectral Cores',
     },
   },
-  path: '/aloy',
   own: false,
 })
 
@@ -91,7 +97,6 @@ characters.set('Amber', {
       common: 'Hilichurl Arrowheads',
     },
   },
-  path: '/amber',
   own: true,
 })
 
@@ -113,7 +118,6 @@ characters.set('Arataki Itto', {
       common: 'Slime',
     },
   },
-  path: '/arataki_itto',
   own: false,
 })
 
@@ -134,7 +138,6 @@ characters.set('Barbara', {
       common: 'Samachurl Scrolls',
     },
   },
-  path: '/barbara',
   own: true,
 })
 
@@ -155,7 +158,6 @@ characters.set('Beidou', {
       common: 'Treasure Hoarder Insignias',
     },
   },
-  path: '/beidou',
   own: false,
 })
 
@@ -176,7 +178,6 @@ characters.set('Bennett', {
       common: 'Treasure Hoarder Insignias',
     },
   },
-  path: '/bennett',
   own: false,
 })
 
@@ -197,7 +198,6 @@ characters.set('Chongyun', {
       common: 'Hilichurl Masks',
     },
   },
-  path: '/chongyun',
   own: false,
 })
 
@@ -218,7 +218,6 @@ characters.set('Diluc', {
       common: 'Fatui Insignia',
     },
   },
-  path: '/diluc',
   own: false,
 })
 
@@ -239,7 +238,6 @@ characters.set('Diona', {
       common: 'Hilichurl Arrowheads',
     },
   },
-  path: '/diona',
   own: false,
 })
 
@@ -260,7 +258,6 @@ characters.set('Eula', {
       common: 'Hilichurl Masks',
     },
   },
-  path: '/eula',
   own: false,
 })
 
@@ -281,7 +278,6 @@ characters.set('Fischl', {
       common: 'Hilichurl Arrowheads',
     },
   },
-  path: '/fischl',
   own: false,
 })
 
@@ -302,7 +298,6 @@ characters.set('Ganyu', {
       common: 'Whopperflower Nectar',
     },
   },
-  path: '/ganyu',
   own: false,
 })
 
@@ -323,7 +318,6 @@ characters.set('Gorou', {
       common: 'Spectral Cores',
     },
   },
-  path: '/gorou',
   own: false,
 })
 
@@ -344,7 +338,6 @@ characters.set('Hu Tao', {
       common: 'Whopperflower Nectar',
     },
   },
-  path: '/hu_tao',
   own: false,
 })
 
@@ -365,7 +358,6 @@ characters.set('Jean', {
       common: 'Hilichurl Masks',
     },
   },
-  path: '/jean',
   own: false,
 })
 
@@ -386,7 +378,6 @@ characters.set('Kaedehara Kazuha', {
       common: 'Treasure Hoarder Insignias',
     },
   },
-  path: '/kaedehara_kazuha',
   own: false,
 })
 
@@ -407,7 +398,6 @@ characters.set('Kaeya', {
       common: 'Treasure Hoarder Insignias',
     },
   },
-  path: '/kaeya',
   own: true,
 })
 
@@ -428,7 +418,6 @@ characters.set('Kamisato Ayaka', {
       common: 'Nobushi Handguards',
     },
   },
-  path: '/kamisato_ayaka',
   own: false,
 })
 
@@ -449,7 +438,6 @@ characters.set('Keqing', {
       common: 'Whopperflower Nectar',
     },
   },
-  path: '/keqing',
   own: false,
 })
 
@@ -470,7 +458,6 @@ characters.set('Klee', {
       common: 'Samachurl Scrolls',
     },
   },
-  path: '/klee',
   own: false,
 })
 
@@ -491,7 +478,6 @@ characters.set('Kujou Sara', {
       common: 'Hilichurl Masks',
     },
   },
-  path: '/kujou_sara',
   own: false,
 })
 
@@ -512,7 +498,6 @@ characters.set('Lisa', {
       common: 'Slime',
     },
   },
-  path: '/lisa',
   own: true,
 })
 
@@ -533,7 +518,6 @@ characters.set('Mona', {
       common: 'Whopperflower Nectar',
     },
   },
-  path: '/mona',
   own: false,
 })
 
@@ -554,7 +538,6 @@ characters.set('Ningguang', {
       common: 'Fatui Insignia',
     },
   },
-  path: '/ningguang',
   own: false,
 })
 
@@ -575,7 +558,6 @@ characters.set('Noelle', {
       common: 'Hilichurl Masks',
     },
   },
-  path: '/noelle',
   own: true,
 })
 
@@ -596,7 +578,6 @@ characters.set('Qiqi', {
       common: 'Samachurl Scrolls',
     },
   },
-  path: '/qiqi',
   own: false,
 })
 
@@ -617,7 +598,6 @@ characters.set('Raiden Shogun', {
       common: 'Nobushi Handguards',
     },
   },
-  path: '/raiden_shogun',
   own: false,
 })
 
@@ -638,7 +618,6 @@ characters.set('Razor', {
       common: 'Hilichurl Masks',
     },
   },
-  path: '/razor',
   own: false,
 })
 
@@ -659,7 +638,6 @@ characters.set('Rosaria', {
       common: 'Treasure Hoarder Insignias',
     },
   },
-  path: '/rosaria',
   own: false,
 })
 
@@ -680,7 +658,6 @@ characters.set('Sangonomiya Kokomi', {
       common: 'Spectral Cores',
     },
   },
-  path: '/sangonomiya_kokomi',
   own: false,
 })
 
@@ -701,7 +678,6 @@ characters.set('Sayu', {
       common: 'Whopperflower Nectar',
     },
   },
-  path: '/sayu',
   own: false,
 })
 
@@ -722,7 +698,6 @@ characters.set('Shenhe', {
       common: 'Whopperflower Nectar',
     },
   },
-  path: '/shenhe',
   own: false,
 })
 
@@ -743,7 +718,6 @@ characters.set('Sucrose', {
       common: 'Whopperflower Nectar',
     },
   },
-  path: '/sucrose',
   own: false,
 })
 
@@ -764,7 +738,6 @@ characters.set('Tartaglia', {
       common: 'Fatui Insignia',
     },
   },
-  path: '/tartaglia',
   own: false,
 })
 
@@ -785,7 +758,6 @@ characters.set('Thoma', {
       common: 'Treasure Hoarder Insignias',
     },
   },
-  path: '/thoma',
   own: false,
 })
 
@@ -806,7 +778,6 @@ characters.set('Venti', {
       common: 'Slime',
     },
   },
-  path: '/venti',
   own: false,
 })
 
@@ -827,7 +798,6 @@ characters.set('Xiangling', {
       common: 'Slime',
     },
   },
-  path: '/xiangling',
   own: true,
 })
 characters.set('Xiao', {
@@ -847,7 +817,6 @@ characters.set('Xiao', {
       common: 'Slime',
     },
   },
-  path: '/xiao',
   own: false,
 })
 
@@ -868,7 +837,6 @@ characters.set('Xingqiu', {
       common: 'Hilichurl Masks',
     },
   },
-  path: '/xingqiu',
   own: false,
 })
 
@@ -889,7 +857,6 @@ characters.set('Xinyan', {
       common: 'Treasure Hoarder Insignias',
     },
   },
-  path: '/xinyan',
   own: false,
 })
 
@@ -910,7 +877,6 @@ characters.set('Yanfei', {
       common: 'Treasure Hoarder Insignias',
     },
   },
-  path: '/yanfei',
   own: false,
 })
 
@@ -931,7 +897,6 @@ characters.set('Yoimiya', {
       common: 'Samachurl Scrolls',
     },
   },
-  path: '/yoimiya',
   own: false,
 })
 
@@ -952,7 +917,6 @@ characters.set('Yun Jin', {
       common: 'Hilichurl Masks',
     },
   },
-  path: '/yun_jin',
   own: false,
 })
 
@@ -973,7 +937,6 @@ characters.set('Zhongli', {
       common: 'Slime',
     },
   },
-  path: '/zhongli',
   own: false,
 })
 
