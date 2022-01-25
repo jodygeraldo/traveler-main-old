@@ -58,8 +58,6 @@ async function addUserTodo(
 
   const id = await repository.save(userTodo)
   await setTodoTTL(type, id, expire)
-
-  return id
 }
 
 export async function setUserTodo(
@@ -72,15 +70,14 @@ export async function setUserTodo(
   const userTodo = await getUserTodoEntity(type, userId)
 
   if (!userTodo) {
-    const id = await addUserTodo(type, name, expire, userId)
-    return id
+    await addUserTodo(type, name, expire, userId)
+    return
   }
 
   userTodo.complete.push(name)
   const id = await repository.save(userTodo)
 
   await setTodoTTL(type, id, expire)
-  return null
 }
 
 export async function removeUserTodoEntry(
@@ -111,5 +108,4 @@ export async function removeUserTodoEntry(
   const id = await repository.save(userTodo)
 
   await setTodoTTL(type, id, expire)
-  return null
 }

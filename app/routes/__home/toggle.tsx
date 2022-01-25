@@ -25,18 +25,12 @@ export const action: ActionFunction = async ({ request }) => {
   )
 
   if (status === 'true') {
-    const id = await setUserTodo(_action, name, timeUntilReset, user.id)
-
-    if (!id) {
-      return json(null, { status: 200 })
-    }
-
-    return json(request.url, {
-      status: 201,
-    })
+    await setUserTodo(_action, name, timeUntilReset, user.id)
+  } else {
+    await removeUserTodoEntry(_action, name, timeUntilReset, user.id)
   }
 
-  await removeUserTodoEntry(_action, name, timeUntilReset, user.id)
-
-  return json(null, { status: 200 })
+  return json(request.url, {
+    status: 201,
+  })
 }

@@ -28,7 +28,7 @@ export const action: ActionFunction = async ({ request }) => {
   return json(null, { status: 201 })
 }
 
-export default function CharacterEditManualRoute() {
+export default function CharacterRoute() {
   const { character, level } = useOutletContext<{
     character: ICharacter | ITraveler
     level: ICharacter['level'] | ITraveler['level']

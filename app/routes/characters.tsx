@@ -1,4 +1,4 @@
-import { json, LoaderFunction, Outlet, useLoaderData, useMatches } from 'remix'
+import { json, LoaderFunction, Outlet, useLoaderData } from 'remix'
 
 import { getCharacters } from '~/data/characters.server'
 import type { ICharacter, ITraveler } from '~/types/character'
@@ -6,7 +6,6 @@ import { requireUserSession } from '~/utils/auth.server'
 import { getUserCharacterOwnership } from '~/utils/character.server'
 
 type LoaderData = Array<ITraveler | ICharacter>
-
 export const loader: LoaderFunction = async ({ request }) => {
   const user = await requireUserSession(request)
 
