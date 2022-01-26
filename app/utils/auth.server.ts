@@ -1,100 +1,49 @@
-import { createCookieSessionStorage } from 'remix'
+import { User } from '@prisma/client'
 import { Authenticator, AuthorizationError } from 'remix-auth'
-import { SupabaseStrategy } from 'remix-auth-supabase'
+import { FormStrategy } from 'remix-auth-form'
 import invariant from 'tiny-invariant'
 
-import type { Session } from './supabase.server'
-import { sbClient } from './supabase.server'
+import { sessionStorage } from '~/services/session.server'
 
-invariant(process.env.AUTH_COOKIE_SECRET, 'AUTH_COOKIE_SECRET is required')
+import { login, signup } from './db/user.server'
 
-export const sessionStorage = createCookieSessionStorage({
-  cookie: {
-    name: 'sb',
-    httpOnly: true,
-    path: '/',
-    sameSite: 'lax',
-    secrets: [process.env.AUTH_COOKIE_SECRET],
-    secure: process.env.NODE_ENV === 'production',
-  },
+export const authenticator = new Authenticator<User>(sessionStorage, {
+  sessionErrorKey: 'auth-error',
 })
 
-export const supabaseStrategy = new SupabaseStrategy(
-  {
-    supabaseClient: sbClient,
-    sessionStorage,
-  },
-
-  async ({ req, supabaseClient }) => {
-    const form = await req.formData()
-    const _action = form.get('_action')
-    const email = form.get('email')
+authenticator.use(
+  new FormStrategy(async ({ form }) => {
+    const action = form.get('_action')
+    const username = form.get('username')
     const password = form.get('password')
-
-    if (!email) throw new AuthorizationError('Email is required')
-    if (typeof email !== 'string') {
-      throw new AuthorizationError('Email must be a string')
-    }
-
-    if (!password) throw new AuthorizationError('Password is required')
-    if (typeof password !== 'string') {
-      throw new AuthorizationError('Password must be a string')
-    }
-    if (password.length < 8 || password.length > 16) {
-      throw new AuthorizationError(
-        'Password must be between 8 and 16 characters',
-      )
-    }
-
-    if (_action === 'login') {
-      const { data, error } = await supabaseClient.auth.api.signInWithEmail(
-        email,
-        password,
-      )
-
-      if (error || !data) {
-        throw new AuthorizationError(error?.message ?? '')
-      }
-
-      return data
-    }
-
     const server = form.get('server')
-    if (typeof server !== 'string') {
-      throw new AuthorizationError('Server not selected correctly')
-    }
 
-    const { data, error } = await supabaseClient.auth.api.signUpWithEmail(
-      email,
-      password,
-      { data: { server } },
+    invariant(typeof action === 'string', 'action must be a string')
+    invariant(
+      action === 'login' || action === 'signup',
+      'action must be login or signup',
     )
 
-    if (error || !data) {
-      throw new AuthorizationError(error?.message ?? '')
+    invariant(typeof username === 'string', 'username must be a string')
+    if (username.length < 6 && username.length > 16) {
+      throw new Error('username must be between 6 and 16 characters')
     }
 
-    // data retuned by supabase will always be Session object
-    // because there's no email confirmation that will trigger
-    // return of User object instead of Session object
-    const sessionData = data as Session
-    invariant(sessionData.user, 'This should never throw')
+    invariant(typeof password === 'string', 'password must be a string')
+    if (password.length < 8) {
+      throw new Error('password must be at least 8 characters')
+    }
 
-    return sessionData
-  },
+    if (action === 'login') {
+      const user = await login(username, password)
+
+      return user
+    } else {
+      invariant(typeof server === 'string', 'server not selected properly')
+      const user = await signup(username, password, server)
+
+      return user
+    }
+  }),
+  'form',
 )
-
-export const authenticator = new Authenticator<Session>(sessionStorage, {
-  sessionKey: supabaseStrategy.sessionKey, // keep in sync
-  sessionErrorKey: supabaseStrategy.sessionErrorKey, // keep in sync
-})
-
-authenticator.use(supabaseStrategy)
-
-export async function requireUserSession(request: Request) {
-  const session = await supabaseStrategy.checkSession(request, {
-    failureRedirect: '/login',
-  })
-  invariant(session.user, 'This should never throw')
-  return session.user
-}
