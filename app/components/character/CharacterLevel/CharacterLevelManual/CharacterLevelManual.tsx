@@ -1,29 +1,21 @@
 import type { FC } from 'react'
-import { Form, useLocation } from 'remix'
-import invariant from 'tiny-invariant'
+import { Form } from 'remix'
 
-import {
-  CharacterActionTypeEnum,
-  ICharacter,
-  ITraveler,
-} from '~/types/character'
+import { ICharacter, ITraveler } from '~/types/character'
 
 import CharacterLevelTalentManual from './CharacterLevelTalentManual'
 
 interface Props {
-  level: ITraveler['level'] | ICharacter['level']
   character: ICharacter | ITraveler
 }
 
-const CharacterLevelManual: FC<Props> = ({ level, character }) => {
-  invariant(
-    level,
-    'This should never happen, unless I forget to pass the level',
-  )
+const CharacterLevelManual: FC<Props> = ({ character }) => {
+  const id = character.dbId ?? 'NEW'
 
   return (
     <Form method="post">
       <div className="grid grid-cols-6 gap-4">
+        <input type="hidden" name="id" value={id} />
         <input type="hidden" name="name" value={character.name} />
         <div className="col-span-3">
           <label htmlFor="level" className="block text-sm font-medium">
@@ -33,8 +25,8 @@ const CharacterLevelManual: FC<Props> = ({ level, character }) => {
             type="number"
             name="level"
             id="level"
-            className="shadow-sm focus:ring-primary-500 focus:border-primary-500 block w-full sm:text-sm border-primary-300 rounded-md bg-primary-600"
-            defaultValue={level.character}
+            className="block w-full rounded-md border-primary-300 bg-primary-600 shadow-sm focus:border-primary-500 focus:ring-primary-500 sm:text-sm"
+            defaultValue={character.level.character}
             min={1}
             max={90}
           />
@@ -47,17 +39,17 @@ const CharacterLevelManual: FC<Props> = ({ level, character }) => {
             type="number"
             name="ascension"
             id="ascension"
-            className="shadow-sm focus:ring-primary-500 focus:border-primary-500 block w-full sm:text-sm border-primary-300 rounded-md bg-primary-600"
-            defaultValue={level.ascension}
+            className="block w-full rounded-md border-primary-300 bg-primary-600 shadow-sm focus:border-primary-500 focus:ring-primary-500 sm:text-sm"
+            defaultValue={character.level.ascension}
             min={0}
             max={6}
           />
         </div>
       </div>
-      <CharacterLevelTalentManual level={level} />
+      <CharacterLevelTalentManual talent={character.level.talent} />
       <button
         type="submit"
-        className="mt-5 inline-flex items-center px-6 py-3 border border-transparent text-base font-medium rounded-md shadow-sm text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+        className="border-transparent bg-indigo-600 hover:bg-indigo-700 focus:ring-indigo-500 mt-5 inline-flex items-center rounded-md border px-6 py-3 text-base font-medium text-white shadow-sm focus:outline-none focus:ring-2 focus:ring-offset-2"
       >
         Confirm
       </button>

@@ -1,27 +1,32 @@
 import { json, LoaderFunction, Outlet, useLoaderData } from 'remix'
 
-import { getCharacters } from '~/data/characters.server'
 import type { ICharacter, ITraveler } from '~/types/character'
-import { requireUserSession } from '~/utils/auth.server'
-import { getUserCharacterOwnership } from '~/utils/character.server'
+import { authenticator } from '~/utils/auth.server'
+import {
+  getCharacters,
+  getUpdatedCharacters,
+  getUserCharacters,
+} from '~/utils/db/character.server'
 
 type LoaderData = Array<ITraveler | ICharacter>
 export const loader: LoaderFunction = async ({ request }) => {
-  const user = await requireUserSession(request)
+  const user = await authenticator.isAuthenticated(request, {
+    failureRedirect: '/login',
+  })
 
   const characters = getCharacters()
 
-  const ownershipData = await getUserCharacterOwnership(user.id)
-  if (!ownershipData) return json<LoaderData>(characters, { status: 200 })
+  const userCharacters = await getUserCharacters(user.id)
 
-  const updatedCharaters = characters.map(character => {
-    if (ownershipData.includes(character.name)) {
-      character.own = true
-    }
-    return character
+  if (userCharacters.length === 0) {
+    return json<LoaderData>(characters, { status: 200 })
+  }
+
+  const updatedCharacters = getUpdatedCharacters(userCharacters, characters)
+
+  return json<LoaderData>(updatedCharacters, {
+    status: 200,
   })
-
-  return json<LoaderData>(updatedCharaters, { status: 200 })
 }
 
 export default function CharactersPage() {

@@ -1,38 +1,43 @@
-import { ActionFunction, redirect, useOutletContext } from 'remix'
+import { ActionFunction, json, redirect, useOutletContext } from 'remix'
 import { route, RouteParams } from 'routes-gen'
 import invariant from 'tiny-invariant'
 
 import CharacterLevelManual from '~/components/Character/CharacterLevel/CharacterLevelManual/CharacterLevelManual'
 import { ICharacter, ITraveler } from '~/types/character'
-import { requireUserSession } from '~/utils/auth.server'
+import { authenticator } from '~/utils/auth.server'
 import {
+  addUserCharacter,
   parseTalentToNumberArray,
-  setUserCharacter,
-} from '~/utils/character.server'
+  updateUserCharacter,
+} from '~/utils/db/character.server'
 import { getFormHackMessage } from '~/utils/message'
 
 export const action: ActionFunction = async ({ request, params }) => {
-  const user = await requireUserSession(request)
-
   const { name } = params as RouteParams['/characters/:name/edit-manual']
 
+  const user = await authenticator.isAuthenticated(request, {
+    failureRedirect: '/login',
+  })
+
   const formData = await request.formData()
+  const id = formData.get('id')
   const characterName = formData.get('name')
   const level = formData.get('level')
   const ascension = formData.get('ascension')
-  const talentNormal = formData.get('talent-normal')
-  const talentSkill = formData.get('talent-skill')
-  const talentBurst = formData.get('talent-burst')
-  const talentAnemoNormal = formData.get('anemo-talent-normal')
-  const talentAnemoSkill = formData.get('anemo-talent-skill')
-  const talentAnemoburst = formData.get('anemo-talent-burst')
-  const talentGeoNormal = formData.get('geo-talent-normal')
-  const talentGeoSkill = formData.get('geo-talent-skill')
-  const talentGeoBurst = formData.get('geo-talent-burst')
-  const talentElectroNormal = formData.get('electro-talent-normal')
-  const talentElectroSkill = formData.get('electro-talent-skill')
-  const talentElectroBurst = formData.get('electro-talent-burst')
+  const tNormal = formData.get('talent-normal')
+  const tSkill = formData.get('talent-skill')
+  const tBurst = formData.get('talent-burst')
+  const tAnemoNormal = formData.get('anemo-talent-normal')
+  const tAnemoSkill = formData.get('anemo-talent-skill')
+  const tAnemoburst = formData.get('anemo-talent-burst')
+  const tGeoNormal = formData.get('geo-talent-normal')
+  const tGeoSkill = formData.get('geo-talent-skill')
+  const tGeoBurst = formData.get('geo-talent-burst')
+  const tElectroNormal = formData.get('electro-talent-normal')
+  const tElectroSkill = formData.get('electro-talent-skill')
+  const tElectroBurst = formData.get('electro-talent-burst')
 
+  invariant(typeof id === 'string', 'Data not sync properly')
   invariant(typeof characterName === 'string', getFormHackMessage())
   invariant(typeof level === 'string', getFormHackMessage())
   invariant(typeof ascension === 'string', getFormHackMessage())
@@ -40,57 +45,46 @@ export const action: ActionFunction = async ({ request, params }) => {
   let talent: [number, number, number] | ITraveler['level']['talent']
 
   if (characterName === 'Traveler') {
-    invariant(typeof talentAnemoNormal === 'string', getFormHackMessage())
-    invariant(typeof talentAnemoSkill === 'string', getFormHackMessage())
-    invariant(typeof talentAnemoburst === 'string', getFormHackMessage())
-    invariant(typeof talentGeoNormal === 'string', getFormHackMessage())
-    invariant(typeof talentGeoSkill === 'string', getFormHackMessage())
-    invariant(typeof talentGeoBurst === 'string', getFormHackMessage())
-    invariant(typeof talentElectroNormal === 'string', getFormHackMessage())
-    invariant(typeof talentElectroSkill === 'string', getFormHackMessage())
-    invariant(typeof talentElectroBurst === 'string', getFormHackMessage())
+    invariant(typeof tAnemoNormal === 'string', getFormHackMessage())
+    invariant(typeof tAnemoSkill === 'string', getFormHackMessage())
+    invariant(typeof tAnemoburst === 'string', getFormHackMessage())
+    invariant(typeof tGeoNormal === 'string', getFormHackMessage())
+    invariant(typeof tGeoSkill === 'string', getFormHackMessage())
+    invariant(typeof tGeoBurst === 'string', getFormHackMessage())
+    invariant(typeof tElectroNormal === 'string', getFormHackMessage())
+    invariant(typeof tElectroSkill === 'string', getFormHackMessage())
+    invariant(typeof tElectroBurst === 'string', getFormHackMessage())
 
     talent = {
-      anemo: parseTalentToNumberArray(
-        talentAnemoNormal,
-        talentAnemoSkill,
-        talentAnemoburst,
-      ),
-      geo: parseTalentToNumberArray(
-        talentGeoNormal,
-        talentGeoSkill,
-        talentGeoBurst,
-      ),
+      anemo: parseTalentToNumberArray(tAnemoNormal, tAnemoSkill, tAnemoburst),
+      geo: parseTalentToNumberArray(tGeoNormal, tGeoSkill, tGeoBurst),
       electro: parseTalentToNumberArray(
-        talentElectroNormal,
-        talentElectroSkill,
-        talentElectroBurst,
+        tElectroNormal,
+        tElectroSkill,
+        tElectroBurst,
       ),
     }
   } else {
-    invariant(typeof talentNormal === 'string', getFormHackMessage())
-    invariant(typeof talentSkill === 'string', getFormHackMessage())
-    invariant(typeof talentBurst === 'string', getFormHackMessage())
+    invariant(typeof tNormal === 'string', getFormHackMessage())
+    invariant(typeof tSkill === 'string', getFormHackMessage())
+    invariant(typeof tBurst === 'string', getFormHackMessage())
 
-    talent = parseTalentToNumberArray(talentNormal, talentSkill, talentBurst)
+    talent = parseTalentToNumberArray(tNormal, tSkill, tBurst)
   }
 
-  await setUserCharacter(
-    characterName,
-    Number(level),
-    Number(ascension),
-    talent,
-    user.id,
-  )
+  if (id === 'NEW') {
+    await addUserCharacter(user.id, name, +level, +ascension, talent)
+
+    return redirect(route('/characters/:name', { name }))
+  }
+
+  await updateUserCharacter(id, +level, +ascension, talent)
 
   return redirect(route('/characters/:name', { name }))
 }
 
 export default function CharacterEditManualRoute() {
-  const { character, level } = useOutletContext<{
-    character: ICharacter | ITraveler
-    level: ICharacter['level'] | ITraveler['level']
-  }>()
+  const character = useOutletContext<ICharacter | ITraveler>()
 
-  return <CharacterLevelManual character={character} level={level} />
+  return <CharacterLevelManual character={character} />
 }

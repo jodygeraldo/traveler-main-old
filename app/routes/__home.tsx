@@ -1,5 +1,5 @@
 import { useEffect } from 'react'
-import { json, LoaderFunction, Outlet, useLoaderData, useSubmit } from 'remix'
+import { json, LoaderFunction, Outlet, useLoaderData, useNavigate } from 'remix'
 import invariant from 'tiny-invariant'
 
 import FarmableCard from '~/components/Farmable/FarmableCard'
@@ -7,7 +7,7 @@ import Tabs from '~/components/UI/Tabs'
 import { farmable, getFarmables } from '~/data/farmable.server'
 import { FarmableType, FarmDayTypeEnum } from '~/types/farmable'
 import type { ITab } from '~/types/global'
-import { requireUserSession, supabaseStrategy } from '~/utils/auth.server'
+import { authenticator } from '~/utils/auth.server'
 import { getCurrentDay, getDailyResetTime, Region } from '~/utils/date'
 
 const tabs: ITab[] = [
@@ -33,13 +33,11 @@ type LoaderData = {
   todayFarmable: FarmableType
 }
 export const loader: LoaderFunction = async ({ request }) => {
-  const session = await supabaseStrategy.checkSession(request, {
+  const user = await authenticator.isAuthenticated(request, {
     failureRedirect: '/login',
   })
-  invariant(typeof session.user?.id === 'string', 'This should never throw')
-  const user = await requireUserSession(request)
 
-  const day = getCurrentDay(user.user_metadata.server as Region | undefined)
+  const day = getCurrentDay(user.server as Region)
 
   let todayFarmable: FarmableType | undefined
 
@@ -72,11 +70,11 @@ export const loader: LoaderFunction = async ({ request }) => {
 
 export default function Index() {
   const { todayFarmable, timeUntilReset } = useLoaderData<LoaderData>()
-  const submit = useSubmit()
+  const navigate = useNavigate()
 
   useEffect(() => {
     const refreshPage = setTimeout(() => {
-      submit(null, { method: 'get' })
+      navigate('.')
     }, timeUntilReset)
 
     return () => clearTimeout(refreshPage)

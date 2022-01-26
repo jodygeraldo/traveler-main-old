@@ -3,10 +3,10 @@ import type { FC } from 'react'
 import { ICharacter, ITraveler } from '~/types/character'
 
 interface Props {
-  level: ITraveler['level'] | ICharacter['level']
+  talent: ITraveler['level']['talent'] | ICharacter['level']['talent']
 }
 
-const CharacterLevelTalent: FC<Props> = ({ level }) => {
+const CharacterLevelTalent: FC<Props> = ({ talent }) => {
   return <h1>Automatic Level Up with Inventory items, IMPLETEMENT LATER</h1>
 }
 

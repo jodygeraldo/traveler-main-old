@@ -6,12 +6,14 @@ import TodoList from '~/components/Todo/TodoList'
 import { todos } from '~/data/todos.server'
 import type { ITodo } from '~/types/todo'
 import { TodoTypeEnum } from '~/types/todo'
-import { requireUserSession } from '~/utils/auth.server'
+import { authenticator } from '~/utils/auth.server'
 import { getUserTodo } from '~/utils/todo.server'
 
 type LoaderData = ITodo[]
 export const loader: LoaderFunction = async ({ request }) => {
-  const user = await requireUserSession(request)
+  const user = await authenticator.isAuthenticated(request, {
+    failureRedirect: '/login',
+  })
 
   const todo = todos.get(TodoTypeEnum.Weekly)
   invariant(todo, 'This should never throw')

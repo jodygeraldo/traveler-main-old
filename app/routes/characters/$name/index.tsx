@@ -3,36 +3,39 @@ import invariant from 'tiny-invariant'
 
 import CharacterView from '~/components/Character/CharacterView'
 import { ICharacter, ITraveler } from '~/types/character'
-import { requireUserSession } from '~/utils/auth.server'
+import { authenticator } from '~/utils/auth.server'
 import {
-  removeUserCharacterOwnershipEntry,
-  setUserCharacterOwnership,
-} from '~/utils/character.server'
+  addUserCharacterOwnership,
+  updateUserCharacterOwnership,
+} from '~/utils/db/character.server'
 import { getFormHackMessage } from '~/utils/message'
 
 export const action: ActionFunction = async ({ request }) => {
-  const user = await requireUserSession(request)
+  const user = await authenticator.isAuthenticated(request, {
+    failureRedirect: '/login',
+  })
 
   const formData = await request.formData()
   const name = formData.get('name')
-  const own = formData.get('own')
+  const newOwnStatus = formData.get('toggle-own')
+  const id = formData.get('id')
+  invariant(typeof id === 'string', getFormHackMessage())
   invariant(typeof name === 'string', getFormHackMessage())
-  invariant(typeof own === 'string', getFormHackMessage())
+  invariant(typeof newOwnStatus === 'string', getFormHackMessage())
 
-  if (own === 'true') {
-    await setUserCharacterOwnership(name, user.id)
-  } else {
-    await removeUserCharacterOwnershipEntry(name, user.id)
+  if (id === 'NEW') {
+    await addUserCharacterOwnership(user.id, name)
+
+    return json(null, { status: 201 })
   }
+
+  await updateUserCharacterOwnership(id, !(newOwnStatus === 'true'))
 
   return json(null, { status: 201 })
 }
 
 export default function CharacterRoute() {
-  const { character, level } = useOutletContext<{
-    character: ICharacter | ITraveler
-    level: ICharacter['level'] | ITraveler['level']
-  }>()
+  const character = useOutletContext<ICharacter | ITraveler>()
 
   return (
     <div>

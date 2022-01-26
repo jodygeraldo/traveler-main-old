@@ -1,8 +1,8 @@
 import { CharacterName, ICharacter, ITraveler } from '~/types/character'
 
-const characters = new Map<CharacterName, ICharacter | ITraveler>()
+const characterMap = new Map<CharacterName, ICharacter | ITraveler>()
 
-characters.set('Traveler', {
+characterMap.set('Traveler', {
   name: 'Traveler',
   vision: ['Anemo', 'Geo', 'Electro'],
   rarity: 5,
@@ -40,7 +40,7 @@ characters.set('Traveler', {
   own: true,
 })
 
-characters.set('Albedo', {
+characterMap.set('Albedo', {
   name: 'Albedo',
   vision: 'Geo',
   rarity: 5,
@@ -58,9 +58,14 @@ characters.set('Albedo', {
     },
   },
   own: false,
+  level: {
+    character: 1,
+    ascension: 0,
+    talent: [1, 1, 1],
+  },
 })
 
-characters.set('Aloy', {
+characterMap.set('Aloy', {
   name: 'Aloy',
   vision: 'Cryo',
   rarity: 'aloy',
@@ -78,9 +83,14 @@ characters.set('Aloy', {
     },
   },
   own: false,
+  level: {
+    character: 1,
+    ascension: 0,
+    talent: [1, 1, 1],
+  },
 })
 
-characters.set('Amber', {
+characterMap.set('Amber', {
   name: 'Amber',
   vision: 'Pyro',
   rarity: 4,
@@ -98,9 +108,14 @@ characters.set('Amber', {
     },
   },
   own: true,
+  level: {
+    character: 1,
+    ascension: 0,
+    talent: [1, 1, 1],
+  },
 })
 
-characters.set('Arataki Itto', {
+characterMap.set('Arataki Itto', {
   name: 'Arataki Itto',
   vision: 'Geo',
   rarity: 5,
@@ -119,9 +134,14 @@ characters.set('Arataki Itto', {
     },
   },
   own: false,
+  level: {
+    character: 1,
+    ascension: 0,
+    talent: [1, 1, 1],
+  },
 })
 
-characters.set('Barbara', {
+characterMap.set('Barbara', {
   name: 'Barbara',
   vision: 'Hydro',
   rarity: 4,
@@ -139,9 +159,14 @@ characters.set('Barbara', {
     },
   },
   own: true,
+  level: {
+    character: 1,
+    ascension: 0,
+    talent: [1, 1, 1],
+  },
 })
 
-characters.set('Beidou', {
+characterMap.set('Beidou', {
   name: 'Beidou',
   vision: 'Electro',
   rarity: 4,
@@ -159,9 +184,14 @@ characters.set('Beidou', {
     },
   },
   own: false,
+  level: {
+    character: 1,
+    ascension: 0,
+    talent: [1, 1, 1],
+  },
 })
 
-characters.set('Bennett', {
+characterMap.set('Bennett', {
   name: 'Bennett',
   vision: 'Pyro',
   rarity: 4,
@@ -179,9 +209,14 @@ characters.set('Bennett', {
     },
   },
   own: false,
+  level: {
+    character: 1,
+    ascension: 0,
+    talent: [1, 1, 1],
+  },
 })
 
-characters.set('Chongyun', {
+characterMap.set('Chongyun', {
   name: 'Chongyun',
   vision: 'Cryo',
   rarity: 4,
@@ -199,9 +234,14 @@ characters.set('Chongyun', {
     },
   },
   own: false,
+  level: {
+    character: 1,
+    ascension: 0,
+    talent: [1, 1, 1],
+  },
 })
 
-characters.set('Diluc', {
+characterMap.set('Diluc', {
   name: 'Diluc',
   vision: 'Pyro',
   rarity: 5,
@@ -219,9 +259,14 @@ characters.set('Diluc', {
     },
   },
   own: false,
+  level: {
+    character: 1,
+    ascension: 0,
+    talent: [1, 1, 1],
+  },
 })
 
-characters.set('Diona', {
+characterMap.set('Diona', {
   name: 'Diona',
   vision: 'Cryo',
   rarity: 4,
@@ -239,9 +284,14 @@ characters.set('Diona', {
     },
   },
   own: false,
+  level: {
+    character: 1,
+    ascension: 0,
+    talent: [1, 1, 1],
+  },
 })
 
-characters.set('Eula', {
+characterMap.set('Eula', {
   name: 'Eula',
   vision: 'Cryo',
   rarity: 5,
@@ -259,9 +309,14 @@ characters.set('Eula', {
     },
   },
   own: false,
+  level: {
+    character: 1,
+    ascension: 0,
+    talent: [1, 1, 1],
+  },
 })
 
-characters.set('Fischl', {
+characterMap.set('Fischl', {
   name: 'Fischl',
   vision: 'Electro',
   rarity: 4,
@@ -279,9 +334,14 @@ characters.set('Fischl', {
     },
   },
   own: false,
+  level: {
+    character: 1,
+    ascension: 0,
+    talent: [1, 1, 1],
+  },
 })
 
-characters.set('Ganyu', {
+characterMap.set('Ganyu', {
   name: 'Ganyu',
   vision: 'Cryo',
   rarity: 5,
@@ -299,9 +359,14 @@ characters.set('Ganyu', {
     },
   },
   own: false,
+  level: {
+    character: 1,
+    ascension: 0,
+    talent: [1, 1, 1],
+  },
 })
 
-characters.set('Gorou', {
+characterMap.set('Gorou', {
   name: 'Gorou',
   vision: 'Geo',
   rarity: 4,
@@ -319,9 +384,14 @@ characters.set('Gorou', {
     },
   },
   own: false,
+  level: {
+    character: 1,
+    ascension: 0,
+    talent: [1, 1, 1],
+  },
 })
 
-characters.set('Hu Tao', {
+characterMap.set('Hu Tao', {
   name: 'Hu Tao',
   vision: 'Pyro',
   rarity: 5,
@@ -339,9 +409,14 @@ characters.set('Hu Tao', {
     },
   },
   own: false,
+  level: {
+    character: 1,
+    ascension: 0,
+    talent: [1, 1, 1],
+  },
 })
 
-characters.set('Jean', {
+characterMap.set('Jean', {
   name: 'Jean',
   vision: 'Anemo',
   rarity: 5,
@@ -359,9 +434,14 @@ characters.set('Jean', {
     },
   },
   own: false,
+  level: {
+    character: 1,
+    ascension: 0,
+    talent: [1, 1, 1],
+  },
 })
 
-characters.set('Kaedehara Kazuha', {
+characterMap.set('Kaedehara Kazuha', {
   name: 'Kaedehara Kazuha',
   vision: 'Anemo',
   rarity: 5,
@@ -379,9 +459,14 @@ characters.set('Kaedehara Kazuha', {
     },
   },
   own: false,
+  level: {
+    character: 1,
+    ascension: 0,
+    talent: [1, 1, 1],
+  },
 })
 
-characters.set('Kaeya', {
+characterMap.set('Kaeya', {
   name: 'Kaeya',
   vision: 'Cryo',
   rarity: 4,
@@ -399,9 +484,14 @@ characters.set('Kaeya', {
     },
   },
   own: true,
+  level: {
+    character: 1,
+    ascension: 0,
+    talent: [1, 1, 1],
+  },
 })
 
-characters.set('Kamisato Ayaka', {
+characterMap.set('Kamisato Ayaka', {
   name: 'Kamisato Ayaka',
   vision: 'Cryo',
   rarity: 5,
@@ -419,9 +509,14 @@ characters.set('Kamisato Ayaka', {
     },
   },
   own: false,
+  level: {
+    character: 1,
+    ascension: 0,
+    talent: [1, 1, 1],
+  },
 })
 
-characters.set('Keqing', {
+characterMap.set('Keqing', {
   name: 'Keqing',
   vision: 'Electro',
   rarity: 5,
@@ -439,9 +534,14 @@ characters.set('Keqing', {
     },
   },
   own: false,
+  level: {
+    character: 1,
+    ascension: 0,
+    talent: [1, 1, 1],
+  },
 })
 
-characters.set('Klee', {
+characterMap.set('Klee', {
   name: 'Klee',
   vision: 'Pyro',
   rarity: 5,
@@ -459,9 +559,14 @@ characters.set('Klee', {
     },
   },
   own: false,
+  level: {
+    character: 1,
+    ascension: 0,
+    talent: [1, 1, 1],
+  },
 })
 
-characters.set('Kujou Sara', {
+characterMap.set('Kujou Sara', {
   name: 'Kujou Sara',
   vision: 'Electro',
   rarity: 4,
@@ -479,9 +584,14 @@ characters.set('Kujou Sara', {
     },
   },
   own: false,
+  level: {
+    character: 1,
+    ascension: 0,
+    talent: [1, 1, 1],
+  },
 })
 
-characters.set('Lisa', {
+characterMap.set('Lisa', {
   name: 'Lisa',
   vision: 'Electro',
   rarity: 4,
@@ -499,9 +609,14 @@ characters.set('Lisa', {
     },
   },
   own: true,
+  level: {
+    character: 1,
+    ascension: 0,
+    talent: [1, 1, 1],
+  },
 })
 
-characters.set('Mona', {
+characterMap.set('Mona', {
   name: 'Mona',
   vision: 'Hydro',
   rarity: 5,
@@ -519,9 +634,14 @@ characters.set('Mona', {
     },
   },
   own: false,
+  level: {
+    character: 1,
+    ascension: 0,
+    talent: [1, 1, 1],
+  },
 })
 
-characters.set('Ningguang', {
+characterMap.set('Ningguang', {
   name: 'Ningguang',
   vision: 'Geo',
   rarity: 4,
@@ -539,9 +659,14 @@ characters.set('Ningguang', {
     },
   },
   own: false,
+  level: {
+    character: 1,
+    ascension: 0,
+    talent: [1, 1, 1],
+  },
 })
 
-characters.set('Noelle', {
+characterMap.set('Noelle', {
   name: 'Noelle',
   vision: 'Geo',
   rarity: 4,
@@ -559,9 +684,14 @@ characters.set('Noelle', {
     },
   },
   own: true,
+  level: {
+    character: 1,
+    ascension: 0,
+    talent: [1, 1, 1],
+  },
 })
 
-characters.set('Qiqi', {
+characterMap.set('Qiqi', {
   name: 'Qiqi',
   vision: 'Cryo',
   rarity: 5,
@@ -579,9 +709,14 @@ characters.set('Qiqi', {
     },
   },
   own: false,
+  level: {
+    character: 1,
+    ascension: 0,
+    talent: [1, 1, 1],
+  },
 })
 
-characters.set('Raiden Shogun', {
+characterMap.set('Raiden Shogun', {
   name: 'Raiden Shogun',
   vision: 'Electro',
   rarity: 5,
@@ -599,9 +734,14 @@ characters.set('Raiden Shogun', {
     },
   },
   own: false,
+  level: {
+    character: 1,
+    ascension: 0,
+    talent: [1, 1, 1],
+  },
 })
 
-characters.set('Razor', {
+characterMap.set('Razor', {
   name: 'Razor',
   vision: 'Electro',
   rarity: 4,
@@ -619,9 +759,14 @@ characters.set('Razor', {
     },
   },
   own: false,
+  level: {
+    character: 1,
+    ascension: 0,
+    talent: [1, 1, 1],
+  },
 })
 
-characters.set('Rosaria', {
+characterMap.set('Rosaria', {
   name: 'Rosaria',
   vision: 'Cryo',
   rarity: 4,
@@ -639,9 +784,14 @@ characters.set('Rosaria', {
     },
   },
   own: false,
+  level: {
+    character: 1,
+    ascension: 0,
+    talent: [1, 1, 1],
+  },
 })
 
-characters.set('Sangonomiya Kokomi', {
+characterMap.set('Sangonomiya Kokomi', {
   name: 'Sangonomiya Kokomi',
   vision: 'Hydro',
   rarity: 5,
@@ -659,9 +809,14 @@ characters.set('Sangonomiya Kokomi', {
     },
   },
   own: false,
+  level: {
+    character: 1,
+    ascension: 0,
+    talent: [1, 1, 1],
+  },
 })
 
-characters.set('Sayu', {
+characterMap.set('Sayu', {
   name: 'Sayu',
   vision: 'Anemo',
   rarity: 4,
@@ -679,9 +834,14 @@ characters.set('Sayu', {
     },
   },
   own: false,
+  level: {
+    character: 1,
+    ascension: 0,
+    talent: [1, 1, 1],
+  },
 })
 
-characters.set('Shenhe', {
+characterMap.set('Shenhe', {
   name: 'Shenhe',
   vision: 'Cryo',
   rarity: 5,
@@ -699,9 +859,14 @@ characters.set('Shenhe', {
     },
   },
   own: false,
+  level: {
+    character: 1,
+    ascension: 0,
+    talent: [1, 1, 1],
+  },
 })
 
-characters.set('Sucrose', {
+characterMap.set('Sucrose', {
   name: 'Sucrose',
   vision: 'Anemo',
   rarity: 4,
@@ -719,9 +884,14 @@ characters.set('Sucrose', {
     },
   },
   own: false,
+  level: {
+    character: 1,
+    ascension: 0,
+    talent: [1, 1, 1],
+  },
 })
 
-characters.set('Tartaglia', {
+characterMap.set('Tartaglia', {
   name: 'Tartaglia',
   vision: 'Hydro',
   rarity: 5,
@@ -739,9 +909,14 @@ characters.set('Tartaglia', {
     },
   },
   own: false,
+  level: {
+    character: 1,
+    ascension: 0,
+    talent: [1, 1, 1],
+  },
 })
 
-characters.set('Thoma', {
+characterMap.set('Thoma', {
   name: 'Thoma',
   vision: 'Pyro',
   rarity: 4,
@@ -759,9 +934,14 @@ characters.set('Thoma', {
     },
   },
   own: false,
+  level: {
+    character: 1,
+    ascension: 0,
+    talent: [1, 1, 1],
+  },
 })
 
-characters.set('Venti', {
+characterMap.set('Venti', {
   name: 'Venti',
   vision: 'Anemo',
   rarity: 5,
@@ -779,9 +959,14 @@ characters.set('Venti', {
     },
   },
   own: false,
+  level: {
+    character: 1,
+    ascension: 0,
+    talent: [1, 1, 1],
+  },
 })
 
-characters.set('Xiangling', {
+characterMap.set('Xiangling', {
   name: 'Xiangling',
   vision: 'Pyro',
   rarity: 4,
@@ -799,8 +984,13 @@ characters.set('Xiangling', {
     },
   },
   own: true,
+  level: {
+    character: 1,
+    ascension: 0,
+    talent: [1, 1, 1],
+  },
 })
-characters.set('Xiao', {
+characterMap.set('Xiao', {
   name: 'Xiao',
   vision: 'Anemo',
   rarity: 5,
@@ -818,9 +1008,14 @@ characters.set('Xiao', {
     },
   },
   own: false,
+  level: {
+    character: 1,
+    ascension: 0,
+    talent: [1, 1, 1],
+  },
 })
 
-characters.set('Xingqiu', {
+characterMap.set('Xingqiu', {
   name: 'Xingqiu',
   vision: 'Hydro',
   rarity: 4,
@@ -838,9 +1033,14 @@ characters.set('Xingqiu', {
     },
   },
   own: false,
+  level: {
+    character: 1,
+    ascension: 0,
+    talent: [1, 1, 1],
+  },
 })
 
-characters.set('Xinyan', {
+characterMap.set('Xinyan', {
   name: 'Xinyan',
   vision: 'Pyro',
   rarity: 4,
@@ -858,9 +1058,14 @@ characters.set('Xinyan', {
     },
   },
   own: false,
+  level: {
+    character: 1,
+    ascension: 0,
+    talent: [1, 1, 1],
+  },
 })
 
-characters.set('Yanfei', {
+characterMap.set('Yanfei', {
   name: 'Yanfei',
   vision: 'Pyro',
   rarity: 4,
@@ -878,9 +1083,14 @@ characters.set('Yanfei', {
     },
   },
   own: false,
+  level: {
+    character: 1,
+    ascension: 0,
+    talent: [1, 1, 1],
+  },
 })
 
-characters.set('Yoimiya', {
+characterMap.set('Yoimiya', {
   name: 'Yoimiya',
   vision: 'Pyro',
   rarity: 5,
@@ -898,9 +1108,14 @@ characters.set('Yoimiya', {
     },
   },
   own: false,
+  level: {
+    character: 1,
+    ascension: 0,
+    talent: [1, 1, 1],
+  },
 })
 
-characters.set('Yun Jin', {
+characterMap.set('Yun Jin', {
   name: 'Yun Jin',
   vision: 'Geo',
   rarity: 4,
@@ -918,9 +1133,14 @@ characters.set('Yun Jin', {
     },
   },
   own: false,
+  level: {
+    character: 1,
+    ascension: 0,
+    talent: [1, 1, 1],
+  },
 })
 
-characters.set('Zhongli', {
+characterMap.set('Zhongli', {
   name: 'Zhongli',
   vision: 'Geo',
   rarity: 5,
@@ -938,12 +1158,11 @@ characters.set('Zhongli', {
     },
   },
   own: false,
+  level: {
+    character: 1,
+    ascension: 0,
+    talent: [1, 1, 1],
+  },
 })
 
-function getCharacters() {
-  const result: (ITraveler | ICharacter)[] = []
-  characters.forEach(value => result.push(value))
-  return result
-}
-
-export { characters, getCharacters }
+export default characterMap

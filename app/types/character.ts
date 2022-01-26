@@ -87,11 +87,12 @@ export interface ICharacter {
     }
   }
   own: boolean
-  level?: {
+  level: {
     character: number
     ascension: number
     talent: [number, number, number]
   }
+  dbId?: string
 }
 
 export interface ITraveler {
@@ -130,4 +131,5 @@ export interface ITraveler {
       electro: [number, number, number]
     }
   }
+  dbId?: string
 }

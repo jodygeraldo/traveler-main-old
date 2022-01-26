@@ -19,15 +19,17 @@ const og7character: Array<CharacterName> = [
 
 const CharacterView: FC<Props> = ({ character }) => {
   const transition = useTransition()
+  const id = character.dbId ?? 'NEW'
 
   return (
-    <div className="flex justify-between items-start">
+    <div className="flex items-start justify-between">
       <h1 className="text-6xl">{character.name}</h1>
       {og7character.includes(character.name) ? null : (
         <Form replace method="post">
+          <input type="hidden" name="id" value={id} />
           <input type="hidden" name="name" value={character.name} />
-          <input type="hidden" name="own" value={`${!character.own}`} />
-          <button className="bg-primary-400 rounded-md shadow-md shadow-primary-800 px-4 py-2 ">
+          <input type="hidden" name="toggle-own" value={`${!character.own}`} />
+          <button className="rounded-md bg-primary-400 px-4 py-2 shadow-md shadow-primary-800 ">
             {transition.submission
               ? 'Saving...'
               : character.own

@@ -1,141 +1,213 @@
-import { ItemCategory, ItemType } from '~/types/item'
+import {
+  AscensionBossMaterial,
+  AscensionCommonMaterial,
+  AscensionGem,
+  IAscensionBossMaterial,
+  IAscensionCommonMaterial,
+  IAscensionGem,
+  ILocalSpecialty,
+  ITalentBook,
+  ITalentBossMaterial,
+  ITalentCrown,
+  LocalSpecialty,
+  TalentBook,
+  TalentBossMaterial,
+  TalentCrown,
+} from '~/types/item'
 
-const items = new Map<ItemCategory, ItemType>()
+export const talentCrownMap: ReadonlyMap<TalentCrown, ITalentCrown> = new Map([
+  ['Crown of Insight', { name: 'Crown of Insight', count: 0 }],
+])
 
-items.set('TalentCrown', {
-  name: 'Crown of Insight',
-  material: [{ id: 1000000001, name: 'Crown of Insight' }],
-})
+export const talentBookMap: ReadonlyMap<TalentBook, ITalentBook> = new Map([
+  ['Freedom', { name: 'Freedom', region: 'mondstadt', count: 0 }],
+  ['Resistance', { name: 'Resistance', region: 'mondstadt', count: 0 }],
+  ['Ballad', { name: 'Ballad', region: 'mondstadt', count: 0 }],
+  ['Prosperity', { name: 'Prosperity', region: 'liyue', count: 0 }],
+  ['Diligence', { name: 'Diligence', region: 'liyue', count: 0 }],
+  ['Gold', { name: 'Gold', region: 'liyue', count: 0 }],
+  ['Transience', { name: 'Transience', region: 'inazuma', count: 0 }],
+  ['Elegance', { name: 'Elegance', region: 'inazuma', count: 0 }],
+  ['Light', { name: 'Light', region: 'inazuma', count: 0 }],
+])
 
-items.set('TalentBook', {
-  name: 'Talent Book',
-  material: [
-    { id: 2001000001, name: 'Freedom', region: 'mondstadt' },
-    { id: 2001000002, name: 'Resistance', region: 'mondstadt' },
-    { id: 2001000003, name: 'Ballad', region: 'mondstadt' },
-    { id: 2002000004, name: 'Prosperity', region: 'liyue' },
-    { id: 2002000005, name: 'Diligence', region: 'liyue' },
-    { id: 2002000006, name: 'Gold', region: 'liyue' },
-    { id: 2003000007, name: 'Transience', region: 'inazuma' },
-    { id: 2003000008, name: 'Elegance', region: 'inazuma' },
-    { id: 2003000009, name: 'Light', region: 'inazuma' },
+export const talentBossMaterialMap: ReadonlyMap<
+  TalentBossMaterial,
+  ITalentBossMaterial
+> = new Map([
+  ["Dvalin's Plume", { name: "Dvalin's Plume", region: 'mondstadt', count: 0 }],
+  ["Dvalin's Claw", { name: "Dvalin's Claw", region: 'mondstadt', count: 0 }],
+  ["Dvalin's Sigh", { name: "Dvalin's Sigh", region: 'mondstadt', count: 0 }],
+  ['Tail of Boreas', { name: 'Tail of Boreas', region: 'mondstadt', count: 0 }],
+  ['Ring of Boreas', { name: 'Ring of Boreas', region: 'mondstadt', count: 0 }],
+  [
+    'Spirit Locket of Boreas',
+    { name: 'Spirit Locket of Boreas', region: 'mondstadt', count: 0 },
   ],
-})
-
-items.set('TalentBossMaterial', {
-  name: 'Talent Boss Material',
-  material: [
-    { id: 3001000001, name: "Dvalin's Plume", region: 'mondstadt' },
-    { id: 3001000002, name: "Dvalin's Claw", region: 'mondstadt' },
-    { id: 3001000003, name: "Dvalin's Sigh", region: 'mondstadt' },
-    { id: 3001000004, name: 'Tail of Boreas', region: 'mondstadt' },
-    { id: 3001000005, name: 'Ring of Boreas', region: 'mondstadt' },
-    { id: 3001000006, name: 'Spirit Locket of Boreas', region: 'mondstadt' },
-    { id: 3002000007, name: 'Tusk of Monoceros Caeli', region: 'liyue' },
-    { id: 3002000008, name: 'Shard of a Foul Legacy', region: 'liyue' },
-    { id: 3002000009, name: 'Shadow of the Warrior', region: 'liyue' },
-    { id: 3002000010, name: "Dragon Lord's Crown", region: 'liyue' },
-    { id: 3002000011, name: 'Bloodjade Branch', region: 'liyue' },
-    { id: 3002000012, name: 'Gilded Scale', region: 'liyue' },
-    { id: 3003000013, name: 'Molten Moment', region: 'inazuma' },
-    { id: 3003000014, name: 'Ashen Heart', region: 'inazuma' },
-    { id: 3003000015, name: 'Hellfire Butterfly', region: 'inazuma' },
+  [
+    'Tusk of Monoceros Caeli',
+    { name: 'Tusk of Monoceros Caeli', region: 'liyue', count: 0 },
   ],
-})
-
-items.set('AscensionGem', {
-  name: 'Ascension Gem',
-  material: [
-    { id: 4000000001, name: 'Brilliant Diamond' },
-    { id: 4000000002, name: 'Agnidus Agate' },
-    { id: 4000000003, name: 'Varunada Lazurite' },
-    { id: 4000000004, name: 'Vajrada Amethyst' },
-    { id: 4000000005, name: 'Vayuda Turquoise' },
-    { id: 4000000006, name: 'Shivada Jade' },
-    { id: 4000000007, name: 'Prithiva Topaz' },
+  [
+    'Shard of a Foul Legacy',
+    { name: 'Shard of a Foul Legacy', region: 'liyue', count: 0 },
   ],
-})
-
-items.set('AscensionBossMaterial', {
-  name: 'Ascension Boss Material',
-  material: [
-    { id: 5001000001, name: 'Hurricane Seed', region: 'mondstadt' },
-    { id: 5001000002, name: 'Lightning Prism', region: 'mondstadt' },
-    { id: 5002000003, name: 'Basalt Pillar', region: 'liyue' },
-    { id: 5001000004, name: 'Hoarfrost Core', region: 'mondstadt' },
-    { id: 5002000005, name: 'Everflame Seed', region: 'liyue' },
-    { id: 5002000006, name: 'Cleansing Heart', region: 'liyue' },
-    { id: 5002000007, name: 'Juvenile Jade', region: 'liyue' },
-    { id: 5001000008, name: 'Crystalline Bloom', region: 'mondstadt' },
-    { id: 5003000009, name: 'Marionette Core', region: 'inazuma' },
-    { id: 5003000010, name: 'Perpetual Heart', region: 'inazuma' },
-    { id: 5003000011, name: 'Smoldering Pearl', region: 'inazuma' },
-    { id: 5003000012, name: 'Dew of Repudiation', region: 'inazuma' },
-    { id: 5003000013, name: 'Storm Beads', region: 'inazuma' },
-    { id: 5003000014, name: 'Riftborn Regalia', region: 'inazuma' },
-    { id: 5003000015, name: "Dragonheir's False Fin", region: 'inazuma' },
+  [
+    'Shadow of the Warrior',
+    { name: 'Shadow of the Warrior', region: 'liyue', count: 0 },
   ],
-})
-
-items.set('LocalSpecialty', {
-  name: 'Local Specialty',
-  material: [
-    { id: 6001000001, name: 'Calla Lily', region: 'mondstadt' },
-    { id: 6001000002, name: 'Wolfhook', region: 'mondstadt' },
-    { id: 6001000003, name: 'Valberry', region: 'mondstadt' },
-    { id: 6001000004, name: 'Cecilia', region: 'mondstadt' },
-    { id: 6001000005, name: 'Windwheel Aster', region: 'mondstadt' },
-    { id: 6001000006, name: 'Philanemo Mushroom', region: 'mondstadt' },
-    { id: 6002000007, name: 'Jueyun Chili', region: 'liyue' },
-    { id: 6002000008, name: 'Noctilucous Jade', region: 'liyue' },
-    { id: 6002000009, name: 'Silk Flower', region: 'liyue' },
-    { id: 6002000010, name: 'Glaze Lily', region: 'liyue' },
-    { id: 6002000011, name: 'Qingxin', region: 'liyue' },
-    { id: 6002000012, name: 'Starconch', region: 'liyue' },
-    { id: 6002000013, name: 'Violet Grass', region: 'liyue' },
-    { id: 6001000014, name: 'Small Lamp Grass', region: 'mondstadt' },
-    { id: 6001000014, name: 'Dandelion', region: 'mondstadt' },
-    { id: 6002000015, name: 'Cor Lapis', region: 'liyue' },
-    { id: 6003000016, name: 'Onikabuto', region: 'inazuma' },
-    { id: 6003000017, name: 'Sakura Bloom', region: 'inazuma' },
-    { id: 6003000018, name: 'Crystal Marrow', region: 'inazuma' },
-    { id: 6003000019, name: 'Dendrobium', region: 'inazuma' },
-    { id: 6003000020, name: 'Naku Weed', region: 'inazuma' },
-    { id: 6003000021, name: 'Sea Ganoderma', region: 'inazuma' },
-    { id: 6003000022, name: 'Sango Pearl', region: 'inazuma' },
-    { id: 6003000023, name: 'Amakumo Fruit', region: 'inazuma' },
-    { id: 6003000024, name: 'Fluorescent Fungus', region: 'inazuma' },
+  [
+    "Dragon Lord's Crown",
+    { name: "Dragon Lord's Crown", region: 'liyue', count: 0 },
   ],
-})
-
-items.set('AscensionCommonMaterial', {
-  name: 'Ascension Common Material',
-  material: [
-    { id: 7000000001, name: 'Slime', isElite: false },
-    { id: 7000000002, name: 'Hilichurl Masks', isElite: false },
-    { id: 7000000003, name: 'Samachurl Scrolls', isElite: false },
-    { id: 7000000004, name: 'Hilichurl Arrowheads', isElite: false },
-    { id: 7000000005, name: 'Fatui Insignia', isElite: false },
-    { id: 7000000006, name: 'Treasure Hoarder Insignias', isElite: false },
-    { id: 7000000007, name: 'Whopperflower Nectar', isElite: false },
-    { id: 7000000008, name: 'Nobushi Handguards', isElite: false },
-    { id: 7000000009, name: 'Spectral Cores', isElite: false },
-    { id: 7000000010, name: 'Hilichurl Horns', isElite: true },
-    { id: 7000000011, name: 'Ley Lines', isElite: true },
-    { id: 7000000012, name: 'Chaos Parts', isElite: true },
-    { id: 7000000013, name: 'Mist Grass', isElite: true },
-    { id: 7000000014, name: 'Sacrificial Knifes', isElite: true },
-    { id: 7000000015, name: 'Bone Shards', isElite: true },
-    { id: 7000000016, name: 'Sentinel Chaos Parts', isElite: true },
-    { id: 7000000017, name: 'Prisms', isElite: true },
-    { id: 7000000018, name: 'Concealed Rifthound Claws', isElite: true },
+  ['Bloodjade Branch', { name: 'Bloodjade Branch', region: 'liyue', count: 0 }],
+  ['Gilded Scale', { name: 'Gilded Scale', region: 'liyue', count: 0 }],
+  ['Molten Moment', { name: 'Molten Moment', region: 'inazuma', count: 0 }],
+  ['Ashen Heart', { name: 'Ashen Heart', region: 'inazuma', count: 0 }],
+  [
+    'Hellfire Butterfly',
+    { name: 'Hellfire Butterfly', region: 'inazuma', count: 0 },
   ],
-})
+])
 
-function getItems() {
-  const result: ItemType[] = []
-  items.forEach(value => result.push(value))
-  return result
-}
+export const ascensionGemMap: ReadonlyMap<AscensionGem, IAscensionGem> =
+  new Map([
+    ['Brilliant Diamond', { name: 'Brilliant Diamond', count: 0 }],
+    ['Agnidus Agate', { name: 'Agnidus Agate', count: 0 }],
+    ['Varunada Lazurite', { name: 'Varunada Lazurite', count: 0 }],
+    ['Vajrada Amethyst', { name: 'Vajrada Amethyst', count: 0 }],
+    ['Vayuda Turquoise', { name: 'Vayuda Turquoise', count: 0 }],
+    ['Shivada Jade', { name: 'Shivada Jade', count: 0 }],
+    ['Prithiva Topaz', { name: 'Prithiva Topaz', count: 0 }],
+  ])
 
-export { getItems, items }
+export const ascensionBossMaterialMap = new Map<
+  AscensionBossMaterial,
+  IAscensionBossMaterial
+>([
+  ['Hurricane Seed', { name: 'Hurricane Seed', region: 'mondstadt', count: 0 }],
+  [
+    'Lightning Prism',
+    { name: 'Lightning Prism', region: 'mondstadt', count: 0 },
+  ],
+  ['Basalt Pillar', { name: 'Basalt Pillar', region: 'liyue', count: 0 }],
+  ['Hoarfrost Core', { name: 'Hoarfrost Core', region: 'mondstadt', count: 0 }],
+  ['Everflame Seed', { name: 'Everflame Seed', region: 'liyue', count: 0 }],
+  ['Cleansing Heart', { name: 'Cleansing Heart', region: 'liyue', count: 0 }],
+  ['Juvenile Jade', { name: 'Juvenile Jade', region: 'liyue', count: 0 }],
+  [
+    'Crystalline Bloom',
+    { name: 'Crystalline Bloom', region: 'mondstadt', count: 0 },
+  ],
+  ['Marionette Core', { name: 'Marionette Core', region: 'inazuma', count: 0 }],
+  ['Perpetual Heart', { name: 'Perpetual Heart', region: 'inazuma', count: 0 }],
+  [
+    'Smoldering Pearl',
+    { name: 'Smoldering Pearl', region: 'inazuma', count: 0 },
+  ],
+  [
+    'Dew of Repudiation',
+    { name: 'Dew of Repudiation', region: 'inazuma', count: 0 },
+  ],
+  ['Storm Beads', { name: 'Storm Beads', region: 'inazuma', count: 0 }],
+  [
+    'Riftborn Regalia',
+    { name: 'Riftborn Regalia', region: 'inazuma', count: 0 },
+  ],
+  [
+    "Dragonheir's False Fin",
+    { name: "Dragonheir's False Fin", region: 'inazuma', count: 0 },
+  ],
+])
+
+const ascensionLocalSpecialtyMap: ReadonlyMap<LocalSpecialty, ILocalSpecialty> =
+  new Map([
+    ['Calla Lily', { name: 'Calla Lily', region: 'mondstadt', count: 0 }],
+    ['Wolfhook', { name: 'Wolfhook', region: 'mondstadt', count: 0 }],
+    ['Valberry', { name: 'Valberry', region: 'mondstadt', count: 0 }],
+    ['Cecilia', { name: 'Cecilia', region: 'mondstadt', count: 0 }],
+    [
+      'Windwheel Aster',
+      { name: 'Windwheel Aster', region: 'mondstadt', count: 0 },
+    ],
+    [
+      'Philanemo Mushroom',
+      { name: 'Philanemo Mushroom', region: 'mondstadt', count: 0 },
+    ],
+    ['Jueyun Chili', { name: 'Jueyun Chili', region: 'liyue', count: 0 }],
+    [
+      'Noctilucous Jade',
+      { name: 'Noctilucous Jade', region: 'liyue', count: 0 },
+    ],
+    ['Silk Flower', { name: 'Silk Flower', region: 'liyue', count: 0 }],
+    ['Glaze Lily', { name: 'Glaze Lily', region: 'liyue', count: 0 }],
+    ['Qingxin', { name: 'Qingxin', region: 'liyue', count: 0 }],
+    ['Starconch', { name: 'Starconch', region: 'liyue', count: 0 }],
+    ['Violet Grass', { name: 'Violet Grass', region: 'liyue', count: 0 }],
+    [
+      'Small Lamp Grass',
+      { name: 'Small Lamp Grass', region: 'mondstadt', count: 0 },
+    ],
+    ['Dandelion', { name: 'Dandelion', region: 'mondstadt', count: 0 }],
+    ['Cor Lapis', { name: 'Cor Lapis', region: 'liyue', count: 0 }],
+    ['Onikabuto', { name: 'Onikabuto', region: 'inazuma', count: 0 }],
+    ['Sakura Bloom', { name: 'Sakura Bloom', region: 'inazuma', count: 0 }],
+    ['Crystal Marrow', { name: 'Crystal Marrow', region: 'inazuma', count: 0 }],
+    ['Dendrobium', { name: 'Dendrobium', region: 'inazuma', count: 0 }],
+    ['Naku Weed', { name: 'Naku Weed', region: 'inazuma', count: 0 }],
+    ['Sea Ganoderma', { name: 'Sea Ganoderma', region: 'inazuma', count: 0 }],
+    ['Sango Pearl', { name: 'Sango Pearl', region: 'inazuma', count: 0 }],
+    ['Amakumo Fruit', { name: 'Amakumo Fruit', region: 'inazuma', count: 0 }],
+    [
+      'Fluorescent Fungus',
+      { name: 'Fluorescent Fungus', region: 'inazuma', count: 0 },
+    ],
+  ])
+
+export const ascensionCommonMaterialMap: ReadonlyMap<
+  AscensionCommonMaterial,
+  IAscensionCommonMaterial
+> = new Map([
+  ['Slime', { name: 'Slime', isElite: false, count: 0 }],
+  ['Hilichurl Masks', { name: 'Hilichurl Masks', isElite: false, count: 0 }],
+  [
+    'Samachurl Scrolls',
+    { name: 'Samachurl Scrolls', isElite: false, count: 0 },
+  ],
+  [
+    'Hilichurl Arrowheads',
+    { name: 'Hilichurl Arrowheads', isElite: false, count: 0 },
+  ],
+  ['Fatui Insignia', { name: 'Fatui Insignia', isElite: false, count: 0 }],
+  [
+    'Treasure Hoarder Insignias',
+    { name: 'Treasure Hoarder Insignias', isElite: false, count: 0 },
+  ],
+  [
+    'Whopperflower Nectar',
+    { name: 'Whopperflower Nectar', isElite: false, count: 0 },
+  ],
+  [
+    'Nobushi Handguards',
+    { name: 'Nobushi Handguards', isElite: false, count: 0 },
+  ],
+  ['Spectral Cores', { name: 'Spectral Cores', isElite: false, count: 0 }],
+  ['Hilichurl Horns', { name: 'Hilichurl Horns', isElite: true, count: 0 }],
+  ['Ley Lines', { name: 'Ley Lines', isElite: true, count: 0 }],
+  ['Chaos Parts', { name: 'Chaos Parts', isElite: true, count: 0 }],
+  ['Mist Grass', { name: 'Mist Grass', isElite: true, count: 0 }],
+  [
+    'Sacrificial Knifes',
+    { name: 'Sacrificial Knifes', isElite: true, count: 0 },
+  ],
+  ['Bone Shards', { name: 'Bone Shards', isElite: true, count: 0 }],
+  [
+    'Sentinel Chaos Parts',
+    { name: 'Sentinel Chaos Parts', isElite: true, count: 0 },
+  ],
+  ['Prisms', { name: 'Prisms', isElite: true, count: 0 }],
+  [
+    'Concealed Rifthound Claws',
+    { name: 'Concealed Rifthound Claws', isElite: true, count: 0 },
+  ],
+])

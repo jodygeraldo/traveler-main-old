@@ -1,5 +1,7 @@
 import { GenshinRegion } from './general'
 
+export type TalentCrown = 'Crown of Insight'
+
 export type TalentBook =
   | 'Freedom'
   | 'Prosperity'
@@ -102,80 +104,60 @@ export type AscensionCommonMaterial =
   | 'Concealed Rifthound Claws'
 
 export type ItemCategory =
-  | 'TalentCrown'
-  | 'TalentBook'
-  | 'TalentBossMaterial'
-  | 'AscensionGem'
-  | 'AscensionBossMaterial'
-  | 'LocalSpecialty'
-  | 'AscensionCommonMaterial'
+  | 'Talent Crown'
+  | 'Talent Book'
+  | 'Talent Boss Material'
+  | 'Ascension Gem'
+  | 'Ascension Boss Material'
+  | 'Local Specialty'
+  | 'Ascension Common Material'
 
 export interface ITalentCrown {
-  id: number
   name: 'Crown of Insight'
+  count?: number
 }
 
 export interface ITalentBook {
-  id: number
   name: TalentBook
   region: GenshinRegion
+  count?: number
 }
 
 export interface ITalentBossMaterial {
-  id: number
   name: TalentBossMaterial
   region: GenshinRegion
+  count?: number
 }
 
 export interface IAscensionGem {
-  id: number
   name: AscensionGem
+  count?: number
 }
 
 export interface IAscensionBossMaterial {
-  id: number
   name: AscensionBossMaterial
   region: GenshinRegion
+  count?: number
 }
 
 export interface IAscensionCommonMaterial {
-  id: number
   name: AscensionCommonMaterial
   isElite: boolean
+  count?: number
 }
 
 export interface ILocalSpecialty {
-  id: number
   name: LocalSpecialty
   region: GenshinRegion
+  count?: number
 }
 
-export type ItemType =
-  | {
-      name: 'Crown of Insight'
-      material: ITalentCrown[]
-    }
-  | {
-      name: 'Talent Book'
-      material: ITalentBook[]
-    }
-  | {
-      name: 'Talent Boss Material'
-      material: ITalentBossMaterial[]
-    }
-  | {
-      name: 'Ascension Gem'
-      material: IAscensionGem[]
-    }
-  | {
-      name: 'Ascension Boss Material'
-      material: IAscensionBossMaterial[]
-    }
-  | {
-      name: 'Local Specialty'
-      material: ILocalSpecialty[]
-    }
-  | {
-      name: 'Ascension Common Material'
-      material: IAscensionCommonMaterial[]
-    }
+export type ItemTypes = {
+  talentCrown: ITalentCrown[]
+  talentBook: ITalentBook[]
+  talentBossMaterial: ITalentBossMaterial[]
+  ascensionGem: IAscensionGem[]
+  ascensionLocalSpecialty: ILocalSpecialty[]
+  ascensionCommonMaterial: IAscensionCommonMaterial[]
+  ascensionBossMaterial: IAscensionBossMaterial[]
+}

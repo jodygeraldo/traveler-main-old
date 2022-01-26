@@ -8,29 +8,24 @@ import {
   useTransition,
 } from 'remix'
 
-import {
-  authenticator,
-  sessionStorage,
-  supabaseStrategy,
-} from '~/utils/auth.server'
-
-type LoaderData = {
-  error: { message: string } | null
-}
+import { getSession } from '~/services/session.server'
+import { authenticator } from '~/utils/auth.server'
 
 export const action: ActionFunction = async ({ request }) => {
-  await authenticator.authenticate('sb', request, {
+  return authenticator.authenticate('form', request, {
     successRedirect: '/',
     failureRedirect: '/login',
   })
 }
 
+type LoaderData = {
+  error: { message: string } | null
+}
 export const loader: LoaderFunction = async ({ request }) => {
-  await supabaseStrategy.checkSession(request, {
+  await authenticator.isAuthenticated(request, {
     successRedirect: '/',
   })
-
-  const session = await sessionStorage.getSession(request.headers.get('Cookie'))
+  const session = await getSession(request.headers.get('Cookie'))
 
   const error = session.get(
     authenticator.sessionErrorKey,
@@ -45,19 +40,25 @@ export default function LoginPage() {
 
   return (
     <Form replace method="post">
-      <Link to={'/signup'} className="bg-primary-500 px-4 py-2 rounded-md">
+      <Link to={'/signup'} className="rounded-md bg-primary-500 px-4 py-2">
         Go to Signup
       </Link>
       {error && <div>{error.message}</div>}
       <fieldset disabled={transition.state === 'submitting'} className="mt-6">
         <div>
-          <label htmlFor="email">Email</label>
-          <input type="email" name="email" id="email" />
+          <label htmlFor="username">Email</label>
+          <input
+            type="username"
+            name="username"
+            id="username"
+            minLength={6}
+            maxLength={16}
+          />
         </div>
 
         <div>
           <label htmlFor="password">Password</label>
-          <input type="password" name="password" id="password" />
+          <input type="password" name="password" id="password" minLength={8} />
         </div>
 
         <button type="submit" name="_action" value="login">
