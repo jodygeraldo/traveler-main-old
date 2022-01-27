@@ -36,7 +36,7 @@ const CharacterItem: FC<Props> = ({ character }) => {
       prefetch="intent"
       to={`/characters/${stringToKebab(character.name)}`}
       className={clsx(
-        'w-20 hover:ring-4 rounded-md',
+        'w-20 rounded-md hover:ring-4',
         !character.own && 'opacity-50',
         hoverRingColor[character.rarity],
       )}
@@ -46,15 +46,16 @@ const CharacterItem: FC<Props> = ({ character }) => {
           <motion.img
             whileHover={{ scale: 1.05 }}
             whileTap={{ scale: 0.95 }}
-            className="w-full h-full"
+            width={80}
+            height={80}
             src={`/assets/images/characters/close/${stringToLowerSnake(
               character.name,
             )}.png`}
             alt={`${character.name} image`}
           />
         </div>
-        <div className="bg-primary-400 rounded-b-md py-1">
-          <h3 className="text-primary-900 text-sm font-semibold text-center">
+        <div className="rounded-b-md bg-primary-400 py-1">
+          <h3 className="text-center text-sm font-semibold text-primary-900">
             {lastnameOnlyIfTooLong(character.name)}
           </h3>
         </div>
