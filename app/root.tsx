@@ -11,7 +11,6 @@ import {
 
 import Layout from './components/Layout'
 import styles from './tailwind.css'
-import { authenticator } from './utils/auth.server'
 
 export const links: LinksFunction = () => {
   return [
