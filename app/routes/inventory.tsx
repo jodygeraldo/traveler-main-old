@@ -1,30 +1,45 @@
-// import { json, LoaderFunction, Outlet, useLoaderData } from 'remix'
+import { Item } from '@prisma/client'
+import {
+  json,
+  LoaderFunction,
+  Outlet,
+  ShouldReloadFunction,
+  useLoaderData,
+} from 'remix'
 
-// import { ItemTypes } from '~/types/item'
-// import { authenticator } from '~/utils/auth.server'
-// import { getUserInventory } from '~/utils/inventory.server'
+import { ItemTypes } from '~/types/item'
+import { authenticator } from '~/utils/auth.server'
+import { db } from '~/utils/db/db.server'
+import { getItems, getUpdatedUserItems } from '~/utils/db/item.server'
 
-// export const loader: LoaderFunction = async ({ request }) => {
-//   const user = await authenticator.isAuthenticated(request, {
-//     failureRedirect: '/login',
-//   })
+export const loader: LoaderFunction = async ({ request }) => {
+  const user = await authenticator.isAuthenticated(request, {
+    failureRedirect: '/login',
+  })
 
-//   const t1 = performance.now()
-//   const items = getAllItems()
-//   console.log(`getAllItems: ${performance.now() - t1}ms`)
+  const items = getItems()
 
-//   const inventoryData = await getUserInventory(user.id)
-//   if (!inventoryData) return json<ItemTypes>(items, { status: 200 })
+  const userItem = await db.item.findUnique({
+    where: {
+      userId: user.id,
+    },
+  })
 
-//   const t = performance.now()
-//   const freshItems = getFreshItemsCount(inventoryData)
-//   console.log(`getFreshItemsCount: ${performance.now() - t}ms`)
+  if (!userItem) {
+    return json<ItemTypes>(items, { status: 200 })
+  }
 
-//   return json<ItemTypes>(freshItems, { status: 200 })
-// }
+  const updatedItems = getUpdatedUserItems(userItem, items)
 
-// export default function InventoryPage() {
-//   const items = useLoaderData<ItemTypes>()
+  return json<ItemTypes>(updatedItems, { status: 200 })
+}
 
-//   return <Outlet context={items} />
-// }
+export default function InventoryPage() {
+  const items = useLoaderData<ItemTypes>()
+
+  return <Outlet context={items} />
+}
+
+export const unstable_shouldReload: ShouldReloadFunction = () => {
+  return false
+}

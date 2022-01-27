@@ -10,6 +10,9 @@ export function stringToKebab(str: string): string {
 }
 
 export function stringToLowerSnake(str: string): string {
+  // remove all single quote
+  str = str.replace(/'/g, '')
+
   return str.replace(/ /g, '_').toLowerCase()
 }
 

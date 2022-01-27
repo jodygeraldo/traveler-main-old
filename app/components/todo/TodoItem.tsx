@@ -25,9 +25,10 @@ const TodoItem: FC<Props> = ({ todo, type }) => {
       },
     )
   }
+
   return (
     <div className="relative flex items-start">
-      <div className="flex items-center h-5">
+      <div className="flex h-5 items-center">
         <input
           onChange={handleCheckboxChange}
           id={todo.title}
@@ -35,7 +36,7 @@ const TodoItem: FC<Props> = ({ todo, type }) => {
           name={todo.title}
           defaultChecked={todo.completed}
           type="checkbox"
-          className="focus:ring-primary-900 h-4 w-4 text-primary-600 border-primary-900 bg-primary-400 rounded"
+          className="focus:ring-primary-900 text-primary-600 border-primary-900 bg-primary-400 h-4 w-4 rounded"
         />
       </div>
       <div className="ml-3 text-sm">
@@ -45,7 +46,7 @@ const TodoItem: FC<Props> = ({ todo, type }) => {
         {todo.link ? (
           <a
             href={todo.link}
-            className="inline-block text-primary-600 hover:underline"
+            className="text-primary-600 inline-block hover:underline"
             target="_blank"
           >
             {todo.description}

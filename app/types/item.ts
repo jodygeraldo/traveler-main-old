@@ -3,15 +3,33 @@ import { GenshinRegion } from './general'
 export type TalentCrown = 'Crown of Insight'
 
 export type TalentBook =
-  | 'Freedom'
-  | 'Prosperity'
-  | 'Transience'
-  | 'Elegance'
-  | 'Resistance'
-  | 'Diligence'
-  | 'Ballad'
-  | 'Gold'
-  | 'Light'
+  | 'Teachings of Freedom'
+  | 'Guide of Freedom'
+  | 'Philosophies of Freedom'
+  | 'Teachings of Prosperity'
+  | 'Guide of Prosperity'
+  | 'Philosophies of Prosperity'
+  | 'Teachings of Transience'
+  | 'Guide of Transience'
+  | 'Philosophies of Transience'
+  | 'Teachings of Elegance'
+  | 'Guide of Elegance'
+  | 'Philosophies of Elegance'
+  | 'Teachings of Resistance'
+  | 'Guide of Resistance'
+  | 'Philosophies of Resistance'
+  | 'Teachings of Diligence'
+  | 'Guide of Diligence'
+  | 'Philosophies of Diligence'
+  | 'Teachings of Ballad'
+  | 'Guide of Ballad'
+  | 'Philosophies of Ballad'
+  | 'Teachings of Gold'
+  | 'Guide of Gold'
+  | 'Philosophies of Gold'
+  | 'Teachings of Light'
+  | 'Guide of Light'
+  | 'Philosophies of Light'
 
 export type TalentBossMaterial =
   | "Dvalin's Plume"
@@ -31,13 +49,34 @@ export type TalentBossMaterial =
   | 'Hellfire Butterfly'
 
 export type AscensionGem =
-  | 'Brilliant Diamond'
-  | 'Agnidus Agate'
-  | 'Varunada Lazurite'
-  | 'Vajrada Amethyst'
-  | 'Vayuda Turquoise'
-  | 'Shivada Jade'
-  | 'Prithiva Topaz'
+  | 'Brilliant Diamond Sliver'
+  | 'Brilliant Diamond Fragment'
+  | 'Brilliant Diamond Chunk'
+  | 'Brilliant Diamond Gemstone'
+  | 'Agnidus Agate Sliver'
+  | 'Agnidus Agate Fragment'
+  | 'Agnidus Agate Chunk'
+  | 'Agnidus Agate Gemstone'
+  | 'Varunada Lazurite Sliver'
+  | 'Varunada Lazurite Fragment'
+  | 'Varunada Lazurite Chunk'
+  | 'Varunada Lazurite Gemstone'
+  | 'Vajrada Amethyst Sliver'
+  | 'Vajrada Amethyst Fragment'
+  | 'Vajrada Amethyst Chunk'
+  | 'Vajrada Amethyst Gemstone'
+  | 'Vayuda Turquoise Sliver'
+  | 'Vayuda Turquoise Fragment'
+  | 'Vayuda Turquoise Chunk'
+  | 'Vayuda Turquoise Gemstone'
+  | 'Shivada Jade Sliver'
+  | 'Shivada Jade Fragment'
+  | 'Shivada Jade Chunk'
+  | 'Shivada Jade Gemstone'
+  | 'Prithiva Topaz Sliver'
+  | 'Prithiva Topaz Fragment'
+  | 'Prithiva Topaz Chunk'
+  | 'Prithiva Topaz Gemstone'
 
 export type AscensionBossMaterial =
   | 'Hurricane Seed'
@@ -69,9 +108,9 @@ export type LocalSpecialty =
   | 'Glaze Lily'
   | 'Qingxin'
   | 'Starconch'
-  | 'Violet Grass'
+  | 'Violetgrass'
   | 'Small Lamp Grass'
-  | 'Dandelion'
+  | 'Dandelion Seed'
   | 'Cor Lapis'
   | 'Onikabuto'
   | 'Sakura Bloom'
@@ -84,27 +123,109 @@ export type LocalSpecialty =
   | 'Fluorescent Fungus'
 
 export type AscensionCommonMaterial =
-  | 'Slime'
-  | 'Hilichurl Masks'
-  | 'Samachurl Scrolls'
-  | 'Hilichurl Arrowheads'
-  | 'Fatui Insignia'
-  | 'Treasure Hoarder Insignias'
+  | 'Slime Condensate'
+  | 'Slime Secretions'
+  | 'Slime Concentrate'
+  | 'Damaged Mask'
+  | 'Stained Mask'
+  | 'Ominous Mask'
+  | 'Divining Scroll'
+  | 'Sealed Scroll'
+  | 'Forbidden Curse Scroll'
+  | 'Firm Arrowhead'
+  | 'Sharp Arrowhead'
+  | 'Weathered Arrowhead'
+  | "Recruit's Insignia"
+  | "Sergeant's Insignia"
+  | "Lieutenant's Insignia"
+  | 'Treasure Hoarder Insignia'
+  | 'Silver Raven Insignia'
+  | 'Golden Raven Insignia'
   | 'Whopperflower Nectar'
-  | 'Nobushi Handguards'
-  | 'Spectral Cores'
-  | 'Hilichurl Horns'
-  | 'Ley Lines'
-  | 'Chaos Parts'
+  | 'Shinmmering Nectar'
+  | 'Energy Nectar'
+  | 'Old Handguard'
+  | 'Kageuchi Handguard'
+  | 'Famed Handguard'
+  | 'Spectral Husk'
+  | 'Spectral Heart'
+  | 'Spectral Nucleus'
+  | 'Heavy Horn'
+  | 'Black Bronze Horn'
+  | 'Black Crystal Horn'
+  | 'Dead Ley Line Branch'
+  | 'Dead Ley Line Leaves'
+  | 'Ley Line Sprout'
+  | 'Chaos Device'
+  | 'Chaos Circuit'
+  | 'Chaos Core'
+  | 'Mist Grass Pollen'
   | 'Mist Grass'
-  | 'Sacrificial Knifes'
-  | 'Bone Shards'
-  | 'Sentinel Chaos Parts'
-  | 'Prisms'
-  | 'Concealed Rifthound Claws'
+  | 'Mist Grass Wick'
+  | "Hunter's Sacrificial Knife"
+  | "Agent's Sacrificial Knife"
+  | "Inspector's Sacrificial Knife"
+  | 'Fragile Bone Shard'
+  | 'Sturdy Bone Shard'
+  | 'Fossilized Bone Shard'
+  | 'Chaos Gear'
+  | 'Chaos Axis'
+  | 'Chaos Oculus'
+  | 'Dismal Prism'
+  | 'Crystal Prism'
+  | 'Polarizing Prism'
+  | 'Concealed Claw'
+  | 'Concealed Unguis'
+  | 'Concealed Talon'
+
+export interface ITalentCrown {
+  name: TalentCrown
+  rarity: 1 | 2 | 3 | 4 | 5
+  count: number
+}
+
+export interface ITalentBook {
+  name: TalentBook
+  region: GenshinRegion
+  rarity: 1 | 2 | 3 | 4 | 5
+  count: number
+}
+
+export interface ITalentBossMaterial {
+  name: TalentBossMaterial
+  region: GenshinRegion
+  rarity: 1 | 2 | 3 | 4 | 5
+  count: number
+}
+
+export interface IAscensionGem {
+  name: AscensionGem
+  rarity: 1 | 2 | 3 | 4 | 5
+  count: number
+}
+
+export interface IAscensionBossMaterial {
+  name: AscensionBossMaterial
+  region: GenshinRegion
+  rarity: 1 | 2 | 3 | 4 | 5
+  count: number
+}
+
+export interface IAscensionCommonMaterial {
+  name: AscensionCommonMaterial
+  rarity: 1 | 2 | 3 | 4 | 5
+  count: number
+}
+
+export interface ILocalSpecialty {
+  name: LocalSpecialty
+  region: GenshinRegion
+  rarity: 1 | 2 | 3 | 4 | 5
+  count: number
+}
 
 export type ItemCategory =
-  | 'Talent Crown'
+  | 'Crown'
   | 'Talent Book'
   | 'Talent Boss Material'
   | 'Ascension Gem'
@@ -112,52 +233,33 @@ export type ItemCategory =
   | 'Local Specialty'
   | 'Ascension Common Material'
 
-export interface ITalentCrown {
-  name: 'Crown of Insight'
-  count?: number
-}
-
-export interface ITalentBook {
-  name: TalentBook
-  region: GenshinRegion
-  count?: number
-}
-
-export interface ITalentBossMaterial {
-  name: TalentBossMaterial
-  region: GenshinRegion
-  count?: number
-}
-
-export interface IAscensionGem {
-  name: AscensionGem
-  count?: number
-}
-
-export interface IAscensionBossMaterial {
-  name: AscensionBossMaterial
-  region: GenshinRegion
-  count?: number
-}
-
-export interface IAscensionCommonMaterial {
-  name: AscensionCommonMaterial
-  isElite: boolean
-  count?: number
-}
-
-export interface ILocalSpecialty {
-  name: LocalSpecialty
-  region: GenshinRegion
-  count?: number
-}
-
-export type ItemTypes = {
-  talentCrown: ITalentCrown[]
-  talentBook: ITalentBook[]
-  talentBossMaterial: ITalentBossMaterial[]
-  ascensionGem: IAscensionGem[]
-  ascensionLocalSpecialty: ILocalSpecialty[]
-  ascensionCommonMaterial: IAscensionCommonMaterial[]
-  ascensionBossMaterial: IAscensionBossMaterial[]
-}
+export type ItemTypes = [
+  {
+    name: 'Crown'
+    items: ITalentCrown[]
+  },
+  {
+    name: 'Talent Book'
+    items: ITalentBook[]
+  },
+  {
+    name: 'Talent Boss Material'
+    items: ITalentBossMaterial[]
+  },
+  {
+    name: 'Ascension Gem'
+    items: IAscensionGem[]
+  },
+  {
+    name: 'Ascension Boss Material'
+    items: IAscensionBossMaterial[]
+  },
+  {
+    name: 'Local Specialty'
+    items: ILocalSpecialty[]
+  },
+  {
+    name: 'Ascension Common Material'
+    items: IAscensionCommonMaterial[]
+  },
+]

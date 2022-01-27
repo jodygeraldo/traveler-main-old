@@ -16,7 +16,7 @@ import type { CharacterName, ICharacter, ITraveler } from '~/types/character'
 import { stringToCapitalized } from '~/utils/string'
 
 export const loader: LoaderFunction = async ({ params }) => {
-  const { name } = params as RouteParams['/character/:name']
+  const { name } = params as RouteParams['/characters/:name']
 
   const character = characterMap.get(stringToCapitalized(name) as CharacterName)
   if (!character) {

@@ -35,7 +35,7 @@ export default function Layout({ children }: { children: ReactNode }) {
               leaveFrom="opacity-100"
               leaveTo="opacity-0"
             >
-              <Dialog.Overlay className="fixed inset-0 bg-primary-600 bg-opacity-75" />
+              <Dialog.Overlay className="fixed inset-0 bg-slate-600 bg-opacity-75" />
             </Transition.Child>
             <Transition.Child
               as={Fragment}
@@ -46,7 +46,7 @@ export default function Layout({ children }: { children: ReactNode }) {
               leaveFrom="translate-x-0"
               leaveTo="-translate-x-full"
             >
-              <div className="relative flex w-full max-w-xs flex-1 flex-col bg-primary-800">
+              <div className="relative flex w-full max-w-xs flex-1 flex-col bg-slate-800">
                 <Transition.Child
                   as={Fragment}
                   enter="ease-in-out duration-300"
@@ -86,8 +86,8 @@ export default function Layout({ children }: { children: ReactNode }) {
                         className={({ isActive }) =>
                           clsx(
                             isActive
-                              ? 'bg-primary-900 text-white'
-                              : 'text-primary-300 hover:bg-primary-700 hover:text-white',
+                              ? 'bg-slate-900 text-white'
+                              : 'text-slate-300 hover:bg-slate-700 hover:text-white',
                             'group flex items-center rounded-md px-2 py-2 text-base font-medium',
                           )
                         }
@@ -105,7 +105,7 @@ export default function Layout({ children }: { children: ReactNode }) {
                     <Form replace method="post" action="/logout">
                       <button
                         type="submit"
-                        className="group flex items-center rounded-md px-2 py-2 text-sm font-medium text-primary-300 hover:bg-primary-700 hover:text-white"
+                        className="group flex items-center rounded-md px-2 py-2 text-sm font-medium text-slate-300 hover:bg-slate-700 hover:text-white"
                       >
                         Logout
                       </button>
@@ -123,7 +123,7 @@ export default function Layout({ children }: { children: ReactNode }) {
         {/* Static sidebar for desktop */}
         <div className="hidden md:fixed md:inset-y-0 md:flex md:w-64 md:flex-col">
           {/* Sidebar component, swap this element with another sidebar if you like */}
-          <div className="flex min-h-0 flex-1 flex-col bg-primary-800">
+          <div className="flex min-h-0 flex-1 flex-col bg-slate-800">
             <div className="flex flex-1 flex-col overflow-y-auto pt-5 pb-4">
               <div className="flex flex-shrink-0 items-center px-4">
                 <img
@@ -143,8 +143,8 @@ export default function Layout({ children }: { children: ReactNode }) {
                           (item.href === '/' &&
                             (location.pathname === '/weekly' ||
                               location.pathname === '/others'))
-                          ? 'bg-primary-900 text-white'
-                          : 'text-primary-300 hover:bg-primary-700 hover:text-white',
+                          ? 'bg-slate-900 text-white'
+                          : 'text-slate-300 hover:bg-slate-700 hover:text-white',
                         'group flex items-center rounded-md px-2 py-2 text-sm font-medium',
                       )
                     }
@@ -162,7 +162,7 @@ export default function Layout({ children }: { children: ReactNode }) {
                 <Form method="post" action="/logout">
                   <button
                     type="submit"
-                    className="group flex items-center rounded-md px-2 py-2 text-sm font-medium text-primary-300 hover:bg-primary-700 hover:text-white"
+                    className="group flex items-center rounded-md px-2 py-2 text-sm font-medium text-slate-300 hover:bg-slate-700 hover:text-white"
                   >
                     Logout
                   </button>
@@ -172,10 +172,10 @@ export default function Layout({ children }: { children: ReactNode }) {
           </div>
         </div>
         <div className="flex flex-1 flex-col md:pl-64">
-          <div className="sticky top-0 z-10 bg-primary-100 pl-1 pt-1 sm:pl-3 sm:pt-3 md:hidden">
+          <div className="sticky top-0 z-10 bg-slate-100 pl-1 pt-1 sm:pl-3 sm:pt-3 md:hidden">
             <button
               type="button"
-              className="focus:ring-indigo-500 -ml-0.5 -mt-0.5 inline-flex h-12 w-12 items-center justify-center rounded-md text-primary-500 hover:text-primary-900 focus:outline-none focus:ring-2 focus:ring-inset"
+              className="-ml-0.5 -mt-0.5 inline-flex h-12 w-12 items-center justify-center rounded-md text-slate-500 hover:text-slate-900 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-indigo-500"
               onClick={() => setSidebarOpen(true)}
             >
               <span className="sr-only">Open sidebar</span>

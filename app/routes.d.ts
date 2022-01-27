@@ -1,7 +1,5 @@
 declare module "routes-gen" {
   export type RouteParams = {
-    "/character/:name": { name: string };
-    "/character": {};
     "/characters": {};
     "/characters/:name": { name: string };
     "/characters/:name/edit-with-inventory": { name: string };
@@ -13,15 +11,11 @@ declare module "routes-gen" {
     "/others": {};
     "/toggle": {};
     "/weekly": {};
-    "/clear": {};
     "/login": {};
-    "/init": {};
   };
 
   export function route<
     T extends
-      | ["/character/:name", RouteParams["/character/:name"]]
-      | ["/character"]
       | ["/characters"]
       | ["/characters/:name", RouteParams["/characters/:name"]]
       | ["/characters/:name/edit-with-inventory", RouteParams["/characters/:name/edit-with-inventory"]]
@@ -33,8 +27,6 @@ declare module "routes-gen" {
       | ["/others"]
       | ["/toggle"]
       | ["/weekly"]
-      | ["/clear"]
       | ["/login"]
-      | ["/init"]
   >(...args: T): typeof args[0];
 }
