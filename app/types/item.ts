@@ -122,7 +122,7 @@ export type LocalSpecialty =
   | 'Amakumo Fruit'
   | 'Fluorescent Fungus'
 
-export type AscensionCommonMaterial =
+export type CommonMaterial =
   | 'Slime Condensate'
   | 'Slime Secretions'
   | 'Slime Concentrate'
@@ -211,8 +211,8 @@ export interface IAscensionBossMaterial {
   count: number
 }
 
-export interface IAscensionCommonMaterial {
-  name: AscensionCommonMaterial
+export interface ICommonMaterial {
+  name: CommonMaterial
   rarity: 1 | 2 | 3 | 4 | 5
   count: number
 }
@@ -235,31 +235,31 @@ export type ItemCategory =
 
 export type ItemTypes = [
   {
-    name: 'Crown'
-    items: ITalentCrown[]
-  },
-  {
-    name: 'Talent Book'
-    items: ITalentBook[]
+    name: 'Common Material'
+    items: ICommonMaterial[]
   },
   {
     name: 'Talent Boss Material'
     items: ITalentBossMaterial[]
   },
   {
-    name: 'Ascension Gem'
-    items: IAscensionGem[]
-  },
-  {
     name: 'Ascension Boss Material'
     items: IAscensionBossMaterial[]
   },
   {
-    name: 'Local Specialty'
-    items: ILocalSpecialty[]
+    name: 'Ascension Gem'
+    items: IAscensionGem[]
   },
   {
-    name: 'Ascension Common Material'
-    items: IAscensionCommonMaterial[]
+    name: 'Talent Book'
+    items: ITalentBook[]
+  },
+  {
+    name: 'Crown'
+    items: ITalentCrown[]
+  },
+  {
+    name: 'Local Specialty'
+    items: ILocalSpecialty[]
   },
 ]
