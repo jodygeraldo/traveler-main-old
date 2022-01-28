@@ -1,14 +1,28 @@
-import { Prisma } from '@prisma/client'
-
+import charactersAnemoMap from '~/services/data/characters/character-anemo.server'
+import charactersCryoMap from '~/services/data/characters/character-cryo.server'
+import charactersDendroMap from '~/services/data/characters/character-dendro.server'
+import charactersElectroMap from '~/services/data/characters/character-electro.server'
+import charactersGeoMap from '~/services/data/characters/character-geo.server'
+import charactersHydroMap from '~/services/data/characters/character-hydro.server'
+import charactersPyroMap from '~/services/data/characters/character-pyro.server'
 import { db } from '~/services/db.server'
 import { ICharacter } from '~/types/character'
 
-export function parseTalentToNumberArray(
-  talentNormal: string | number = 1,
-  talentSkill: string | number = 1,
-  talentBurst: string | number = 1,
-): [number, number, number] {
-  return [Number(talentNormal), Number(talentSkill), Number(talentBurst)]
+export function getCharacters() {
+  const characters: ICharacter[] = []
+  charactersAnemoMap.forEach(value => characters.push(value))
+  charactersCryoMap.forEach(value => characters.push(value))
+  charactersDendroMap.forEach(value => characters.push(value))
+  charactersElectroMap.forEach(value => characters.push(value))
+  charactersGeoMap.forEach(value => characters.push(value))
+  charactersHydroMap.forEach(value => characters.push(value))
+  charactersPyroMap.forEach(value => characters.push(value))
+
+  return characters.sort((a, b) => {
+    if (a.name < b.name) return -1
+    if (a.name > b.name) return 1
+    return 0
+  })
 }
 
 export async function getUserCharacters(userId: string) {
@@ -35,7 +49,7 @@ export async function addUserCharacterOwnership(userId: string, name: string) {
       name,
       level: 1,
       ascension: 0,
-      talent: 'NEW',
+      talent: [1, 1, 1],
       userId,
     },
   })
@@ -60,7 +74,7 @@ export async function addUserCharacter(
   name: string,
   level: number,
   ascension: number,
-  talent: ICharacter['level']['talent'] | ITraveler['level']['talent'],
+  talent: ICharacter['progression']['talent'],
 ) {
   await db.character.create({
     data: {
@@ -77,15 +91,15 @@ export async function updateUserCharacter(
   id: string,
   level: number,
   ascension: number,
-  talent: ICharacter['level']['talent'] | ITraveler['level']['talent'],
+  talent: ICharacter['progression']['talent'],
 ) {
   await db.character.update({
     where: {
       id,
     },
     data: {
-      level: +level,
-      ascension: +ascension,
+      level,
+      ascension,
       talent,
     },
   })
@@ -94,27 +108,23 @@ export async function updateUserCharacter(
 export function getUpdatedCharacters(
   userCharacters: {
     level: number
-    talent: Prisma.JsonValue
+    talent: [number, number, number]
     id: string
     name: string
     ascension: number
   }[],
-  characters: (ITraveler | ICharacter)[],
+  characters: ICharacter[],
 ) {
   const updatedCharacters = characters
 
   userCharacters.forEach(character => {
     const index = updatedCharacters.findIndex(c => c.name === character.name)
     if (index === -1) return
-    updatedCharacters[index].dbId = character.id
-    updatedCharacters[index].own = true
-    updatedCharacters[index].level.character = character.level
-    updatedCharacters[index].level.ascension = character.ascension
-    if (character.talent !== 'NEW') {
-      updatedCharacters[index].level.talent = character.talent as
-        | ITraveler['level']['talent']
-        | ICharacter['level']['talent']
-    }
+    updatedCharacters[index].id = character.id
+    updatedCharacters[index].ownership = true
+    updatedCharacters[index].progression.level = character.level
+    updatedCharacters[index].progression.ascension = character.ascension
+    updatedCharacters[index].progression.talent = character.talent
   })
 
   return updatedCharacters
