@@ -28,7 +28,7 @@ model Character {
   name      String
   level     Int
   ascension Int
-  talent    Json
+  talent    Int[]
   userId    String
   user      User     @relation(fields: [userId], references: [id])
   deleted   Boolean  @default(false)
