@@ -1,3 +1,4 @@
+import { Item } from '@prisma/client'
 import { json, LoaderFunction, Outlet, useLoaderData } from 'remix'
 
 import { authenticator } from '~/services/auth.server'
@@ -7,7 +8,12 @@ import {
   getUpdatedCharacters,
   getUserCharacters,
 } from '~/utils/db/character.server'
+import { getUserItems } from '~/utils/db/item.server'
 
+interface LoaderData {
+  characters: ICharacter[]
+  userItems?: Item | null
+}
 export const loader: LoaderFunction = async ({ request }) => {
   const user = await authenticator.isAuthenticated(request, {
     failureRedirect: '/login',
@@ -25,18 +31,23 @@ export const loader: LoaderFunction = async ({ request }) => {
   }[]
 
   if (userCharacters.length === 0) {
-    return json<ICharacter[]>(characters, { status: 200 })
+    return json<LoaderData>({ characters }, { status: 200 })
   }
+
+  const userItems = await getUserItems(user.id)
 
   const updatedCharacters = getUpdatedCharacters(userCharacters, characters)
 
-  return json<ICharacter[]>(updatedCharacters, {
-    status: 200,
-  })
+  return json<LoaderData>(
+    { characters: updatedCharacters, userItems },
+    {
+      status: 200,
+    },
+  )
 }
 
 export default function CharactersPage() {
-  const characters = useLoaderData<ICharacter[]>()
+  const { characters } = useLoaderData<LoaderData>()
 
   return <Outlet context={characters} />
 }

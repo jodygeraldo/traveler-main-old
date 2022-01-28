@@ -3,7 +3,6 @@ import { Form } from 'remix'
 
 import { ICharacter } from '~/types/character'
 
-import CharacterLevelManual from './CharacterLevelManual/CharacterLevelManual'
 import CharacterLevelTalent from './CharacterLevelTalent'
 
 interface Props {
