@@ -231,7 +231,7 @@ export type ItemCategory =
   | 'Ascension Gem'
   | 'Ascension Boss Material'
   | 'Local Specialty'
-  | 'Ascension Common Material'
+  | 'Common Material'
 
 export type ItemTypes = [
   {

@@ -50,7 +50,7 @@ export const action: ActionFunction = async ({ request }) => {
       return upsertAscensionBossMaterial(user.id, userItem, name, +count)
     case 'Local Specialty':
       return upsertLocalSpecialty(user.id, userItem, name, +count)
-    case 'Ascension Common Material':
+    case 'Common Material':
       return upsertCommonMaterial(user.id, userItem, name, +count)
     default:
       return null
