@@ -765,8 +765,8 @@ charactersElectroMap.set('Razor', {
   },
 })
 
-charactersElectroMap.set('Electro Traveler', {
-  name: 'Electro Traveler',
+charactersElectroMap.set('Traveler Electro', {
+  name: 'Traveler Electro',
   vision: 'Electro',
   rarity: 5,
   weaponType: 'Sword',

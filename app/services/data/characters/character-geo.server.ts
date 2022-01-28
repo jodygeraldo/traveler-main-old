@@ -547,8 +547,8 @@ charactersGeoMap.set('Noelle', {
   },
 })
 
-charactersGeoMap.set('Geo Traveler', {
-  name: 'Geo Traveler',
+charactersGeoMap.set('Traveler Geo', {
+  name: 'Traveler Geo',
   vision: 'Geo',
   rarity: 5,
   weaponType: 'Sword',

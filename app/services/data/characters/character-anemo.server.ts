@@ -438,8 +438,8 @@ charactersAnemoMap.set('Sucrose', {
   },
 })
 
-charactersAnemoMap.set('Anemo Traveler', {
-  name: 'Anemo Traveler',
+charactersAnemoMap.set('Traveler Anemo', {
+  name: 'Traveler Anemo',
   vision: 'Anemo',
   rarity: 5,
   weaponType: 'Sword',
