@@ -258,6 +258,14 @@ export function getItems() {
   return itemsArray
 }
 
+export async function getUserItems(userId: string) {
+  return db.item.findUnique({
+    where: {
+      userId,
+    },
+  })
+}
+
 function getUpdatedUserItem(
   category:
     | 'common'

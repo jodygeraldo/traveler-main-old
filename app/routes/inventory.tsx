@@ -8,9 +8,12 @@ import {
 } from 'remix'
 
 import { authenticator } from '~/services/auth.server'
-import { db } from '~/services/db.server'
 import { ItemTypes } from '~/types/item'
-import { getItems, getUpdatedUserItems } from '~/utils/db/item.server'
+import {
+  getItems,
+  getUpdatedUserItems,
+  getUserItems,
+} from '~/utils/db/item.server'
 
 export const loader: LoaderFunction = async ({ request }) => {
   const user = await authenticator.isAuthenticated(request, {
@@ -19,11 +22,7 @@ export const loader: LoaderFunction = async ({ request }) => {
 
   const items = getItems()
 
-  const userItem = await db.item.findUnique({
-    where: {
-      userId: user.id,
-    },
-  })
+  const userItem = await getUserItems(user.id)
 
   if (!userItem) {
     return json<ItemTypes>(items, { status: 200 })
