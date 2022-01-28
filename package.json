@@ -13,7 +13,8 @@
     "deploy": "flyctl deploy --remote-only",
     "start": "remix-serve build",
     "lint": "eslint --cache --cache-location ./node_modules/.cache/.eslintcache --ext js,jsx,ts,tsx .",
-    "lint:fix": "eslint --cache --cache-location ./node_modules/.cache/.eslintcache --fix --ext js,jsx,ts,tsx ./app/"
+    "lint:fix": "eslint --cache --cache-location ./node_modules/.cache/.eslintcache --fix --ext js,jsx,ts,tsx ./app/",
+    "rg": "routes-gen -d @routes-gen/remix"
   },
   "dependencies": {
     "@headlessui/react": "^1.4.3",
