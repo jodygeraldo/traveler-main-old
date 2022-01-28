@@ -11,7 +11,7 @@ import {
 import { RouteParams } from 'routes-gen'
 import invariant from 'tiny-invariant'
 
-import characterMap from '~/data/characters.server'
+import characterMap from '~/data/characters/characters.server'
 import type { CharacterName, ICharacter, ITraveler } from '~/types/character'
 import { stringToCapitalized } from '~/utils/string'
 

@@ -4,7 +4,7 @@ const farmable = new Map<FarmDayTypeEnum, FarmableType>()
 
 farmable.set(FarmDayTypeEnum.MT, [
   {
-    name: 'Freedom',
+    name: 'Philosophies of Freedom',
     characters: [
       'Aloy',
       'Amber',
@@ -17,7 +17,7 @@ farmable.set(FarmDayTypeEnum.MT, [
     ],
   },
   {
-    name: 'Prosperity',
+    name: 'Philosophies of Prosperity',
     characters: [
       'Keqing',
       'Ningguang',
@@ -28,22 +28,22 @@ farmable.set(FarmDayTypeEnum.MT, [
     ],
   },
   {
-    name: 'Transience',
+    name: 'Philosophies of Transience',
     characters: ['Sangonomiya Kokomi', 'Thoma', 'Electro Traveler', 'Yoimiya'],
   },
 ])
 
 farmable.set(FarmDayTypeEnum.TF, [
   {
-    name: 'Elegance',
+    name: 'Philosophies of Elegance',
     characters: ['Arataki Itto', 'Kamisato Ayaka', 'Kujou Sara'],
   },
   {
-    name: 'Resistance',
+    name: 'Philosophies of Resistance',
     characters: ['Bennett', 'Diluc', 'Eula', 'Jean', 'Mona', 'Noelle', 'Razor'],
   },
   {
-    name: 'Diligence',
+    name: 'Philosophies of Diligence',
     characters: [
       'Chongyun',
       'Ganyu',
@@ -57,15 +57,15 @@ farmable.set(FarmDayTypeEnum.TF, [
 
 farmable.set(FarmDayTypeEnum.WS, [
   {
-    name: 'Ballad',
+    name: 'Philosophies of Ballad',
     characters: ['Albedo', 'Fischl', 'Kaeya', 'Lisa', 'Rosaria', 'Venti'],
   },
   {
-    name: 'Gold',
+    name: 'Philosophies of Gold',
     characters: ['Beidou', 'Xingqiu', 'Xinyan', 'Yanfei', 'Zhongli'],
   },
   {
-    name: 'Light',
+    name: 'Philosophies of Light',
     characters: ['Gorou', 'Raiden Shogun', 'Sayu'],
   },
 ])

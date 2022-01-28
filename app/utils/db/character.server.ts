@@ -1,9 +1,7 @@
 import { Prisma } from '@prisma/client'
 
-import characterMap from '~/data/characters.server'
-import { ICharacter, ITraveler } from '~/types/character'
-
-import { db } from './db.server'
+import { db } from '~/services/db.server'
+import { ICharacter } from '~/types/character'
 
 export function parseTalentToNumberArray(
   talentNormal: string | number = 1,
@@ -11,12 +9,6 @@ export function parseTalentToNumberArray(
   talentBurst: string | number = 1,
 ): [number, number, number] {
   return [Number(talentNormal), Number(talentSkill), Number(talentBurst)]
-}
-
-export function getCharacters() {
-  const result: (ITraveler | ICharacter)[] = []
-  characterMap.forEach(value => result.push(value))
-  return result
 }
 
 export async function getUserCharacters(userId: string) {

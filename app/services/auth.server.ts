@@ -1,11 +1,11 @@
 import { User } from '@prisma/client'
-import { Authenticator, AuthorizationError } from 'remix-auth'
+import { Authenticator } from 'remix-auth'
 import { FormStrategy } from 'remix-auth-form'
 import invariant from 'tiny-invariant'
 
 import { sessionStorage } from '~/services/session.server'
 
-import { login, signup } from './db/user.server'
+import { login, signup } from '../utils/db/user.server'
 
 export const authenticator = new Authenticator<User>(sessionStorage, {
   sessionErrorKey: 'auth-error',

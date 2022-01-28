@@ -3,10 +3,10 @@ import { json, useLoaderData } from 'remix'
 import invariant from 'tiny-invariant'
 
 import TodoList from '~/components/Todo/TodoList'
-import { todos } from '~/data/todos.server'
+import { authenticator } from '~/services/auth.server'
+import { todos } from '~/services/data/todos.server'
 import type { ITodo } from '~/types/todo'
 import { TodoTypeEnum } from '~/types/todo'
-import { authenticator } from '~/utils/auth.server'
 import { getUserTodo } from '~/utils/todo.server'
 
 type LoaderData = ITodo[]

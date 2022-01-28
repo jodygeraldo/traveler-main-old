@@ -1,7 +1,7 @@
 import {
   AscensionBossMaterial,
-  AscensionCommonMaterial,
   AscensionGem,
+  CommonMaterial,
   LocalSpecialty,
   TalentBook,
   TalentBossMaterial,
@@ -48,6 +48,10 @@ export type CharacterName =
   | 'Anemo Traveler'
   | 'Geo Traveler'
   | 'Electro Traveler'
+  | 'Dendro Traveler'
+  | 'Pyro Traveler'
+  | 'Cryo Traveler'
+  | 'Hydro Traveler'
   | 'Venti'
   | 'Xiangling'
   | 'Xiao'
@@ -69,67 +73,59 @@ export type Vision =
 
 export type WeaponType = 'Bow' | 'Catalyst' | 'Claymore' | 'Polearm' | 'Sword'
 
+export interface IAscensionMaterial {
+  mora: number
+  gem: { name: AscensionGem; count: number }
+  localSpecialty: { name: LocalSpecialty; count: number }
+  common: { name: CommonMaterial; count: number }
+  boss?: { name: AscensionBossMaterial; count: number }
+}
+
+export type AscensionType = [
+  IAscensionMaterial,
+  IAscensionMaterial,
+  IAscensionMaterial,
+  IAscensionMaterial,
+  IAscensionMaterial,
+  IAscensionMaterial,
+]
+
+export interface ITalentMaterial {
+  mora: number
+  common: { name: CommonMaterial; count: number }
+  book: { name: TalentBook; count: number }
+  boss?: { name: TalentBossMaterial; count: number }
+  crown?: number
+}
+
+export type TalentType = [
+  ITalentMaterial,
+  ITalentMaterial,
+  ITalentMaterial,
+  ITalentMaterial,
+  ITalentMaterial,
+  ITalentMaterial,
+  ITalentMaterial,
+  ITalentMaterial,
+  ITalentMaterial,
+]
+
 export interface ICharacter {
   name: CharacterName
   vision: Vision
   rarity: 4 | 5 | 'aloy'
-  weapon_type: WeaponType
-  materials: {
-    talent: {
-      book: TalentBook
-      boss: TalentBossMaterial
-    }
-    ascension: {
-      material: AscensionGem
-      boss: AscensionBossMaterial
-      local: LocalSpecialty
-      common: AscensionCommonMaterial
-    }
+  weaponType: WeaponType
+  material: {
+    ascension: AscensionType
+    talent:
+      | TalentType
+      | { normal: TalentType; skill: TalentType; burst: TalentType }
   }
-  own: boolean
-  level: {
-    character: number
+  id?: string
+  ownership?: boolean
+  progression: {
+    level: number
     ascension: number
     talent: [number, number, number]
   }
-  dbId?: string
-}
-
-export interface ITraveler {
-  name: 'Traveler'
-  vision: Vision[]
-  rarity: 5
-  weapon_type: WeaponType
-  materials: {
-    talent: {
-      anemo: {
-        book: 'Freedom'
-        boss: "Dvalin's Sigh"
-      }
-      geo: {
-        book: 'Prosperity'
-        boss: 'Tail of Boreas'
-      }
-      electro: {
-        book: 'Transience'
-        boss: "Dragon Lord's Crown"
-      }
-    }
-    ascension: {
-      material: 'Brilliant Diamond'
-      local: 'Windwheel Aster'
-      common: 'Hilichurl Mask'
-    }
-  }
-  own: boolean
-  level: {
-    character: number
-    ascension: number
-    talent: {
-      anemo: [number, number, number]
-      geo: [number, number, number]
-      electro: [number, number, number]
-    }
-  }
-  dbId?: string
 }

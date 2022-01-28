@@ -8,7 +8,8 @@ import {
   talentBookMap,
   talentBossMaterialMap,
   talentCrownMap,
-} from '~/data/items.server'
+} from '~/services/data/items.server'
+import { db } from '~/services/db.server'
 import {
   AscensionBossMaterial,
   AscensionGem,
@@ -26,8 +27,6 @@ import {
   TalentBossMaterial,
   TalentCrown,
 } from '~/types/item'
-
-import { db } from './db.server'
 
 const dummyCrownName: TalentCrown[] = ['Crown of Insight']
 const dummyTalentBookName: TalentBook[] = [

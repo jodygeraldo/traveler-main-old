@@ -3,8 +3,8 @@ import { route, RouteParams } from 'routes-gen'
 import invariant from 'tiny-invariant'
 
 import CharacterLevelManual from '~/components/Character/CharacterLevel/CharacterLevelManual/CharacterLevelManual'
+import { authenticator } from '~/services/auth.server'
 import { ICharacter, ITraveler } from '~/types/character'
-import { authenticator } from '~/utils/auth.server'
 import {
   addUserCharacter,
   parseTalentToNumberArray,

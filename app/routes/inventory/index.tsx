@@ -1,16 +1,15 @@
-import { Item } from '@prisma/client'
 import { ActionFunction, useOutletContext } from 'remix'
 import invariant from 'tiny-invariant'
 
 import Items from '~/components/Item/Item'
 import ItemList from '~/components/Item/ItemList'
-import { ItemCategory, ItemTypes, TalentBook } from '~/types/item'
-import { authenticator } from '~/utils/auth.server'
-import { db } from '~/utils/db/db.server'
+import { authenticator } from '~/services/auth.server'
+import { db } from '~/services/db.server'
+import { ItemCategory, ItemTypes } from '~/types/item'
 import {
   upsertAscensionBossMaterial,
-  upsertAscensionCommonMaterial,
   upsertAscensionGem,
+  upsertCommonMaterial,
   upsertLocalSpecialty,
   upsertTalentBook,
   upsertTalentBossMaterial,
@@ -21,6 +20,7 @@ export const action: ActionFunction = async ({ request }) => {
   const user = await authenticator.isAuthenticated(request, {
     failureRedirect: '/login',
   })
+
   const formData = await request.formData()
 
   const category = formData.get('category')
@@ -51,7 +51,7 @@ export const action: ActionFunction = async ({ request }) => {
     case 'Local Specialty':
       return upsertLocalSpecialty(user.id, userItem, name, +count)
     case 'Ascension Common Material':
-      return upsertAscensionCommonMaterial(user.id, userItem, name, +count)
+      return upsertCommonMaterial(user.id, userItem, name, +count)
     default:
       return null
   }

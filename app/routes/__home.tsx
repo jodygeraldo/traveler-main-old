@@ -4,10 +4,10 @@ import invariant from 'tiny-invariant'
 
 import FarmableCard from '~/components/Farmable/FarmableCard'
 import Tabs from '~/components/UI/Tabs'
-import { farmable, getFarmables } from '~/data/farmable.server'
+import { authenticator } from '~/services/auth.server'
+import { farmable, getFarmables } from '~/services/data/farmable.server'
 import { FarmableType, FarmDayTypeEnum } from '~/types/farmable'
 import type { ITab } from '~/types/global'
-import { authenticator } from '~/utils/auth.server'
 import { getCurrentDay, getDailyResetTime, Region } from '~/utils/date'
 
 const tabs: ITab[] = [

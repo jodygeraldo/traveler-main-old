@@ -1,7 +1,7 @@
 import bcrypt from 'bcryptjs'
 import invariant from 'tiny-invariant'
 
-import { db } from './db.server'
+import { db } from '~/services/db.server'
 
 export async function login(username: string, password: string) {
   const user = await db.user.findUnique({

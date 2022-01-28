@@ -2,8 +2,8 @@ import { ActionFunction, json, Link, useOutletContext } from 'remix'
 import invariant from 'tiny-invariant'
 
 import CharacterView from '~/components/Character/CharacterView'
+import { authenticator } from '~/services/auth.server'
 import { ICharacter, ITraveler } from '~/types/character'
-import { authenticator } from '~/utils/auth.server'
 import {
   addUserCharacterOwnership,
   updateUserCharacterOwnership,

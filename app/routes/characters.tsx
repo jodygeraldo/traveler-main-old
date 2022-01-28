@@ -1,7 +1,7 @@
 import { json, LoaderFunction, Outlet, useLoaderData } from 'remix'
 
+import { authenticator } from '~/services/auth.server'
 import type { ICharacter, ITraveler } from '~/types/character'
-import { authenticator } from '~/utils/auth.server'
 import {
   getCharacters,
   getUpdatedCharacters,

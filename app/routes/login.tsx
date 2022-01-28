@@ -8,8 +8,8 @@ import {
   useTransition,
 } from 'remix'
 
+import { authenticator } from '~/services/auth.server'
 import { getSession } from '~/services/session.server'
-import { authenticator } from '~/utils/auth.server'
 
 export const action: ActionFunction = async ({ request }) => {
   return authenticator.authenticate('form', request, {
@@ -40,7 +40,7 @@ export default function LoginPage() {
 
   return (
     <Form replace method="post">
-      <Link to={'/signup'} className="rounded-md bg-primary-500 px-4 py-2">
+      <Link to={'/signup'} className="bg-primary-500 rounded-md px-4 py-2">
         Go to Signup
       </Link>
       {error && <div>{error.message}</div>}

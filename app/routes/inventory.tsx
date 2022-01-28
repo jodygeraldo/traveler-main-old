@@ -7,9 +7,9 @@ import {
   useLoaderData,
 } from 'remix'
 
+import { authenticator } from '~/services/auth.server'
+import { db } from '~/services/db.server'
 import { ItemTypes } from '~/types/item'
-import { authenticator } from '~/utils/auth.server'
-import { db } from '~/utils/db/db.server'
 import { getItems, getUpdatedUserItems } from '~/utils/db/item.server'
 
 export const loader: LoaderFunction = async ({ request }) => {
