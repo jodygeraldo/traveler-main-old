@@ -1,9 +1,9 @@
 import type { FC } from 'react'
 
-import { ICharacter, ITraveler } from '~/types/character'
+import { ICharacter } from '~/types/character'
 
 interface Props {
-  talent: ITraveler['level']['talent'] | ICharacter['level']['talent']
+  talent: ICharacter['progression']['talent']
 }
 
 const CharacterLevelTalent: FC<Props> = ({ talent }) => {

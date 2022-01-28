@@ -1,20 +1,20 @@
 import type { FC } from 'react'
-import { Form, useFetcher } from 'remix'
+import { Form } from 'remix'
 
-import { ICharacter, ITraveler } from '~/types/character'
+import { ICharacter } from '~/types/character'
 
 import CharacterLevelManual from './CharacterLevelManual/CharacterLevelManual'
 import CharacterLevelTalent from './CharacterLevelTalent'
 
 interface Props {
-  character: ITraveler | ICharacter
+  character: ICharacter
 }
 
 const CharacterLevel: FC<Props> = ({ character }) => {
   return (
     <Form method="post">
       <input type="hidden" name="character-name" value={character.name} />
-      <CharacterLevelTalent talent={character.level.talent} />
+      <CharacterLevelTalent talent={character.progression.talent} />
     </Form>
   )
 }

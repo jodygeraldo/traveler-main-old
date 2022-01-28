@@ -6,7 +6,7 @@ import charactersGeoMap from '~/services/data/characters/character-geo.server'
 import charactersHydroMap from '~/services/data/characters/character-hydro.server'
 import charactersPyroMap from '~/services/data/characters/character-pyro.server'
 import { db } from '~/services/db.server'
-import { ICharacter } from '~/types/character'
+import { CharacterName, ICharacter } from '~/types/character'
 
 export function getCharacters() {
   const characters: ICharacter[] = []
@@ -129,3 +129,54 @@ export function getUpdatedCharacters(
 
   return updatedCharacters
 }
+
+export const characterName: CharacterName[] = [
+  'Albedo',
+  'Aloy',
+  'Amber',
+  'Arataki Itto',
+  'Barbara',
+  'Beidou',
+  'Bennett',
+  'Chongyun',
+  'Diluc',
+  'Diona',
+  'Eula',
+  'Fischl',
+  'Ganyu',
+  'Gorou',
+  'Hu Tao',
+  'Jean',
+  'Kaedehara Kazuha',
+  'Kaeya',
+  'Kamisato Ayaka',
+  'Keqing',
+  'Klee',
+  'Kujou Sara',
+  'Lisa',
+  'Mona',
+  'Ningguang',
+  'Noelle',
+  'Qiqi',
+  'Raiden Shogun',
+  'Razor',
+  'Rosaria',
+  'Sangonomiya Kokomi',
+  'Sayu',
+  'Shenhe',
+  'Sucrose',
+  'Tartaglia',
+  'Thoma',
+  'Traveler Anemo',
+  'Traveler Geo',
+  'Traveler Electro',
+  'Venti',
+  'Xiangling',
+  'Xiao',
+  'Xingqiu',
+  'Xinyan',
+  'Yanfei',
+  'Yoimiya',
+  'Yun Jin',
+  'Zhongli',
+]

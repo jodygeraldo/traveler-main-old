@@ -3,7 +3,7 @@ import invariant from 'tiny-invariant'
 
 import CharacterView from '~/components/Character/CharacterView'
 import { authenticator } from '~/services/auth.server'
-import { ICharacter, ITraveler } from '~/types/character'
+import { ICharacter } from '~/types/character'
 import {
   addUserCharacterOwnership,
   updateUserCharacterOwnership,
@@ -35,12 +35,12 @@ export const action: ActionFunction = async ({ request }) => {
 }
 
 export default function CharacterRoute() {
-  const character = useOutletContext<ICharacter | ITraveler>()
+  const character = useOutletContext<ICharacter>()
 
   return (
     <div>
       <CharacterView character={character} />
-      {character.own ? (
+      {character.ownership ? (
         <div className="flex gap-4">
           <Link to="edit-manual">
             <button>Edit Manual</button>

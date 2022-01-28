@@ -3,11 +3,11 @@ import { motion } from 'framer-motion'
 import type { FC } from 'react'
 import { Link } from 'remix'
 
-import type { ICharacter, ITraveler } from '~/types/character'
+import type { ICharacter } from '~/types/character'
 import { stringToKebab, stringToLowerSnake } from '~/utils/string'
 
 interface Props {
-  character: ITraveler | ICharacter
+  character: ICharacter
 }
 
 const backgoundColor: Record<ICharacter['rarity'], string> = {
@@ -25,8 +25,6 @@ const hoverRingColor: Record<ICharacter['rarity'], string> = {
 const lastnameOnlyIfTooLong = (name: string) => {
   const nameSplit = name.split(' ')
 
-  if (nameSplit.length === 1) return name
-
   return name.length < 10 ? name : nameSplit[1]
 }
 
@@ -37,7 +35,7 @@ const CharacterItem: FC<Props> = ({ character }) => {
       to={`/characters/${stringToKebab(character.name)}`}
       className={clsx(
         'w-20 rounded-md hover:ring-4',
-        !character.own && 'opacity-50',
+        !character.ownership && 'opacity-50',
         hoverRingColor[character.rarity],
       )}
     >
@@ -54,8 +52,8 @@ const CharacterItem: FC<Props> = ({ character }) => {
             alt={`${character.name} image`}
           />
         </div>
-        <div className="rounded-b-md bg-primary-400 py-1">
-          <h3 className="text-center text-sm font-semibold text-primary-900">
+        <div className="bg-primary-400 rounded-b-md py-1">
+          <h3 className="text-primary-900 text-center text-sm font-semibold">
             {lastnameOnlyIfTooLong(character.name)}
           </h3>
         </div>

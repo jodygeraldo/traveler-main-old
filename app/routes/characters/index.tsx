@@ -1,10 +1,10 @@
 import { useOutletContext } from 'remix'
 
 import CharacterItem from '~/components/Character/CharacterItem'
-import type { ICharacter, ITraveler } from '~/types/character'
+import type { ICharacter } from '~/types/character'
 
 export default function CharactersRoute() {
-  const characters = useOutletContext<Array<ITraveler | ICharacter>>()
+  const characters = useOutletContext<ICharacter[]>()
 
   return (
     <div className="flex flex-wrap gap-4">
