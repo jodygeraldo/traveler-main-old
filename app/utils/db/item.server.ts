@@ -1,6 +1,4 @@
 import { Item, Prisma } from '@prisma/client'
-import { json } from 'remix'
-import invariant from 'tiny-invariant'
 
 import {
   ascensionBossMaterialMap,
@@ -13,11 +11,11 @@ import {
 } from '~/data/items.server'
 import {
   AscensionBossMaterial,
-  AscensionCommonMaterial,
   AscensionGem,
+  CommonMaterial,
   IAscensionBossMaterial,
-  IAscensionCommonMaterial,
   IAscensionGem,
+  ICommonMaterial,
   ILocalSpecialty,
   ITalentBook,
   ITalentBossMaterial,
@@ -31,7 +29,7 @@ import {
 
 import { db } from './db.server'
 
-const dummyTalentCrownName: TalentCrown[] = ['Crown of Insight']
+const dummyCrownName: TalentCrown[] = ['Crown of Insight']
 const dummyTalentBookName: TalentBook[] = [
   'Guide of Ballad',
   'Guide of Diligence',
@@ -125,7 +123,7 @@ const dummyAscensionBossName: AscensionBossMaterial[] = [
   'Riftborn Regalia',
   "Dragonheir's False Fin",
 ]
-const dummyAscensionLocalSpecialtyName: LocalSpecialty[] = [
+const dummyLocalSpecialtyName: LocalSpecialty[] = [
   'Calla Lily',
   'Wolfhook',
   'Valberry',
@@ -152,7 +150,7 @@ const dummyAscensionLocalSpecialtyName: LocalSpecialty[] = [
   'Amakumo Fruit',
   'Fluorescent Fungus',
 ]
-const dummyAscensionCommonName: AscensionCommonMaterial[] = [
+const dummyCommonName: CommonMaterial[] = [
   'Slime Condensate',
   'Slime Secretions',
   'Slime Concentrate',
@@ -172,7 +170,7 @@ const dummyAscensionCommonName: AscensionCommonMaterial[] = [
   'Silver Raven Insignia',
   'Golden Raven Insignia',
   'Whopperflower Nectar',
-  'Shinmmering Nectar',
+  'Shimmering Nectar',
   'Energy Nectar',
   'Old Handguard',
   'Kageuchi Handguard',
@@ -216,10 +214,8 @@ export function getItems() {
   talentBookMap.forEach(value => talentBook.push(value))
   const talentBossMaterial: ITalentBossMaterial[] = []
   talentBossMaterialMap.forEach(value => talentBossMaterial.push(value))
-  const ascensionCommonMaterial: IAscensionCommonMaterial[] = []
-  ascensionCommonMaterialMap.forEach(value =>
-    ascensionCommonMaterial.push(value),
-  )
+  const commonMaterial: ICommonMaterial[] = []
+  ascensionCommonMaterialMap.forEach(value => commonMaterial.push(value))
   const ascensionBossMaterial: IAscensionBossMaterial[] = []
   ascensionBossMaterialMap.forEach(value => ascensionBossMaterial.push(value))
   const ascensionGem: IAscensionGem[] = []
@@ -231,32 +227,32 @@ export function getItems() {
 
   const itemsArray: ItemTypes = [
     {
-      name: 'Crown',
-      items: talentCrown,
-    },
-    {
-      name: 'Talent Book',
-      items: talentBook,
+      name: 'Common Material',
+      items: commonMaterial,
     },
     {
       name: 'Talent Boss Material',
       items: talentBossMaterial,
     },
     {
-      name: 'Ascension Gem',
-      items: ascensionGem,
-    },
-    {
       name: 'Ascension Boss Material',
       items: ascensionBossMaterial,
     },
     {
-      name: 'Local Specialty',
-      items: ascensionLocalSpecialty,
+      name: 'Ascension Gem',
+      items: ascensionGem,
     },
     {
-      name: 'Ascension Common Material',
-      items: ascensionCommonMaterial,
+      name: 'Talent Book',
+      items: talentBook,
+    },
+    {
+      name: 'Crown',
+      items: talentCrown,
+    },
+    {
+      name: 'Local Specialty',
+      items: ascensionLocalSpecialty,
     },
   ]
 
@@ -265,13 +261,13 @@ export function getItems() {
 
 function getUpdatedUserItem(
   category:
-    | 'talentCrown'
-    | 'talentBook'
+    | 'common'
     | 'talentBoss'
-    | 'ascensionGem'
     | 'ascensionBoss'
-    | 'ascensionCommon'
-    | 'ascensionLocalSpecialty',
+    | 'ascensionGem'
+    | 'talentBook'
+    | 'crown'
+    | 'localSpecialty',
   userItem: Prisma.JsonValue,
   items: ItemTypes,
 ) {
@@ -281,7 +277,7 @@ function getUpdatedUserItem(
     | ITalentBossMaterial[]
     | IAscensionGem[]
     | IAscensionBossMaterial[]
-    | IAscensionCommonMaterial[]
+    | ICommonMaterial[]
     | ILocalSpecialty[] = items[6].items
   let dummy:
     | TalentCrown[]
@@ -289,44 +285,44 @@ function getUpdatedUserItem(
     | TalentBossMaterial[]
     | AscensionGem[]
     | AscensionBossMaterial[]
-    | AscensionCommonMaterial[]
-    | LocalSpecialty[] = dummyAscensionCommonName
+    | CommonMaterial[]
+    | LocalSpecialty[] = dummyCommonName
 
   switch (category) {
-    case 'talentCrown':
+    case 'common':
       newUpdatedItem = items[0].items
-      dummy = dummyTalentCrownName
-      break
-    case 'talentBook':
-      newUpdatedItem = items[1].items
-      dummy = dummyTalentBookName
+      dummy = dummyCommonName
       break
     case 'talentBoss':
-      newUpdatedItem = items[2].items
+      newUpdatedItem = items[1].items
       dummy = dummyTalentBossName
+      break
+    case 'ascensionBoss':
+      newUpdatedItem = items[2].items
+      dummy = dummyAscensionBossName
       break
     case 'ascensionGem':
       newUpdatedItem = items[3].items
       dummy = dummyAscensionGemName
       break
-    case 'ascensionBoss':
+    case 'talentBook':
       newUpdatedItem = items[4].items
-      dummy = dummyAscensionBossName
+      dummy = dummyTalentBookName
       break
-    case 'ascensionLocalSpecialty':
+    case 'crown':
       newUpdatedItem = items[5].items
-      dummy = dummyAscensionLocalSpecialtyName
+      dummy = dummyCrownName
       break
-    case 'ascensionCommon':
+    case 'localSpecialty':
     default:
       newUpdatedItem = items[6].items
-      dummy = dummyAscensionCommonName
+      dummy = dummyLocalSpecialtyName
       break
   }
 
   const userIt = userItem as {
     [K in
-      | AscensionCommonMaterial
+      | CommonMaterial
       | AscensionBossMaterial
       | AscensionGem
       | LocalSpecialty
@@ -361,31 +357,31 @@ export function getUpdatedUserItems(
 ): ItemTypes {
   const itemsHolders = items
 
-  if (userItem.talentCrown) {
+  if (userItem.common) {
     // I MAKE SURE THIS IS RETURN THE SAME ARRAY
     // @ts-ignore
     itemsHolders['0'].items = getUpdatedUserItem(
-      'talentCrown',
-      userItem.talentCrown,
+      'common',
+      userItem.common,
       items,
     )
   }
 
-  if (userItem.talentBook) {
-    // I MAKE SURE THIS IS RETURN THE SAME ARRAY
-    // @ts-ignore
-    itemsHolders['1'].items = getUpdatedUserItem(
-      'talentBook',
-      userItem.talentBook,
-      items,
-    )
-  }
   if (userItem.talentBoss) {
     // I MAKE SURE THIS IS RETURN THE SAME ARRAY
     // @ts-ignore
-    itemsHolders['2'].items = getUpdatedUserItem(
+    itemsHolders['1'].items = getUpdatedUserItem(
       'talentBoss',
       userItem.talentBoss,
+      items,
+    )
+  }
+  if (userItem.ascensionBoss) {
+    // I MAKE SURE THIS IS RETURN THE SAME ARRAY
+    // @ts-ignore
+    itemsHolders['2'].items = getUpdatedUserItem(
+      'ascensionBoss',
+      userItem.ascensionBoss,
       items,
     )
   }
@@ -398,30 +394,26 @@ export function getUpdatedUserItems(
       items,
     )
   }
-  if (userItem.ascensionBoss) {
+  if (userItem.talentBook) {
     // I MAKE SURE THIS IS RETURN THE SAME ARRAY
     // @ts-ignore
     itemsHolders['4'].items = getUpdatedUserItem(
-      'ascensionBoss',
-      userItem.ascensionBoss,
+      'talentBook',
+      userItem.talentBook,
       items,
     )
   }
-  if (userItem.ascensionLocalSpecialty) {
+  if (userItem.crown) {
     // I MAKE SURE THIS IS RETURN THE SAME ARRAY
     // @ts-ignore
-    itemsHolders['5'].items = getUpdatedUserItem(
-      'ascensionLocalSpecialty',
-      userItem.ascensionLocalSpecialty,
-      items,
-    )
+    itemsHolders['5'].items = getUpdatedUserItem('crown', userItem.crown, items)
   }
-  if (userItem.ascensionCommon) {
+  if (userItem.localSpecialty) {
     // I MAKE SURE THIS IS RETURN THE SAME ARRAY
     // @ts-ignore
     itemsHolders['6'].items = getUpdatedUserItem(
-      'ascensionCommon',
-      userItem.ascensionCommon,
+      'localSpecialty',
+      userItem.localSpecialty,
       items,
     )
   }
@@ -439,19 +431,19 @@ export async function upsertTalentCrown(
     return db.item.create({
       data: {
         userId,
-        talentCrown: [{ [name]: count }],
+        crown: [{ [name]: count }],
       },
     })
   }
 
-  const talentCrown = getUpdatedItemArray('talentCrown', userItem, name, count)
+  const crown = getUpdatedItemArray('crown', userItem, name, count)
 
   return db.item.update({
     where: {
       userId,
     },
     data: {
-      talentCrown,
+      crown,
     },
   })
 }
@@ -584,13 +576,13 @@ export async function upsertLocalSpecialty(
     return db.item.create({
       data: {
         userId,
-        ascensionLocalSpecialty: [{ [name]: count }],
+        localSpecialty: [{ [name]: count }],
       },
     })
   }
 
-  const ascensionLocalSpecialty = getUpdatedItemArray(
-    'ascensionLocalSpecialty',
+  const localSpecialty = getUpdatedItemArray(
+    'localSpecialty',
     userItem,
     name,
     count,
@@ -601,12 +593,12 @@ export async function upsertLocalSpecialty(
       userId,
     },
     data: {
-      ascensionLocalSpecialty,
+      localSpecialty,
     },
   })
 }
 
-export async function upsertAscensionCommonMaterial(
+export async function upsertCommonMaterial(
   userId: string,
   userItem: Item | null,
   name: string,
@@ -616,43 +608,38 @@ export async function upsertAscensionCommonMaterial(
     return db.item.create({
       data: {
         userId,
-        ascensionCommon: [{ [name]: count }],
+        common: [{ [name]: count }],
       },
     })
   }
 
-  const ascensionCommon = getUpdatedItemArray(
-    'ascensionCommon',
-    userItem,
-    name,
-    count,
-  )
+  const common = getUpdatedItemArray('common', userItem, name, count)
 
   return db.item.update({
     where: {
       userId,
     },
     data: {
-      ascensionCommon,
+      common,
     },
   })
 }
 
 function getUpdatedItemArray(
   category:
-    | 'talentCrown'
-    | 'talentBook'
+    | 'common'
     | 'talentBoss'
-    | 'ascensionGem'
     | 'ascensionBoss'
-    | 'ascensionCommon'
-    | 'ascensionLocalSpecialty',
+    | 'ascensionGem'
+    | 'talentBook'
+    | 'crown'
+    | 'localSpecialty',
   userItem: Item,
   name: string,
   count: number,
 ) {
   const nameTyped = name as
-    | AscensionCommonMaterial
+    | CommonMaterial
     | AscensionBossMaterial
     | AscensionGem
     | LocalSpecialty
@@ -663,7 +650,7 @@ function getUpdatedItemArray(
   const oldArray = userItem[category] as
     | {
         [K in
-          | AscensionCommonMaterial
+          | CommonMaterial
           | AscensionBossMaterial
           | AscensionGem
           | LocalSpecialty

@@ -35,14 +35,14 @@ model Character {
 }
 
 model Item {
-  id                      String @id @default(uuid())
-  talentCrown             Json?
-  talentBook              Json?
-  talentBoss              Json?
-  ascensionGem            Json?
-  ascensionCommon         Json?
-  ascensionBoss           Json?
-  ascensionLocalSpecialty Json?
-  userId                  String @unique
-  user                    User   @relation(fields: [userId], references: [id])
+  id             String @id @default(uuid())
+  common         Json?
+  talentBoss     Json?
+  ascensionBoss  Json?
+  ascensionGem   Json?
+  talentBook     Json?
+  crown          Json?
+  localSpecialty Json?
+  userId         String @unique
+  user           User   @relation(fields: [userId], references: [id])
 }

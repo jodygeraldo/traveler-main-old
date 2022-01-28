@@ -142,7 +142,7 @@ export type CommonMaterial =
   | 'Silver Raven Insignia'
   | 'Golden Raven Insignia'
   | 'Whopperflower Nectar'
-  | 'Shinmmering Nectar'
+  | 'Shimmering Nectar'
   | 'Energy Nectar'
   | 'Old Handguard'
   | 'Kageuchi Handguard'
