@@ -65,3 +65,11 @@ export async function requireUserId(request: Request) {
 
   return user.id
 }
+
+export async function requireUserServer(request: Request) {
+  const user = await authenticator.isAuthenticated(request, {
+    failureRedirect: '/login',
+  })
+
+  return user.server
+}
