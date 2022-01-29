@@ -428,7 +428,7 @@ export function getUpdatedUserItems(
   return itemsHolders
 }
 
-export async function upsertTalentCrown(
+export async function upsertCrown(
   userId: string,
   userItem: Item | null,
   name: string,
