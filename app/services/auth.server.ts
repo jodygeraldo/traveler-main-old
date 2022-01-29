@@ -42,6 +42,9 @@ authenticator.use(
       return user
     } else {
       invariant(typeof server === 'string', 'server not selected properly')
+      if (server !== 'America' && server !== 'Europe' && server !== 'Asia') {
+        throw new Error('server not selected properly')
+      }
       const user = await signup(username, password, server)
 
       return user

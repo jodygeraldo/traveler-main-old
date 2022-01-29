@@ -1,22 +1,21 @@
+import { Server } from '@prisma/client'
 import { addDays, differenceInSeconds, getDay, nextMonday, set } from 'date-fns'
-import { getTimezoneOffset, utcToZonedTime, zonedTimeToUtc } from 'date-fns-tz'
+import { utcToZonedTime } from 'date-fns-tz'
 
 import { DayOfWeek } from '~/types/farmable'
 
-export type Region = 'EU' | 'NA' | 'AS'
-
-function getCurrentTime(region: Region = 'AS') {
-  const regionTz: Record<Region, string> = {
-    NA: 'EST',
-    EU: 'CET',
-    AS: 'Asia/Singapore',
+function getCurrentTime(server: Server) {
+  const regionTz: Record<Server, string> = {
+    America: 'EST',
+    Europe: 'CET',
+    Asia: 'Asia/Singapore',
   }
 
-  return utcToZonedTime(new Date(), regionTz[region])
+  return utcToZonedTime(new Date(), regionTz[server])
 }
 
-export function getDailyResetTime(region: Region = 'AS') {
-  const time = getCurrentTime(region)
+export function getDailyResetTime(server: Server) {
+  const time = getCurrentTime(server)
   const nextReset = set(time, {
     hours: 4,
     minutes: 0,
@@ -30,8 +29,8 @@ export function getDailyResetTime(region: Region = 'AS') {
   return diffSec
 }
 
-export function getWeeklyResetTime(region: Region = 'AS') {
-  const time = getCurrentTime(region)
+export function getWeeklyResetTime(server: Server) {
+  const time = getCurrentTime(server)
   const nextMondayTime = nextMonday(time)
   const nextReset = set(nextMondayTime, {
     hours: 4,
@@ -46,8 +45,8 @@ export function getWeeklyResetTime(region: Region = 'AS') {
   return diffSec
 }
 
-export function getCurrentDay(region: Region = 'AS') {
-  const time = getCurrentTime(region)
+export function getCurrentDay(server: Server) {
+  const time = getCurrentTime(server)
 
   const day = getDay(time)
   let dayInAplha: DayOfWeek

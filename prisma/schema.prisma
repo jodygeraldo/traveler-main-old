@@ -10,11 +10,17 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
+enum Server {
+  America
+  Europe
+  Asia
+}
+
 model User {
   id           String      @id @default(uuid())
   username     String      @unique
   passwordHash String
-  server       String
+  server       Server
   createdAt    DateTime    @default(now())
   updatedAt    DateTime    @updatedAt
   characters   Character[]

@@ -77,9 +77,9 @@ export default function SignupPage() {
             className="mt-1 block w-full rounded-md border-gray-300 py-2 pl-3 pr-10 text-base focus:border-indigo-500 focus:outline-none focus:ring-indigo-500 sm:text-sm"
             defaultValue="Canada"
           >
-            <option value="AS">Asia</option>
-            <option value="NA">America</option>
-            <option value="EU">Europe</option>
+            <option>America</option>
+            <option>Europe</option>
+            <option>Asia</option>
           </select>
         </div>
 

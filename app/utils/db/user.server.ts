@@ -1,3 +1,4 @@
+import { Server } from '@prisma/client'
 import bcrypt from 'bcryptjs'
 import invariant from 'tiny-invariant'
 
@@ -34,7 +35,7 @@ export async function login(username: string, password: string) {
 export async function signup(
   username: string,
   password: string,
-  server: string,
+  server: Server,
 ) {
   const exist = await db.user.findUnique({ where: { username } })
 
