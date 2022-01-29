@@ -1,3 +1,4 @@
+import { Item } from '@prisma/client'
 import {
   json,
   LoaderFunction,
@@ -8,15 +9,22 @@ import {
   useOutletContext,
   useParams,
 } from 'remix'
-import { RouteParams } from 'routes-gen'
+import { route, RouteParams } from 'routes-gen'
 import invariant from 'tiny-invariant'
 
+import { requireUserId } from '~/services/auth.server'
 import type { CharacterName, ICharacter } from '~/types/character'
 import { characterName as characterNameHelper } from '~/utils/db/character.server'
+import { getUserItems } from '~/utils/db/item.server'
 import { stringToCapitalized } from '~/utils/string'
 
-export const loader: LoaderFunction = async ({ params }) => {
-  const { name } = params as RouteParams['/characters/:name']
+interface LoaderData {
+  name: CharacterName
+  userItems: Item | null
+}
+export const loader: LoaderFunction = async ({ params, request }) => {
+  const userId = await requireUserId(request)
+  const { name } = params as RouteParams['/character/:name']
 
   const parsedName = stringToCapitalized(name) as CharacterName
 
@@ -25,11 +33,13 @@ export const loader: LoaderFunction = async ({ params }) => {
     throw json('Character not found', { status: 404 })
   }
 
-  return json<CharacterName>(parsedName, { status: 200 })
+  const userItems = await getUserItems(userId)
+
+  return json<LoaderData>({ name: parsedName, userItems }, { status: 200 })
 }
 
 export default function CharacterPage() {
-  const name = useLoaderData<CharacterName>()
+  const { name } = useLoaderData<LoaderData>()
   const characterData = useOutletContext<ICharacter[]>()
 
   const character = characterData.find(c => c.name === name)
@@ -49,6 +59,14 @@ export function CatchBoundary() {
   throw new Error(`Unexpected caught response with status: ${caught.status}`)
 }
 
-export const unstable_shouldReload: ShouldReloadFunction = () => {
-  return false
+export const unstable_shouldReload: ShouldReloadFunction = ({
+  params,
+  submission,
+}) => {
+  invariant(params.name, 'This have to exist')
+  return (
+    !!submission &&
+    submission.action ===
+      route('/character/:name/edit-with-inventory', { name: params.name })
+  )
 }
