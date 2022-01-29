@@ -233,33 +233,33 @@ export type ItemCategory =
   | 'Local Specialty'
   | 'Common Material'
 
-export type ItemTypes = [
-  {
-    name: 'Common Material'
-    items: ICommonMaterial[]
-  },
-  {
-    name: 'Talent Boss Material'
-    items: ITalentBossMaterial[]
-  },
-  {
-    name: 'Ascension Boss Material'
-    items: IAscensionBossMaterial[]
-  },
-  {
-    name: 'Ascension Gem'
-    items: IAscensionGem[]
-  },
-  {
-    name: 'Talent Book'
-    items: ITalentBook[]
-  },
-  {
-    name: 'Crown'
-    items: ITalentCrown[]
-  },
-  {
-    name: 'Local Specialty'
-    items: ILocalSpecialty[]
-  },
-]
+export type ItemTypes = Array<
+  | {
+      name: 'Common Material'
+      items: ICommonMaterial[]
+    }
+  | {
+      name: 'Talent Boss Material'
+      items: ITalentBossMaterial[]
+    }
+  | {
+      name: 'Ascension Boss Material'
+      items: IAscensionBossMaterial[]
+    }
+  | {
+      name: 'Ascension Gem'
+      items: IAscensionGem[]
+    }
+  | {
+      name: 'Talent Book'
+      items: ITalentBook[]
+    }
+  | {
+      name: 'Crown'
+      items: ITalentCrown[]
+    }
+  | {
+      name: 'Local Specialty'
+      items: ILocalSpecialty[]
+    }
+>
