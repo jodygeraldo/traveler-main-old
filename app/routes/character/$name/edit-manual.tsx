@@ -1,5 +1,5 @@
 import { ActionFunction, redirect, useOutletContext } from 'remix'
-import { route, RouteParams } from 'routes-gen'
+import { route } from 'routes-gen'
 import invariant from 'tiny-invariant'
 
 import CharacterLevelManual from '~/components/Character/CharacterLevel/CharacterLevelManual/CharacterLevelManual'
@@ -12,7 +12,11 @@ import {
 import { getFormHackMessage } from '~/utils/message'
 
 export const action: ActionFunction = async ({ request, params }) => {
-  const { name } = params as RouteParams['/character/:name/edit-manual']
+  const { name } = params
+  invariant(
+    typeof name === 'string',
+    'There is something wrong with the route params',
+  )
 
   const userId = await requireUserId(request)
 

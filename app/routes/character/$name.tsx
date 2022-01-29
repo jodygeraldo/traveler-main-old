@@ -9,7 +9,7 @@ import {
   useOutletContext,
   useParams,
 } from 'remix'
-import { route, RouteParams } from 'routes-gen'
+import { route } from 'routes-gen'
 import invariant from 'tiny-invariant'
 
 import { requireUserId } from '~/services/auth.server'
@@ -24,7 +24,11 @@ interface LoaderData {
 }
 export const loader: LoaderFunction = async ({ params, request }) => {
   const userId = await requireUserId(request)
-  const { name } = params as RouteParams['/character/:name']
+  const { name } = params
+  invariant(
+    typeof name === 'string',
+    'There is something wrong with the route params',
+  )
 
   const parsedName = stringToCapitalized(name) as CharacterName
 
