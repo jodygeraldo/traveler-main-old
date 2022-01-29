@@ -49,3 +49,19 @@ authenticator.use(
   }),
   'form',
 )
+
+export async function requireUser(request: Request) {
+  const user = await authenticator.isAuthenticated(request, {
+    failureRedirect: '/login',
+  })
+
+  return user
+}
+
+export async function requireUserId(request: Request) {
+  const user = await authenticator.isAuthenticated(request, {
+    failureRedirect: '/login',
+  })
+
+  return user.id
+}
