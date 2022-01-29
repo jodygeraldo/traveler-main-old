@@ -2,6 +2,7 @@ import clsx from 'clsx'
 import { motion } from 'framer-motion'
 import type { FC } from 'react'
 import { Link } from 'remix'
+import { route } from 'routes-gen'
 
 import type { ICharacter } from '~/types/character'
 import { stringToKebab, stringToLowerSnake } from '~/utils/string'
@@ -32,7 +33,7 @@ const CharacterItem: FC<Props> = ({ character }) => {
   return (
     <Link
       prefetch="intent"
-      to={`/characters/${stringToKebab(character.name)}`}
+      to={route('/character/:name', { name: stringToKebab(character.name) })}
       className={clsx(
         'w-20 rounded-md hover:ring-4',
         !character.ownership && 'opacity-50',
