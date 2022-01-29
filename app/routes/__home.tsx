@@ -1,3 +1,4 @@
+import { Server } from '@prisma/client'
 import { useEffect } from 'react'
 import { json, LoaderFunction, Outlet, useLoaderData, useNavigate } from 'remix'
 import invariant from 'tiny-invariant'
@@ -8,7 +9,7 @@ import { requireUserServer } from '~/services/auth.server'
 import { farmable, getFarmables } from '~/services/data/farmable.server'
 import { FarmableType, FarmDayTypeEnum } from '~/types/farmable'
 import type { ITab } from '~/types/global'
-import { getCurrentDay, getDailyResetTime, Region } from '~/utils/date'
+import { getCurrentDay, getDailyResetTime } from '~/utils/date'
 
 const tabs: ITab[] = [
   {
@@ -33,9 +34,9 @@ type LoaderData = {
   todayFarmable: FarmableType
 }
 export const loader: LoaderFunction = async ({ request }) => {
-  const server = await requireUserServer(request)
+  const server = (await requireUserServer(request)) as Server
 
-  const day = getCurrentDay(server as Region)
+  const day = getCurrentDay(server)
 
   let todayFarmable: FarmableType | undefined
 
@@ -55,14 +56,14 @@ export const loader: LoaderFunction = async ({ request }) => {
     default:
       return json<LoaderData>({
         todayFarmable: getFarmables(),
-        timeUntilReset: getDailyResetTime('AS') * 1000,
+        timeUntilReset: getDailyResetTime(server) * 1000,
       })
   }
   invariant(todayFarmable, 'This should never throw')
 
   return json<LoaderData>({
     todayFarmable,
-    timeUntilReset: getDailyResetTime('AS') * 1000,
+    timeUntilReset: getDailyResetTime(server) * 1000,
   })
 }
 
