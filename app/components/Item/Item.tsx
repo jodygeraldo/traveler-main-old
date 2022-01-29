@@ -65,7 +65,7 @@ const Item: FC<Props> = ({ category, item }) => {
             aria-label={`${it.name}-count`}
             onChange={handleChange}
             type="number"
-            className="w-20 rounded-md"
+            className="w-[84px] rounded-md tabular-nums"
             defaultValue={it.count}
             name={it.name}
             min={0}
