@@ -20,7 +20,7 @@ const FarmableItem: FC<Props> = ({ item }) => {
         <div className="flex items-center gap-4">
           <img
             className="h-16 w-16"
-            src={`../assets/images/items/${stringToLowerSnake(item.name)}.png`}
+            src={`/assets/images/items/${stringToLowerSnake(item.name)}.png`}
             alt={`${item.name} talent book image`}
           />
           <p>{item.name}</p>
@@ -30,7 +30,7 @@ const FarmableItem: FC<Props> = ({ item }) => {
             <div key={name} className="relative">
               <img
                 className="h-16 w-16"
-                src={`../assets/images/characters/close/${stringToLowerSnake(
+                src={`/assets/images/characters/close/${stringToLowerSnake(
                   name.includes('Traveler') ? name.split(' ')[1] : name,
                 )}.png`}
                 alt={`${name} character image`}
@@ -38,7 +38,7 @@ const FarmableItem: FC<Props> = ({ item }) => {
               {name.includes('Traveler') ? (
                 <img
                   className="absolute top-0 left-0 right-0 mx-auto h-8 w-8 shadow-md"
-                  src={`../assets/images/elements/${
+                  src={`/assets/images/elements/${
                     // @ts-ignore
                     travelerIndentifier[name]
                   }`}
