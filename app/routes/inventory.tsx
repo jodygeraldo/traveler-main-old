@@ -50,8 +50,8 @@ export default function InventoryPage() {
   const currentPathname = location.pathname.split('/')[2] as string | undefined
 
   return (
-    <div className="flex gap-8">
-      <nav className="sticky top-5 h-full space-y-1 " aria-label="Sidebar">
+    <div className="gap-8 px-2 sm:flex">
+      <nav className="top-5 h-full space-y-1 sm:sticky " aria-label="Sidebar">
         {navigation.map(item => (
           <NavLink
             key={item.name}

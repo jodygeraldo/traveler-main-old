@@ -1,4 +1,4 @@
-import { InformationCircleIcon } from '@heroicons/react/outline'
+import { ClipboardListIcon } from '@heroicons/react/outline'
 import { ActionFunction, useOutletContext } from 'remix'
 import invariant from 'tiny-invariant'
 
@@ -67,11 +67,11 @@ export default function InventoryRoute() {
               {item.name}
             </h1>
             {idx === 0 ? (
-              <div className="flex items-center gap-2 rounded-md border-2 border-slate-500 bg-slate-900 p-2">
-                <InformationCircleIcon className="h-6 w-6 text-yellow-400" />
+              <div className="hidden items-center gap-2 rounded-md border-2 border-slate-500 bg-slate-900 p-2 lg:flex">
+                <ClipboardListIcon className="h-6 w-6 text-slate-400" />
                 <p className="text-slate-200">
                   Use <span className="text-teal-400">CTRL + F</span> to search
-                  items
+                  for item
                 </p>
               </div>
             ) : null}
