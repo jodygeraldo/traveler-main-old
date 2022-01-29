@@ -8,15 +8,27 @@ export async function login(username: string, password: string) {
     where: {
       username,
     },
+    select: {
+      id: true,
+      server: true,
+      passwordHash: true,
+    },
   })
 
-  invariant(user, 'Invalid username or password')
+  if (!user) {
+    throw new Error('Invalid username or password')
+  }
 
   const valid = await bcrypt.compare(password, user.passwordHash)
 
-  invariant(valid, 'Invalid username or password')
+  if (!valid) {
+    throw new Error('Invalid username or password')
+  }
 
-  return user
+  return {
+    id: user.id,
+    server: user.server,
+  }
 }
 
 export async function signup(
@@ -33,6 +45,10 @@ export async function signup(
       username,
       passwordHash: await bcrypt.hash(password, 10),
       server,
+    },
+    select: {
+      id: true,
+      server: true,
     },
   })
 
