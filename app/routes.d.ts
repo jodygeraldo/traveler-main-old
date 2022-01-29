@@ -5,6 +5,13 @@ declare module "routes-gen" {
     "/character/:name/edit-with-inventory": { name: string };
     "/character/:name/edit-manual": { name: string };
     "/inventory": {};
+    "/inventory/ascension-boss-material": {};
+    "/inventory/talent-boss-material": {};
+    "/inventory/common-material": {};
+    "/inventory/local-specialty": {};
+    "/inventory/ascension-gem": {};
+    "/inventory/talent-book": {};
+    "/inventory/crown": {};
     "/logout": {};
     "/signup": {};
     "/": {};
@@ -21,6 +28,13 @@ declare module "routes-gen" {
       | ["/character/:name/edit-with-inventory", RouteParams["/character/:name/edit-with-inventory"]]
       | ["/character/:name/edit-manual", RouteParams["/character/:name/edit-manual"]]
       | ["/inventory"]
+      | ["/inventory/ascension-boss-material"]
+      | ["/inventory/talent-boss-material"]
+      | ["/inventory/common-material"]
+      | ["/inventory/local-specialty"]
+      | ["/inventory/ascension-gem"]
+      | ["/inventory/talent-book"]
+      | ["/inventory/crown"]
       | ["/logout"]
       | ["/signup"]
       | ["/"]
