@@ -44,35 +44,34 @@ const Item: FC<Props> = ({ category, item }) => {
   }
 
   return (
-    <div className="flex flex-wrap gap-5">
+    <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
       {item.map(it => (
         <div
           key={it.name}
-          className="flex items-center gap-4 rounded-md bg-slate-800 p-2"
+          className="flex items-center justify-between gap-4 rounded-md bg-slate-800 p-2"
         >
-          <img
-            src={`/assets/images/items/${stringToLowerSnake(it.name)}.png`}
-            className="h-12 w-10"
-            width={40}
-            height={48}
-            alt={`${it.name} image`}
-          />
-          <div className="w-32">
+          <div className="flex items-center gap-4">
+            <img
+              src={`/assets/images/items/${stringToLowerSnake(it.name)}.png`}
+              className="h-7 w-5"
+              width={20}
+              height={28}
+              alt={`${it.name} image`}
+            />
             <h1 className="text-sm text-white">{it.name}</h1>
-
-            <div>
-              <label htmlFor={`${it.name}-count`}></label>
-              <input
-                onChange={handleChange}
-                type="number"
-                className="mt-2 h-full w-full rounded-md"
-                defaultValue={it.count}
-                name={it.name}
-                min={0}
-                id={`${it.name}-count`}
-              />
-            </div>
           </div>
+
+          <input
+            aria-label={`${it.name}-count`}
+            onChange={handleChange}
+            type="number"
+            className="w-20 rounded-md"
+            defaultValue={it.count}
+            name={it.name}
+            min={0}
+            max={9999}
+            id={`${it.name}-count`}
+          />
         </div>
       ))}
     </div>
