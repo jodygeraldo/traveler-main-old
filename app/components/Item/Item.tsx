@@ -33,7 +33,7 @@ const Item: FC<Props> = ({ category, item }) => {
       {
         category,
         name: e.target.name,
-        count: e.target.value,
+        count: e.target.value === '' ? '0' : e.target.value,
       },
       {
         method: 'post',
