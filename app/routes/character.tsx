@@ -1,7 +1,7 @@
 import { Item } from '@prisma/client'
 import { json, LoaderFunction, Outlet, useLoaderData } from 'remix'
 
-import { authenticator } from '~/services/auth.server'
+import { requireUserId } from '~/services/auth.server'
 import { ICharacter } from '~/types/character'
 import {
   getCharacters,
@@ -15,13 +15,11 @@ interface LoaderData {
   userItems?: Item | null
 }
 export const loader: LoaderFunction = async ({ request }) => {
-  const user = await authenticator.isAuthenticated(request, {
-    failureRedirect: '/login',
-  })
+  const userId = await requireUserId(request)
 
   const characters = getCharacters()
 
-  const userCharacters = (await getUserCharacters(user.id)) as {
+  const userCharacters = (await getUserCharacters(userId)) as {
     id: string
     name: string
     level: number
@@ -34,7 +32,7 @@ export const loader: LoaderFunction = async ({ request }) => {
     return json<LoaderData>({ characters }, { status: 200 })
   }
 
-  const userItems = await getUserItems(user.id)
+  const userItems = await getUserItems(userId)
 
   const updatedCharacters = getUpdatedCharacters(userCharacters, characters)
 

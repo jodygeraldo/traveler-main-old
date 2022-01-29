@@ -1,4 +1,3 @@
-import { Item } from '@prisma/client'
 import {
   json,
   LoaderFunction,
@@ -7,7 +6,7 @@ import {
   useLoaderData,
 } from 'remix'
 
-import { authenticator } from '~/services/auth.server'
+import { requireUserId } from '~/services/auth.server'
 import { ItemTypes } from '~/types/item'
 import {
   getItems,
@@ -16,13 +15,10 @@ import {
 } from '~/utils/db/item.server'
 
 export const loader: LoaderFunction = async ({ request }) => {
-  const user = await authenticator.isAuthenticated(request, {
-    failureRedirect: '/login',
-  })
+  const userId = await requireUserId(request)
+  const userItem = await getUserItems(userId)
 
   const items = getItems()
-
-  const userItem = await getUserItems(user.id)
 
   if (!userItem) {
     return json<ItemTypes>(items, { status: 200 })

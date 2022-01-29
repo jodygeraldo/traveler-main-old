@@ -3,7 +3,7 @@ import { json, useLoaderData } from 'remix'
 import invariant from 'tiny-invariant'
 
 import TodoList from '~/components/Todo/TodoList'
-import { authenticator } from '~/services/auth.server'
+import { requireUserId } from '~/services/auth.server'
 import { todos } from '~/services/data/todos.server'
 import type { ITodo } from '~/types/todo'
 import { TodoTypeEnum } from '~/types/todo'
@@ -11,14 +11,12 @@ import { getUserTodo } from '~/utils/todo.server'
 
 type LoaderData = ITodo[]
 export const loader: LoaderFunction = async ({ request }) => {
-  const user = await authenticator.isAuthenticated(request, {
-    failureRedirect: '/login',
-  })
+  const userId = await requireUserId(request)
 
   const todo = todos.get(TodoTypeEnum.Daily)
   invariant(todo, 'This should never throw')
 
-  const todoData = await getUserTodo(TodoTypeEnum.Daily, user.id)
+  const todoData = await getUserTodo(TodoTypeEnum.Daily, userId)
 
   if (!todoData) return json<LoaderData>(todo)
 

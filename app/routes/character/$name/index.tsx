@@ -2,7 +2,7 @@ import { ActionFunction, json, Link, useOutletContext } from 'remix'
 import invariant from 'tiny-invariant'
 
 import CharacterView from '~/components/Character/CharacterView'
-import { authenticator } from '~/services/auth.server'
+import { requireUserId } from '~/services/auth.server'
 import { ICharacter } from '~/types/character'
 import {
   addUserCharacterOwnership,
@@ -11,9 +11,7 @@ import {
 import { getFormHackMessage } from '~/utils/message'
 
 export const action: ActionFunction = async ({ request }) => {
-  const user = await authenticator.isAuthenticated(request, {
-    failureRedirect: '/login',
-  })
+  const userId = await requireUserId(request)
 
   const formData = await request.formData()
   const name = formData.get('name')
@@ -24,7 +22,7 @@ export const action: ActionFunction = async ({ request }) => {
   invariant(typeof newOwnStatus === 'string', getFormHackMessage())
 
   if (id === 'NEW') {
-    await addUserCharacterOwnership(user.id, name)
+    await addUserCharacterOwnership(userId, name)
 
     return json(null, { status: 201 })
   }

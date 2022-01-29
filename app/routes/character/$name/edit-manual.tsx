@@ -3,7 +3,7 @@ import { route, RouteParams } from 'routes-gen'
 import invariant from 'tiny-invariant'
 
 import CharacterLevelManual from '~/components/Character/CharacterLevel/CharacterLevelManual/CharacterLevelManual'
-import { authenticator } from '~/services/auth.server'
+import { requireUserId } from '~/services/auth.server'
 import { ICharacter } from '~/types/character'
 import {
   addUserCharacter,
@@ -12,11 +12,9 @@ import {
 import { getFormHackMessage } from '~/utils/message'
 
 export const action: ActionFunction = async ({ request, params }) => {
-  const { name } = params as RouteParams['/characters/:name/edit-manual']
+  const { name } = params as RouteParams['/character/:name/edit-manual']
 
-  const user = await authenticator.isAuthenticated(request, {
-    failureRedirect: '/login',
-  })
+  const userId = await requireUserId(request)
 
   const formData = await request.formData()
   const id = formData.get('id')
@@ -38,14 +36,14 @@ export const action: ActionFunction = async ({ request, params }) => {
   const talent: [number, number, number] = [+tNormal, +tSkill, +tBurst]
 
   if (id === 'NEW') {
-    await addUserCharacter(user.id, name, +level, +ascension, talent)
+    await addUserCharacter(userId, name, +level, +ascension, talent)
 
-    return redirect(route('/characters/:name', { name }))
+    return redirect(route('/character/:name', { name }))
   }
 
   await updateUserCharacter(id, +level, +ascension, talent)
 
-  return redirect(route('/characters/:name', { name }))
+  return redirect(route('/character/:name', { name }))
 }
 
 export default function CharacterEditManualRoute() {

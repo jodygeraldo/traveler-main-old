@@ -4,7 +4,7 @@ import invariant from 'tiny-invariant'
 
 import FarmableCard from '~/components/Farmable/FarmableCard'
 import Tabs from '~/components/UI/Tabs'
-import { authenticator } from '~/services/auth.server'
+import { requireUserServer } from '~/services/auth.server'
 import { farmable, getFarmables } from '~/services/data/farmable.server'
 import { FarmableType, FarmDayTypeEnum } from '~/types/farmable'
 import type { ITab } from '~/types/global'
@@ -33,11 +33,9 @@ type LoaderData = {
   todayFarmable: FarmableType
 }
 export const loader: LoaderFunction = async ({ request }) => {
-  const user = await authenticator.isAuthenticated(request, {
-    failureRedirect: '/login',
-  })
+  const server = await requireUserServer(request)
 
-  const day = getCurrentDay(user.server as Region)
+  const day = getCurrentDay(server as Region)
 
   let todayFarmable: FarmableType | undefined
 

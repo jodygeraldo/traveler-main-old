@@ -3,7 +3,7 @@ import invariant from 'tiny-invariant'
 
 import Items from '~/components/Item/Item'
 import ItemList from '~/components/Item/ItemList'
-import { authenticator } from '~/services/auth.server'
+import { requireUserId } from '~/services/auth.server'
 import { db } from '~/services/db.server'
 import { ItemCategory, ItemTypes } from '~/types/item'
 import {
@@ -17,9 +17,7 @@ import {
 } from '~/utils/db/item.server'
 
 export const action: ActionFunction = async ({ request }) => {
-  const user = await authenticator.isAuthenticated(request, {
-    failureRedirect: '/login',
-  })
+  const userId = await requireUserId(request)
 
   const formData = await request.formData()
 
@@ -33,25 +31,25 @@ export const action: ActionFunction = async ({ request }) => {
 
   const userItem = await db.item.findUnique({
     where: {
-      userId: user.id,
+      userId,
     },
   })
 
   switch (category as ItemCategory) {
     case 'Crown':
-      return upsertTalentCrown(user.id, userItem, name, +count)
+      return upsertTalentCrown(userId, userItem, name, +count)
     case 'Talent Book':
-      return upsertTalentBook(user.id, userItem, name, +count)
+      return upsertTalentBook(userId, userItem, name, +count)
     case 'Talent Boss Material':
-      return upsertTalentBossMaterial(user.id, userItem, name, +count)
+      return upsertTalentBossMaterial(userId, userItem, name, +count)
     case 'Ascension Gem':
-      return upsertAscensionGem(user.id, userItem, name, +count)
+      return upsertAscensionGem(userId, userItem, name, +count)
     case 'Ascension Boss Material':
-      return upsertAscensionBossMaterial(user.id, userItem, name, +count)
+      return upsertAscensionBossMaterial(userId, userItem, name, +count)
     case 'Local Specialty':
-      return upsertLocalSpecialty(user.id, userItem, name, +count)
+      return upsertLocalSpecialty(userId, userItem, name, +count)
     case 'Common Material':
-      return upsertCommonMaterial(user.id, userItem, name, +count)
+      return upsertCommonMaterial(userId, userItem, name, +count)
     default:
       return null
   }
