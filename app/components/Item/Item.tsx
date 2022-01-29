@@ -4,8 +4,8 @@ import { useFetcher } from 'remix'
 
 import {
   IAscensionBossMaterial,
-  IAscensionCommonMaterial,
   IAscensionGem,
+  ICommonMaterial,
   ILocalSpecialty,
   ITalentBook,
   ITalentBossMaterial,
@@ -21,7 +21,7 @@ type Props = {
     | ITalentBossMaterial[]
     | IAscensionGem[]
     | ILocalSpecialty[]
-    | IAscensionCommonMaterial[]
+    | ICommonMaterial[]
     | IAscensionBossMaterial[]
 }
 
