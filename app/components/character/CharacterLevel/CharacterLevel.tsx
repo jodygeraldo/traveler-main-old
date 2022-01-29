@@ -1,3 +1,4 @@
+import { Item } from '@prisma/client'
 import type { FC } from 'react'
 import { Form } from 'remix'
 
@@ -7,9 +8,10 @@ import CharacterLevelTalent from './CharacterLevelTalent'
 
 interface Props {
   character: ICharacter
+  items: Item | null
 }
 
-const CharacterLevel: FC<Props> = ({ character }) => {
+const CharacterLevel: FC<Props> = ({ character, items }) => {
   return (
     <Form method="post">
       <input type="hidden" name="character-name" value={character.name} />

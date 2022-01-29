@@ -12,9 +12,8 @@ export default function CharacterEditWithInventoryRoute() {
   const userItems = useMatches().filter(
     match => match.id === 'routes/character/$name',
   )[0].data.userItems as Item | null
-  console.log(userItems)
 
   const character = useOutletContext<ICharacter>()
 
-  return <CharacterLevel character={character} />
+  return <CharacterLevel character={character} items={userItems} />
 }
