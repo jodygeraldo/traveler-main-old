@@ -8,6 +8,7 @@ import {
   useLoaderData,
   useLocation,
 } from 'remix'
+import { route } from 'routes-gen'
 
 import { requireUserId } from '~/services/auth.server'
 import { ItemTypes } from '~/types/item'
@@ -73,4 +74,8 @@ export default function InventoryPage() {
       <Outlet context={items} />
     </div>
   )
+}
+
+export const unstable_shouldReload: ShouldReloadFunction = ({ submission }) => {
+  return !!submission && submission.method !== 'GET'
 }
