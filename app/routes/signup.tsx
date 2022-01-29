@@ -49,14 +49,8 @@ export default function SignupPage() {
       {error && <div>{error.message}</div>}
       <fieldset disabled={transition.state === 'submitting'} className="mt-6">
         <div>
-          <label htmlFor="username">Email</label>
-          <input
-            type="username"
-            name="username"
-            id="username"
-            minLength={6}
-            maxLength={16}
-          />
+          <label htmlFor="email">Email</label>
+          <input type="email" name="email" id="email" />
         </div>
 
         <div>

@@ -16,7 +16,7 @@ export const authenticator = new Authenticator<{ id: string; server: string }>(
 authenticator.use(
   new FormStrategy(async ({ form }) => {
     const action = form.get('_action')
-    const username = form.get('username')
+    const email = form.get('email')
     const password = form.get('password')
     const server = form.get('server')
 
@@ -26,10 +26,8 @@ authenticator.use(
       'action must be login or signup',
     )
 
-    invariant(typeof username === 'string', 'username must be a string')
-    if (username.length < 6 && username.length > 16) {
-      throw new Error('username must be between 6 and 16 characters')
-    }
+    invariant(typeof email === 'string', 'Email must be a string')
+    // html native email input validation should be enough
 
     invariant(typeof password === 'string', 'password must be a string')
     if (password.length < 8) {
@@ -37,7 +35,7 @@ authenticator.use(
     }
 
     if (action === 'login') {
-      const user = await login(username, password)
+      const user = await login(email, password)
 
       return user
     } else {
@@ -45,7 +43,7 @@ authenticator.use(
       if (server !== 'America' && server !== 'Europe' && server !== 'Asia') {
         throw new Error('server not selected properly')
       }
-      const user = await signup(username, password, server)
+      const user = await signup(email, password, server)
 
       return user
     }

@@ -4,10 +4,10 @@ import invariant from 'tiny-invariant'
 
 import { db } from '~/services/db.server'
 
-export async function login(username: string, password: string) {
+export async function login(email: string, password: string) {
   const user = await db.user.findUnique({
     where: {
-      username,
+      email,
     },
     select: {
       id: true,
@@ -17,13 +17,13 @@ export async function login(username: string, password: string) {
   })
 
   if (!user) {
-    throw new Error('Invalid username or password')
+    throw new Error('Invalid email or password')
   }
 
   const valid = await bcrypt.compare(password, user.passwordHash)
 
   if (!valid) {
-    throw new Error('Invalid username or password')
+    throw new Error('Invalid email or password')
   }
 
   return {
@@ -32,18 +32,14 @@ export async function login(username: string, password: string) {
   }
 }
 
-export async function signup(
-  username: string,
-  password: string,
-  server: Server,
-) {
-  const exist = await db.user.findUnique({ where: { username } })
+export async function signup(email: string, password: string, server: Server) {
+  const exist = await db.user.findUnique({ where: { email } })
 
-  invariant(!exist, 'Username already exists')
+  invariant(!exist, 'Email already used')
 
   const user = await db.user.create({
     data: {
-      username,
+      email,
       passwordHash: await bcrypt.hash(password, 10),
       server,
     },

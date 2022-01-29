@@ -18,7 +18,7 @@ enum Server {
 
 model User {
   id           String      @id @default(uuid())
-  username     String      @unique
+  email        String      @unique
   passwordHash String
   server       Server
   createdAt    DateTime    @default(now())
