@@ -6,7 +6,7 @@ import { Form, NavLink, useLocation } from 'remix'
 
 const navigation = [
   { name: 'Handbook', href: '/', icon: 'adventurer_handbook.png' },
-  { name: 'Character', href: '/characters', icon: 'character.png' },
+  { name: 'Character', href: '/character', icon: 'character.png' },
   { name: 'Inventory', href: '/inventory', icon: 'inventory.png' },
   { name: 'Achievement', href: '/achievement', icon: 'achievement.png' },
   { name: 'Schedule', href: '/schedule', icon: 'quest.png' },
