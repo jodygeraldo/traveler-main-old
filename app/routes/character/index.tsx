@@ -59,7 +59,6 @@ export default function CharactersRoute() {
     <div>
       <div className="mb-8 grid grid-cols-2 grid-rows-1 gap-5">
         <MultiSelect
-          size="xl"
           data={vision}
           value={filterVision}
           onChange={setFilterVision}
@@ -70,7 +69,6 @@ export default function CharactersRoute() {
           placeholder="Pick all character vision you want"
         />
         <MultiSelect
-          size="xl"
           data={weaponType}
           value={filterWeaponType}
           onChange={setFilterWeaponType}
