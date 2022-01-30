@@ -1,4 +1,3 @@
-import { Item } from '@prisma/client'
 import {
   json,
   LoaderFunction,
@@ -14,13 +13,18 @@ import invariant from 'tiny-invariant'
 
 import { requireUserId } from '~/services/auth.server'
 import type { CharacterName, ICharacter } from '~/types/character'
+import { ItemTypes } from '~/types/item'
 import { characterName as characterNameHelper } from '~/utils/db/character.server'
-import { getUserItems } from '~/utils/db/item.server'
+import {
+  getItems,
+  getUpdatedUserItems,
+  getUserItems,
+} from '~/utils/db/item.server'
 import { stringToCapitalized } from '~/utils/string'
 
 interface LoaderData {
   name: CharacterName
-  userItems: Item | null
+  userItem?: ItemTypes
 }
 export const loader: LoaderFunction = async ({ params, request }) => {
   const userId = await requireUserId(request)
@@ -37,9 +41,19 @@ export const loader: LoaderFunction = async ({ params, request }) => {
     throw json('Character not found', { status: 404 })
   }
 
-  const userItems = await getUserItems(userId)
+  const userItem = await getUserItems(userId)
 
-  return json<LoaderData>({ name: parsedName, userItems }, { status: 200 })
+  if (!userItem) {
+    return json<LoaderData>({ name: parsedName }, { status: 200 })
+  }
+  const items = getItems()
+
+  const updatedItems = getUpdatedUserItems(userItem, items)
+
+  return json<LoaderData>(
+    { name: parsedName, userItem: updatedItems },
+    { status: 200 },
+  )
 }
 
 export default function CharacterPage() {
@@ -68,9 +82,5 @@ export const unstable_shouldReload: ShouldReloadFunction = ({
   submission,
 }) => {
   invariant(params.name, 'This have to exist')
-  return (
-    !!submission &&
-    submission.action ===
-      route('/character/:name/edit-with-inventory', { name: params.name })
-  )
+  return !!submission && submission.method !== 'GET'
 }
