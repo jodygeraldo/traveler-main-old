@@ -74,11 +74,12 @@ export type Vision =
 export type WeaponType = 'Bow' | 'Catalyst' | 'Claymore' | 'Polearm' | 'Sword'
 
 export interface IAscensionMaterial {
-  mora: number
-  gem: { name: AscensionGem; count: number }
-  localSpecialty: { name: LocalSpecialty; count: number }
-  common: { name: CommonMaterial; count: number }
-  boss?: { name: AscensionBossMaterial; count: number }
+  number?: { name: ''; amount: number }
+  mora: { name: 'Mora'; amount: number }
+  gem: { name: AscensionGem; amount: number }
+  localSpecialty: { name: LocalSpecialty; amount: number }
+  common: { name: CommonMaterial; amount: number }
+  boss?: { name: AscensionBossMaterial; amount: number }
 }
 
 export type AscensionType = [
@@ -91,11 +92,12 @@ export type AscensionType = [
 ]
 
 export interface ITalentMaterial {
-  mora: number
-  common: { name: CommonMaterial; count: number }
-  book: { name: TalentBook; count: number }
-  boss?: { name: TalentBossMaterial; count: number }
-  crown?: number
+  number?: { name: ''; amount: number }
+  mora: { name: 'Mora'; amount: number }
+  common: { name: CommonMaterial; amount: number }
+  book: { name: TalentBook; amount: number }
+  boss?: { name: TalentBossMaterial; amount: number }
+  crown?: { name: 'Crown of Insight'; amount: number }
 }
 
 export type TalentType = [
