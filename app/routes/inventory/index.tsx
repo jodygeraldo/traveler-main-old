@@ -37,19 +37,26 @@ export const action: ActionFunction = async ({ request }) => {
 
   switch (category as ItemCategory) {
     case 'Crown':
-      return upsertCrown(userId, userItem, name, +count)
+      await upsertCrown(userId, userItem, name, +count)
+      return null
     case 'Talent Book':
-      return upsertTalentBook(userId, userItem, name, +count)
+      await upsertTalentBook(userId, userItem, name, +count)
+      return null
     case 'Talent Boss Material':
-      return upsertTalentBossMaterial(userId, userItem, name, +count)
+      await upsertTalentBossMaterial(userId, userItem, name, +count)
+      return null
     case 'Ascension Gem':
-      return upsertAscensionGem(userId, userItem, name, +count)
+      await upsertAscensionGem(userId, userItem, name, +count)
+      return null
     case 'Ascension Boss Material':
-      return upsertAscensionBossMaterial(userId, userItem, name, +count)
+      await upsertAscensionBossMaterial(userId, userItem, name, +count)
+      return null
     case 'Local Specialty':
-      return upsertLocalSpecialty(userId, userItem, name, +count)
+      await upsertLocalSpecialty(userId, userItem, name, +count)
+      return null
     case 'Common Material':
-      return upsertCommonMaterial(userId, userItem, name, +count)
+      await upsertCommonMaterial(userId, userItem, name, +count)
+      return null
     default:
       return null
   }
