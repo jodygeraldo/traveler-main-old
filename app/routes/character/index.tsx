@@ -1,4 +1,4 @@
-import { MultiSelect } from '@mantine/core'
+import { Chip, Chips, MultiSelect } from '@mantine/core'
 import { useEffect, useState } from 'react'
 import { useOutletContext } from 'remix'
 
@@ -39,21 +39,28 @@ export default function CharactersRoute() {
     'Sword',
   ])
 
-  useEffect(() => {
-    setCharacters(() =>
-      initialCharacters.filter(character =>
-        filterVision.includes(character.vision),
-      ),
-    )
-  }, [filterVision])
+  const [filterRarity, setFilterRarity] = useState(['4', '5'])
 
   useEffect(() => {
+    const parsedIntArrFilterRarity: (string | number)[] = []
+
+    filterRarity.forEach(filter => {
+      parsedIntArrFilterRarity.push(parseInt(filter, 10))
+    })
+
+    if (parsedIntArrFilterRarity.includes(5)) {
+      parsedIntArrFilterRarity.push('aloy')
+    }
+
     setCharacters(() =>
-      initialCharacters.filter(character =>
-        filterWeaponType.includes(character.weaponType),
+      initialCharacters.filter(
+        character =>
+          filterWeaponType.includes(character.weaponType) &&
+          filterVision.includes(character.vision) &&
+          parsedIntArrFilterRarity.includes(character.rarity),
       ),
     )
-  }, [filterWeaponType])
+  }, [filterWeaponType, filterVision, filterRarity])
 
   return (
     <div>
@@ -79,6 +86,10 @@ export default function CharactersRoute() {
           placeholder="Pick all character vision you want"
         />
       </div>
+      <Chips value={filterRarity} onChange={setFilterRarity} multiple>
+        <Chip value={'5'}>5 Star</Chip>
+        <Chip value={'4'}>4 Star</Chip>
+      </Chips>
       <div className="flex flex-wrap gap-4">
         {characters.map(character => (
           <CharacterItem key={character.name} character={character} />
