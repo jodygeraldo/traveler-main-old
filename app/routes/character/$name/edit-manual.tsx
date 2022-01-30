@@ -2,7 +2,7 @@ import { ActionFunction, redirect, useOutletContext } from 'remix'
 import { route } from 'routes-gen'
 import invariant from 'tiny-invariant'
 
-import CharacterLevelManual from '~/components/Character/CharacterLevel/CharacterLevelManual/CharacterLevelManual'
+import CharacterLevelManual from '~/components/Character/CharacterLevelManual/CharacterLevelManual'
 import { requireUserId } from '~/services/auth.server'
 import { ICharacter } from '~/types/character'
 import {
