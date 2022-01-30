@@ -32,8 +32,6 @@ export const loader: LoaderFunction = async ({ request }) => {
     authenticator.sessionErrorKey,
   ) as LoaderData['error']
 
-  console.log(error)
-
   return json<LoaderData>({ error })
 }
 

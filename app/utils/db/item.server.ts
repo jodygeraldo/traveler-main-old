@@ -667,8 +667,6 @@ function getUpdatedItemArray(
       }[]
     | null
 
-  console.log(oldArray)
-
   if (oldArray) {
     const newArray = oldArray.filter(item => item[nameTyped] === undefined)
     newArray.push({ [nameTyped]: count })
