@@ -3,6 +3,7 @@ declare module "routes-gen" {
     "/character": {};
     "/character/:name": { name: string };
     "/character/:name/edit-with-inventory": { name: string };
+    "/character/:name/edit-with-inventory/items": { name: string };
     "/character/:name/edit-manual": { name: string };
     "/inventory": {};
     "/inventory/ascension-boss-material": {};
@@ -26,6 +27,7 @@ declare module "routes-gen" {
       | ["/character"]
       | ["/character/:name", RouteParams["/character/:name"]]
       | ["/character/:name/edit-with-inventory", RouteParams["/character/:name/edit-with-inventory"]]
+      | ["/character/:name/edit-with-inventory/items", RouteParams["/character/:name/edit-with-inventory/items"]]
       | ["/character/:name/edit-manual", RouteParams["/character/:name/edit-manual"]]
       | ["/inventory"]
       | ["/inventory/ascension-boss-material"]
