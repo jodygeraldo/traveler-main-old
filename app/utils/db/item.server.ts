@@ -8,7 +8,7 @@ import {
   talentBookMap,
   talentBossMaterialMap,
   talentCrownMap,
-} from '~/services/data/items.server'
+} from '~/services/data/items'
 import { db } from '~/services/db.server'
 import {
   AscensionBossMaterial,
