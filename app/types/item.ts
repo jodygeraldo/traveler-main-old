@@ -2,6 +2,17 @@ import { GenshinRegion } from './general'
 
 export type TalentCrown = 'Crown of Insight'
 
+export type TalentBookGroup =
+  | 'Freedom'
+  | 'Prosperity'
+  | 'Transience'
+  | 'Elegance'
+  | 'Resistance'
+  | 'Diligence'
+  | 'Ballad'
+  | 'Gold'
+  | 'Light'
+
 export type TalentBook =
   | 'Teachings of Freedom'
   | 'Guide of Freedom'
@@ -31,6 +42,13 @@ export type TalentBook =
   | 'Guide of Light'
   | 'Philosophies of Light'
 
+export type TalentBossMaterialGroup =
+  | 'Confront Stormterror'
+  | 'Wolf of the North'
+  | 'Enter the Golden House'
+  | 'Beneath the Dragon-Queller'
+  | 'Narukami Island: Tenshukaku'
+
 export type TalentBossMaterial =
   | "Dvalin's Plume"
   | "Dvalin's Claw"
@@ -47,6 +65,15 @@ export type TalentBossMaterial =
   | 'Molten Moment'
   | 'Ashen Heart'
   | 'Hellfire Butterfly'
+
+export type AscensionGemGroup =
+  | 'Brilliant Diamond'
+  | 'Agnidus Agate'
+  | 'Varunada Lazurite'
+  | 'Vajrada Amethyst'
+  | 'Vayuda Turquoise'
+  | 'Shivada Jade'
+  | 'Prithiva Topaz'
 
 export type AscensionGem =
   | 'Brilliant Diamond Sliver'
@@ -122,6 +149,26 @@ export type LocalSpecialty =
   | 'Amakumo Fruit'
   | 'Fluorescent Fungus'
 
+export type CommonMaterialGroup =
+  | 'Slime'
+  | 'Hilichurl Masks'
+  | 'Samachurl Scrolls'
+  | 'Hilichurl Arrowheads'
+  | 'Fatui Insignia'
+  | 'Treasure Hoarder Insignias'
+  | 'Whopperflower Nectar'
+  | 'Nobushi Handguards'
+  | 'Spectral Cores'
+  | 'Hilichurl Horns'
+  | 'Ley Lines'
+  | 'Chaos Parts'
+  | 'Mist Grass'
+  | 'Sacrificial Knifes'
+  | 'Bone Shards'
+  | 'Sentinel Chaos Parts'
+  | 'Prisms'
+  | 'Concealed Rifthound Claws'
+
 export type CommonMaterial =
   | 'Slime Condensate'
   | 'Slime Secretions'
@@ -188,6 +235,7 @@ export interface ITalentBook {
   name: TalentBook
   region: GenshinRegion
   rarity: 1 | 2 | 3 | 4 | 5
+  group: TalentBookGroup
   count: number
 }
 
@@ -195,12 +243,14 @@ export interface ITalentBossMaterial {
   name: TalentBossMaterial
   region: GenshinRegion
   rarity: 1 | 2 | 3 | 4 | 5
+  group: TalentBossMaterialGroup
   count: number
 }
 
 export interface IAscensionGem {
   name: AscensionGem
   rarity: 1 | 2 | 3 | 4 | 5
+  group: AscensionGemGroup
   count: number
 }
 
@@ -214,6 +264,7 @@ export interface IAscensionBossMaterial {
 export interface ICommonMaterial {
   name: CommonMaterial
   rarity: 1 | 2 | 3 | 4 | 5
+  group: CommonMaterialGroup
   count: number
 }
 
