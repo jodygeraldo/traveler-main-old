@@ -505,10 +505,7 @@ export const ascensionLocalSpecialtyMap = new Map<
   ],
 ])
 
-export const ascensionCommonMaterialMap = new Map<
-  CommonMaterial,
-  ICommonMaterial
->([
+export const commonMaterialMap = new Map<CommonMaterial, ICommonMaterial>([
   ['Slime Concentrate', { name: 'Slime Concentrate', rarity: 3, count: 0 }],
   ['Slime Secretions', { name: 'Slime Secretions', rarity: 2, count: 0 }],
   ['Slime Condensate', { name: 'Slime Condensate', rarity: 1, count: 0 }],

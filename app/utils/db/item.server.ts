@@ -2,9 +2,9 @@ import { Item, Prisma } from '@prisma/client'
 
 import {
   ascensionBossMaterialMap,
-  ascensionCommonMaterialMap,
   ascensionGemMap,
   ascensionLocalSpecialtyMap,
+  commonMaterialMap,
   talentBookMap,
   talentBossMaterialMap,
   talentCrownMap,
@@ -214,7 +214,7 @@ export function getItems() {
   const talentBossMaterial: ITalentBossMaterial[] = []
   talentBossMaterialMap.forEach(value => talentBossMaterial.push(value))
   const commonMaterial: ICommonMaterial[] = []
-  ascensionCommonMaterialMap.forEach(value => commonMaterial.push(value))
+  commonMaterialMap.forEach(value => commonMaterial.push(value))
   const ascensionBossMaterial: IAscensionBossMaterial[] = []
   ascensionBossMaterialMap.forEach(value => ascensionBossMaterial.push(value))
   const ascensionGem: IAscensionGem[] = []
