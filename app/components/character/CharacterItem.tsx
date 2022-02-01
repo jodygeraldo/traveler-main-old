@@ -4,29 +4,27 @@ import type { FC } from 'react'
 import { Link } from 'remix'
 import { route } from 'routes-gen'
 
-import type { ICharacter } from '~/types/character'
+import type { ICharacterDetail } from '~/types/character'
 import { stringToKebab, stringToLowerSnake } from '~/utils/string'
 
 interface Props {
-  character: ICharacter
+  character: ICharacterDetail
 }
 
-const backgoundColor: Record<ICharacter['rarity'], string> = {
-  4: 'bg-rarity-four',
-  5: 'bg-rarity-five',
-  aloy: 'bg-rarity-aloy',
+const backgoundColor: Record<ICharacterDetail['rarity'], string> = {
+  4: 'bg-item-4',
+  5: 'bg-item-5',
 }
 
-const hoverRingColor: Record<ICharacter['rarity'], string> = {
-  4: 'hover:ring-rarity-four-dark',
-  5: 'hover:ring-rarity-five-dark',
-  aloy: 'hover:ring-rarity-aloy-dark',
-}
-
-const lastnameOnlyIfTooLong = (name: string) => {
+const clampName = (name: string) => {
   const nameSplit = name.split(' ')
+  if (nameSplit.length === 1) return name
 
-  return name.length < 10 ? name : nameSplit[1]
+  return nameSplit[0].length < 10 && nameSplit[1].length < 10
+    ? name
+    : nameSplit[1].length < 10
+    ? nameSplit[1]
+    : nameSplit[0]
 }
 
 const CharacterItem: FC<Props> = ({ character }) => {
@@ -34,31 +32,37 @@ const CharacterItem: FC<Props> = ({ character }) => {
     <Link
       prefetch="intent"
       to={route('/character/:name', { name: stringToKebab(character.name) })}
-      className={clsx(
-        'w-20 rounded-md hover:ring-4',
-        !character.ownership && 'opacity-50',
-        hoverRingColor[character.rarity],
-      )}
+      className={clsx('w-20 rounded-md', !character.ownership && 'opacity-50')}
     >
-      <div className="flex flex-col ">
-        <div className={clsx('rounded-t-md', backgoundColor[character.rarity])}>
+      <motion.div
+        whileHover={{ scale: 1.05 }}
+        whileTap={{ scale: 0.95 }}
+        className="flex flex-col "
+      >
+        <div
+          className={clsx(
+            'rounded-t-md bg-cover',
+            character.name === 'Aloy'
+              ? 'bg-rarity-aloy'
+              : backgoundColor[character.rarity],
+          )}
+        >
           <motion.img
-            whileHover={{ scale: 1.05 }}
-            whileTap={{ scale: 0.95 }}
             width={80}
             height={80}
+            className="h-5/6"
             src={`/assets/images/characters/close/${stringToLowerSnake(
               character.name,
             )}.png`}
             alt={`${character.name} image`}
           />
         </div>
-        <div className="bg-primary-400 rounded-b-md py-1">
-          <h3 className="text-primary-900 text-center text-sm font-semibold">
-            {lastnameOnlyIfTooLong(character.name)}
+        <div className="bg-primary-400 py-1">
+          <h3 className="text-primary-900 [width: fit-content] text-center text-sm font-semibold">
+            {clampName(character.name)}
           </h3>
         </div>
-      </div>
+      </motion.div>
     </Link>
   )
 }
