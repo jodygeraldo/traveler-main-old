@@ -11,8 +11,9 @@ import invariant from 'tiny-invariant'
 
 import { requireUserId } from '~/services/auth.server'
 import CharactersLookupMap from '~/services/data/characters/character-lookup.server'
-import type { ICharacterDetail } from '~/types/character'
+import type { ICharacter, ICharacterDetail } from '~/types/character'
 import { ItemTypes } from '~/types/item'
+import { getUserCharacter } from '~/utils/db/character.server'
 import {
   getItems,
   getUpdatedUserItems,
@@ -20,6 +21,11 @@ import {
 } from '~/utils/db/item.server'
 import { stringToCapitalized } from '~/utils/string'
 
+interface LoaderData {
+  userItems?: ItemTypes
+  progression: ICharacter['progression']
+  id?: string
+}
 export const loader: LoaderFunction = async ({ params, request }) => {
   const userId = await requireUserId(request)
   const { characterName } = params
@@ -33,15 +39,40 @@ export const loader: LoaderFunction = async ({ params, request }) => {
   }
 
   const userItem = await getUserItems(userId)
-
-  if (!userItem) {
-    return json(null, { status: 200 })
-  }
   const items = getItems()
+  let userItems: ItemTypes | undefined
+  if (userItem) {
+    userItems = getUpdatedUserItems(userItem, items)
+  }
 
-  const updatedItems = getUpdatedUserItems(userItem, items)
+  const userCharacter = await getUserCharacter(
+    userId,
+    stringToCapitalized(characterName),
+  )
 
-  return json<ItemTypes>(updatedItems, { status: 200 })
+  if (userCharacter) {
+    return json<LoaderData>({
+      userItems,
+      progression: {
+        level: userCharacter.level,
+        ascension: userCharacter.ascension,
+        talent: userCharacter.talent as [number, number, number],
+      },
+      id: userCharacter.id,
+    })
+  } else {
+    return json<LoaderData>(
+      {
+        userItems,
+        progression: {
+          level: 1,
+          ascension: 0,
+          talent: [1, 1, 1],
+        },
+      },
+      { status: 200 },
+    )
+  }
 }
 
 export default function CharacterPage() {
@@ -72,6 +103,6 @@ export const unstable_shouldReload: ShouldReloadFunction = ({
   params,
   submission,
 }) => {
-  invariant(params.name, 'This have to exist')
+  invariant(params.characterName, 'This have to exist')
   return !!submission && submission.method !== 'GET'
 }

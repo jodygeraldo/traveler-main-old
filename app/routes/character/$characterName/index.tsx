@@ -1,11 +1,4 @@
-import {
-  ActionFunction,
-  json,
-  Link,
-  LoaderFunction,
-  useLoaderData,
-  useOutletContext,
-} from 'remix'
+import { ActionFunction, json, Link, useMatches, useOutletContext } from 'remix'
 import invariant from 'tiny-invariant'
 
 import CharacterView from '~/components/Character/CharacterView'
@@ -13,11 +6,9 @@ import { requireUserId } from '~/services/auth.server'
 import { ICharacter, ICharacterDetail } from '~/types/character'
 import {
   addUserCharacterOwnership,
-  getUserCharacter,
   updateUserCharacterOwnership,
 } from '~/utils/db/character.server'
 import { getFormHackMessage } from '~/utils/message'
-import { stringToCapitalized } from '~/utils/string'
 
 export const action: ActionFunction = async ({ request }) => {
   const userId = await requireUserId(request)
@@ -39,48 +30,10 @@ export const action: ActionFunction = async ({ request }) => {
   return json(null, { status: 201 })
 }
 
-interface LoaderData {
-  progression: ICharacter['progression']
-  id?: string
-}
-export const loader: LoaderFunction = async ({ request, params }) => {
-  const userId = await requireUserId(request)
-  const { characterName } = params
-  invariant(
-    typeof characterName === 'string',
-    'There is something wrong with the route params',
-  )
-
-  const userCharacter = await getUserCharacter(
-    userId,
-    stringToCapitalized(characterName),
-  )
-
-  if (userCharacter) {
-    return json<LoaderData>({
-      progression: {
-        level: userCharacter.level,
-        ascension: userCharacter.ascension,
-        talent: userCharacter.talent as [number, number, number],
-      },
-      id: userCharacter.id,
-    })
-  } else {
-    return json<LoaderData>(
-      {
-        progression: {
-          level: 1,
-          ascension: 0,
-          talent: [1, 1, 1],
-        },
-      },
-      { status: 200 },
-    )
-  }
-}
-
 export default function CharacterRoute() {
-  const { progression, id } = useLoaderData<LoaderData>()
+  const { progression, id } = useMatches().find(
+    match => match.id === 'routes/character/$characterName',
+  )?.data as { progression: ICharacter['progression']; id?: string }
   const character = useOutletContext<ICharacterDetail>()
 
   return (
