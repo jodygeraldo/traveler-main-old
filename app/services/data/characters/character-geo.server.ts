@@ -1,8 +1,8 @@
-import { CharacterName, ICharacter } from '~/types/character'
+import { ICharacter } from '~/types/character'
 
-const CharactersGeoMap = new Map<CharacterName, ICharacter>()
+const CharactersGeoMap = new Map<string, ICharacter>()
 
-CharactersGeoMap.set('Albedo', {
+CharactersGeoMap.set('albedo', {
   name: 'Albedo',
   material: {
     ascension: [
@@ -108,7 +108,7 @@ CharactersGeoMap.set('Albedo', {
   },
 })
 
-CharactersGeoMap.set('Arataki Itto', {
+CharactersGeoMap.set('arataki Itto', {
   name: 'Arataki Itto',
   material: {
     ascension: [
@@ -214,7 +214,7 @@ CharactersGeoMap.set('Arataki Itto', {
   },
 })
 
-CharactersGeoMap.set('Gorou', {
+CharactersGeoMap.set('gorou', {
   name: 'Gorou',
   material: {
     ascension: [
@@ -320,7 +320,7 @@ CharactersGeoMap.set('Gorou', {
   },
 })
 
-CharactersGeoMap.set('Ningguang', {
+CharactersGeoMap.set('ningguang', {
   name: 'Ningguang',
   material: {
     ascension: [
@@ -426,7 +426,7 @@ CharactersGeoMap.set('Ningguang', {
   },
 })
 
-CharactersGeoMap.set('Noelle', {
+CharactersGeoMap.set('noelle', {
   name: 'Noelle',
   material: {
     ascension: [
@@ -532,7 +532,7 @@ CharactersGeoMap.set('Noelle', {
   },
 })
 
-CharactersGeoMap.set('Traveler Geo', {
+CharactersGeoMap.set('traveler-geo', {
   name: 'Traveler Geo',
   material: {
     ascension: [
@@ -739,7 +739,7 @@ CharactersGeoMap.set('Traveler Geo', {
   },
 })
 
-CharactersGeoMap.set('Yun Jin', {
+CharactersGeoMap.set('yun-jin', {
   name: 'Yun Jin',
   material: {
     ascension: [
@@ -845,7 +845,7 @@ CharactersGeoMap.set('Yun Jin', {
   },
 })
 
-CharactersGeoMap.set('Zhongli', {
+CharactersGeoMap.set('zhongli', {
   name: 'Zhongli',
   material: {
     ascension: [

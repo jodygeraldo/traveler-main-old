@@ -1,15 +1,16 @@
 import type { FC } from 'react'
 import { Form, useTransition } from 'remix'
 
-import { ICharacter } from '~/types/character'
+import { ICharacter, ICharacterDetail } from '~/types/character'
 
 interface Props {
-  character: ICharacter
+  character: ICharacterDetail
+  progression: ICharacter['progression']
+  id?: string
 }
 
-const CharacterView: FC<Props> = ({ character }) => {
+const CharacterView: FC<Props> = ({ character, progression, id }) => {
   const transition = useTransition()
-  const id = character.id ?? 'NEW'
 
   return (
     <div className="flex items-start justify-between">

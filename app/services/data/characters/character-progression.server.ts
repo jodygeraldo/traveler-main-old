@@ -5,9 +5,9 @@ import CharactersElectroMap from '~/services/data/characters/character-electro.s
 import CharactersGeoMap from '~/services/data/characters/character-geo.server'
 import CharactersHydroMap from '~/services/data/characters/character-hydro.server'
 import CharactersPyroMap from '~/services/data/characters/character-pyro.server'
-import { CharacterName, ICharacter } from '~/types/character'
+import { ICharacter } from '~/types/character'
 
-const CharactersMap = new Map<CharacterName, ICharacter>([
+const CharactersMap = new Map<string, ICharacter>([
   ...CharacterAnemoMap,
   ...CharactersCryoMap,
   ...charactersDendroMap,

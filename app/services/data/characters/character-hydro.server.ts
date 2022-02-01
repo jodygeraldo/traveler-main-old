@@ -1,8 +1,8 @@
-import { CharacterName, ICharacter } from '~/types/character'
+import { ICharacter } from '~/types/character'
 
-const CharactersHydroMap = new Map<CharacterName, ICharacter>()
+const CharactersHydroMap = new Map<string, ICharacter>()
 
-CharactersHydroMap.set('Barbara', {
+CharactersHydroMap.set('barbara', {
   name: 'Barbara',
   material: {
     ascension: [
@@ -108,7 +108,7 @@ CharactersHydroMap.set('Barbara', {
   },
 })
 
-CharactersHydroMap.set('Mona', {
+CharactersHydroMap.set('mona', {
   name: 'Mona',
   material: {
     ascension: [
@@ -214,7 +214,7 @@ CharactersHydroMap.set('Mona', {
   },
 })
 
-CharactersHydroMap.set('Sangonomiya Kokomi', {
+CharactersHydroMap.set('sangonomiya-kokomi', {
   name: 'Sangonomiya Kokomi',
   material: {
     ascension: [
@@ -320,7 +320,7 @@ CharactersHydroMap.set('Sangonomiya Kokomi', {
   },
 })
 
-CharactersHydroMap.set('Tartaglia', {
+CharactersHydroMap.set('tartaglia', {
   name: 'Tartaglia',
   material: {
     ascension: [
@@ -426,7 +426,7 @@ CharactersHydroMap.set('Tartaglia', {
   },
 })
 
-CharactersHydroMap.set('Xingqiu', {
+CharactersHydroMap.set('xingqiu', {
   name: 'Xingqiu',
   material: {
     ascension: [

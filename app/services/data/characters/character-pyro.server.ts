@@ -1,8 +1,8 @@
-import { CharacterName, ICharacter } from '~/types/character'
+import { ICharacter } from '~/types/character'
 
-const CharactersPyroMap = new Map<CharacterName, ICharacter>()
+const CharactersPyroMap = new Map<string, ICharacter>()
 
-CharactersPyroMap.set('Amber', {
+CharactersPyroMap.set('amber', {
   name: 'Amber',
   material: {
     ascension: [
@@ -108,7 +108,7 @@ CharactersPyroMap.set('Amber', {
   },
 })
 
-CharactersPyroMap.set('Bennett', {
+CharactersPyroMap.set('bennett', {
   name: 'Bennett',
   material: {
     ascension: [
@@ -214,7 +214,7 @@ CharactersPyroMap.set('Bennett', {
   },
 })
 
-CharactersPyroMap.set('Diluc', {
+CharactersPyroMap.set('diluc', {
   name: 'Diluc',
   material: {
     ascension: [
@@ -320,7 +320,7 @@ CharactersPyroMap.set('Diluc', {
   },
 })
 
-CharactersPyroMap.set('Hu Tao', {
+CharactersPyroMap.set('hu-tao', {
   name: 'Hu Tao',
   material: {
     ascension: [
@@ -426,7 +426,7 @@ CharactersPyroMap.set('Hu Tao', {
   },
 })
 
-CharactersPyroMap.set('Klee', {
+CharactersPyroMap.set('klee', {
   name: 'Klee',
   material: {
     ascension: [
@@ -532,7 +532,7 @@ CharactersPyroMap.set('Klee', {
   },
 })
 
-CharactersPyroMap.set('Thoma', {
+CharactersPyroMap.set('thoma', {
   name: 'Thoma',
   material: {
     ascension: [
@@ -638,7 +638,7 @@ CharactersPyroMap.set('Thoma', {
   },
 })
 
-CharactersPyroMap.set('Xiangling', {
+CharactersPyroMap.set('xiangling', {
   name: 'Xiangling',
   material: {
     ascension: [
@@ -744,7 +744,7 @@ CharactersPyroMap.set('Xiangling', {
   },
 })
 
-CharactersPyroMap.set('Xinyan', {
+CharactersPyroMap.set('xinyan', {
   name: 'Xinyan',
   material: {
     ascension: [
@@ -850,7 +850,7 @@ CharactersPyroMap.set('Xinyan', {
   },
 })
 
-CharactersPyroMap.set('Yanfei', {
+CharactersPyroMap.set('yanfei', {
   name: 'Yanfei',
   material: {
     ascension: [
@@ -956,7 +956,7 @@ CharactersPyroMap.set('Yanfei', {
   },
 })
 
-CharactersPyroMap.set('Yoimiya', {
+CharactersPyroMap.set('yoimiya', {
   name: 'Yoimiya',
   material: {
     ascension: [

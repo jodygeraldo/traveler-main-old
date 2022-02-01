@@ -1,8 +1,8 @@
-import { CharacterName, ICharacter } from '~/types/character'
+import { ICharacter } from '~/types/character'
 
-const CharactersCryoMap = new Map<CharacterName, ICharacter>()
+const CharactersCryoMap = new Map<string, ICharacter>()
 
-CharactersCryoMap.set('Aloy', {
+CharactersCryoMap.set('aloy', {
   name: 'Aloy',
   material: {
     ascension: [
@@ -108,7 +108,7 @@ CharactersCryoMap.set('Aloy', {
   },
 })
 
-CharactersCryoMap.set('Chongyun', {
+CharactersCryoMap.set('chongyun', {
   name: 'Chongyun',
   material: {
     ascension: [
@@ -214,7 +214,7 @@ CharactersCryoMap.set('Chongyun', {
   },
 })
 
-CharactersCryoMap.set('Diona', {
+CharactersCryoMap.set('diona', {
   name: 'Diona',
   material: {
     ascension: [
@@ -320,7 +320,7 @@ CharactersCryoMap.set('Diona', {
   },
 })
 
-CharactersCryoMap.set('Eula', {
+CharactersCryoMap.set('eula', {
   name: 'Eula',
   material: {
     ascension: [
@@ -426,7 +426,7 @@ CharactersCryoMap.set('Eula', {
   },
 })
 
-CharactersCryoMap.set('Ganyu', {
+CharactersCryoMap.set('ganyu', {
   name: 'Ganyu',
   material: {
     ascension: [
@@ -532,7 +532,7 @@ CharactersCryoMap.set('Ganyu', {
   },
 })
 
-CharactersCryoMap.set('Kaeya', {
+CharactersCryoMap.set('kaeya', {
   name: 'Kaeya',
   material: {
     ascension: [
@@ -638,7 +638,7 @@ CharactersCryoMap.set('Kaeya', {
   },
 })
 
-CharactersCryoMap.set('Kamisato Ayaka', {
+CharactersCryoMap.set('kamisato-ayaka', {
   name: 'Kamisato Ayaka',
   material: {
     ascension: [
@@ -744,7 +744,7 @@ CharactersCryoMap.set('Kamisato Ayaka', {
   },
 })
 
-CharactersCryoMap.set('Qiqi', {
+CharactersCryoMap.set('qiqi', {
   name: 'Qiqi',
   material: {
     ascension: [
@@ -850,7 +850,7 @@ CharactersCryoMap.set('Qiqi', {
   },
 })
 
-CharactersCryoMap.set('Rosaria', {
+CharactersCryoMap.set('rosaria', {
   name: 'Rosaria',
   material: {
     ascension: [
@@ -956,7 +956,7 @@ CharactersCryoMap.set('Rosaria', {
   },
 })
 
-CharactersCryoMap.set('Shenhe', {
+CharactersCryoMap.set('shenhe', {
   name: 'Shenhe',
   material: {
     ascension: [

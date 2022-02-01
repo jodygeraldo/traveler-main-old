@@ -1,8 +1,8 @@
-import { CharacterName, ICharacter } from '~/types/character'
+import { ICharacter } from '~/types/character'
 
-const CharactersElectroMap = new Map<CharacterName, ICharacter>()
+const CharactersElectroMap = new Map<string, ICharacter>()
 
-CharactersElectroMap.set('Beidou', {
+CharactersElectroMap.set('beidou', {
   name: 'Beidou',
   material: {
     ascension: [
@@ -108,7 +108,7 @@ CharactersElectroMap.set('Beidou', {
   },
 })
 
-CharactersElectroMap.set('Fischl', {
+CharactersElectroMap.set('fischl', {
   name: 'Fischl',
   material: {
     ascension: [
@@ -214,7 +214,7 @@ CharactersElectroMap.set('Fischl', {
   },
 })
 
-CharactersElectroMap.set('Keqing', {
+CharactersElectroMap.set('keqing', {
   name: 'Keqing',
   material: {
     ascension: [
@@ -320,7 +320,7 @@ CharactersElectroMap.set('Keqing', {
   },
 })
 
-CharactersElectroMap.set('Kujou Sara', {
+CharactersElectroMap.set('kujou-sara', {
   name: 'Kujou Sara',
   material: {
     ascension: [
@@ -426,7 +426,7 @@ CharactersElectroMap.set('Kujou Sara', {
   },
 })
 
-CharactersElectroMap.set('Lisa', {
+CharactersElectroMap.set('lisa', {
   name: 'Lisa',
   material: {
     ascension: [
@@ -532,7 +532,7 @@ CharactersElectroMap.set('Lisa', {
   },
 })
 
-CharactersElectroMap.set('Raiden Shogun', {
+CharactersElectroMap.set('raiden-shogun', {
   name: 'Raiden Shogun',
   material: {
     ascension: [
@@ -638,7 +638,7 @@ CharactersElectroMap.set('Raiden Shogun', {
   },
 })
 
-CharactersElectroMap.set('Razor', {
+CharactersElectroMap.set('razor', {
   name: 'Razor',
   material: {
     ascension: [
@@ -744,7 +744,7 @@ CharactersElectroMap.set('Razor', {
   },
 })
 
-CharactersElectroMap.set('Traveler Electro', {
+CharactersElectroMap.set('traveler-electro', {
   name: 'Traveler Electro',
   material: {
     ascension: [

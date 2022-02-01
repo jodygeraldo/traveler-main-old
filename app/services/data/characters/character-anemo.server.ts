@@ -1,8 +1,8 @@
-import { CharacterName, ICharacter } from '~/types/character'
+import { ICharacter } from '~/types/character'
 
-const CharacterAnemoMap = new Map<CharacterName, ICharacter>()
+const CharacterAnemoMap = new Map<string, ICharacter>()
 
-CharacterAnemoMap.set('Jean', {
+CharacterAnemoMap.set('jean', {
   name: 'Jean',
   material: {
     ascension: [
@@ -108,7 +108,7 @@ CharacterAnemoMap.set('Jean', {
   },
 })
 
-CharacterAnemoMap.set('Kaedehara Kazuha', {
+CharacterAnemoMap.set('kaedehara-kazuha', {
   name: 'Kaedehara Kazuha',
   material: {
     ascension: [
@@ -214,7 +214,7 @@ CharacterAnemoMap.set('Kaedehara Kazuha', {
   },
 })
 
-CharacterAnemoMap.set('Sayu', {
+CharacterAnemoMap.set('sayu', {
   name: 'Sayu',
   material: {
     ascension: [
@@ -320,7 +320,7 @@ CharacterAnemoMap.set('Sayu', {
   },
 })
 
-CharacterAnemoMap.set('Sucrose', {
+CharacterAnemoMap.set('sucrose', {
   name: 'Sucrose',
   material: {
     ascension: [
@@ -426,7 +426,7 @@ CharacterAnemoMap.set('Sucrose', {
   },
 })
 
-CharacterAnemoMap.set('Traveler Anemo', {
+CharacterAnemoMap.set('traveler-anemo', {
   name: 'Traveler Anemo',
   material: {
     ascension: [
@@ -527,7 +527,7 @@ CharacterAnemoMap.set('Traveler Anemo', {
   },
 })
 
-CharacterAnemoMap.set('Venti', {
+CharacterAnemoMap.set('venti', {
   name: 'Venti',
   material: {
     ascension: [
@@ -633,7 +633,7 @@ CharacterAnemoMap.set('Venti', {
   },
 })
 
-CharacterAnemoMap.set('Xiao', {
+CharacterAnemoMap.set('xiao', {
   name: 'Xiao',
   material: {
     ascension: [

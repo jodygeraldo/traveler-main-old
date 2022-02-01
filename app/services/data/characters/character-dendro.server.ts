@@ -1,5 +1,5 @@
-import { CharacterName, ICharacter } from '~/types/character'
+import { ICharacter } from '~/types/character'
 
-const charactersDendroMap = new Map<CharacterName, ICharacter>()
+const charactersDendroMap = new Map<string, ICharacter>()
 
 export default charactersDendroMap

@@ -12,9 +12,9 @@ import {
 import { getFormHackMessage } from '~/utils/message'
 
 export const action: ActionFunction = async ({ request, params }) => {
-  const { name } = params
+  const { characterName } = params
   invariant(
-    typeof name === 'string',
+    typeof characterName === 'string',
     'There is something wrong with the route params',
   )
 
@@ -22,7 +22,7 @@ export const action: ActionFunction = async ({ request, params }) => {
 
   const formData = await request.formData()
   const id = formData.get('id')
-  const characterName = formData.get('name')
+  const name = formData.get('name')
   const level = formData.get('level')
   const ascension = formData.get('ascension')
   const tNormal = formData.get('talent-normal')
@@ -30,7 +30,7 @@ export const action: ActionFunction = async ({ request, params }) => {
   const tBurst = formData.get('talent-burst')
 
   invariant(typeof id === 'string', 'Data not sync properly')
-  invariant(typeof characterName === 'string', getFormHackMessage())
+  invariant(typeof name === 'string', getFormHackMessage())
   invariant(typeof level === 'string', getFormHackMessage())
   invariant(typeof ascension === 'string', getFormHackMessage())
   invariant(typeof tNormal === 'string', getFormHackMessage())
@@ -40,14 +40,14 @@ export const action: ActionFunction = async ({ request, params }) => {
   const talent: [number, number, number] = [+tNormal, +tSkill, +tBurst]
 
   if (id === 'NEW') {
-    await addUserCharacter(userId, name, +level, +ascension, talent)
+    await addUserCharacter(userId, characterName, +level, +ascension, talent)
 
-    return redirect(route('/character/:name', { name }))
+    return redirect(route('/character/:name', { name: characterName }))
   }
 
   await updateUserCharacter(id, +level, +ascension, talent)
 
-  return redirect(route('/character/:name', { name }))
+  return redirect(route('/character/:name', { name: characterName }))
 }
 
 export default function CharacterEditManualRoute() {
