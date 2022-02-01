@@ -50,7 +50,7 @@ CharactersLookupMap.set('amber', {
   },
 })
 
-CharactersLookupMap.set('arataki_itto', {
+CharactersLookupMap.set('arataki-itto', {
   name: 'Arataki Itto',
   vision: 'Geo',
   rarity: 5,
@@ -226,7 +226,7 @@ CharactersLookupMap.set('gorou', {
   },
 })
 
-CharactersLookupMap.set('hu_tao', {
+CharactersLookupMap.set('hu-tao', {
   name: 'Hu Tao',
   vision: 'Pyro',
   rarity: 5,
@@ -258,7 +258,7 @@ CharactersLookupMap.set('jean', {
   },
 })
 
-CharactersLookupMap.set('kaedehara_kazuha', {
+CharactersLookupMap.set('kaedehara-kazuha', {
   name: 'Kaedehara Kazuha',
   vision: 'Anemo',
   rarity: 5,
@@ -290,7 +290,7 @@ CharactersLookupMap.set('kaeya', {
   },
 })
 
-CharactersLookupMap.set('kamisato_ayaka', {
+CharactersLookupMap.set('kamisato-ayaka', {
   name: 'Kamisato Ayaka',
   vision: 'Cryo',
   rarity: 5,
@@ -338,7 +338,7 @@ CharactersLookupMap.set('klee', {
   },
 })
 
-CharactersLookupMap.set('kujou_sara', {
+CharactersLookupMap.set('kujou-sara', {
   name: 'Kujou Sara',
   vision: 'Electro',
   rarity: 4,
@@ -434,7 +434,7 @@ CharactersLookupMap.set('qiqi', {
   },
 })
 
-CharactersLookupMap.set('raiden_shogun', {
+CharactersLookupMap.set('raiden-shogun', {
   name: 'Raiden Shogun',
   vision: 'Electro',
   rarity: 5,
@@ -482,7 +482,7 @@ CharactersLookupMap.set('rosaria', {
   },
 })
 
-CharactersLookupMap.set('sangonomiya_kokomi', {
+CharactersLookupMap.set('sangonomiya-kokomi', {
   name: 'Sangonomiya Kokomi',
   vision: 'Hydro',
   rarity: 5,
@@ -578,7 +578,7 @@ CharactersLookupMap.set('thoma', {
   },
 })
 
-CharactersLookupMap.set('traveler_anemo', {
+CharactersLookupMap.set('traveler-anemo', {
   name: 'Traveler Anemo',
   vision: 'Anemo',
   rarity: 5,
@@ -594,7 +594,7 @@ CharactersLookupMap.set('traveler_anemo', {
   },
 })
 
-CharactersLookupMap.set('traveler_geo', {
+CharactersLookupMap.set('traveler-geo', {
   name: 'Traveler Geo',
   vision: 'Geo',
   rarity: 5,
@@ -610,7 +610,7 @@ CharactersLookupMap.set('traveler_geo', {
   },
 })
 
-CharactersLookupMap.set('traveler_electro', {
+CharactersLookupMap.set('traveler-electro', {
   name: 'Traveler Electro',
   vision: 'Electro',
   rarity: 5,
@@ -738,7 +738,7 @@ CharactersLookupMap.set('yoimiya', {
   },
 })
 
-CharactersLookupMap.set('yun_jin', {
+CharactersLookupMap.set('yun-jin', {
   name: 'Yun Jin',
   vision: 'Geo',
   rarity: 4,
