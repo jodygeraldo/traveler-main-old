@@ -1,12 +1,9 @@
 import { CharacterName, ICharacter } from '~/types/character'
 
-const charactersElectroMap = new Map<CharacterName, ICharacter>()
+const CharactersElectroMap = new Map<CharacterName, ICharacter>()
 
-charactersElectroMap.set('Beidou', {
+CharactersElectroMap.set('Beidou', {
   name: 'Beidou',
-  vision: 'Electro',
-  rarity: 4,
-  weaponType: 'Claymore',
   material: {
     ascension: [
       {
@@ -111,11 +108,8 @@ charactersElectroMap.set('Beidou', {
   },
 })
 
-charactersElectroMap.set('Fischl', {
+CharactersElectroMap.set('Fischl', {
   name: 'Fischl',
-  vision: 'Electro',
-  rarity: 4,
-  weaponType: 'Bow',
   material: {
     ascension: [
       {
@@ -220,11 +214,8 @@ charactersElectroMap.set('Fischl', {
   },
 })
 
-charactersElectroMap.set('Keqing', {
+CharactersElectroMap.set('Keqing', {
   name: 'Keqing',
-  vision: 'Electro',
-  rarity: 5,
-  weaponType: 'Sword',
   material: {
     ascension: [
       {
@@ -329,11 +320,8 @@ charactersElectroMap.set('Keqing', {
   },
 })
 
-charactersElectroMap.set('Kujou Sara', {
+CharactersElectroMap.set('Kujou Sara', {
   name: 'Kujou Sara',
-  vision: 'Electro',
-  rarity: 4,
-  weaponType: 'Bow',
   material: {
     ascension: [
       {
@@ -438,11 +426,8 @@ charactersElectroMap.set('Kujou Sara', {
   },
 })
 
-charactersElectroMap.set('Lisa', {
+CharactersElectroMap.set('Lisa', {
   name: 'Lisa',
-  vision: 'Electro',
-  rarity: 4,
-  weaponType: 'Catalyst',
   material: {
     ascension: [
       {
@@ -547,11 +532,8 @@ charactersElectroMap.set('Lisa', {
   },
 })
 
-charactersElectroMap.set('Raiden Shogun', {
+CharactersElectroMap.set('Raiden Shogun', {
   name: 'Raiden Shogun',
-  vision: 'Electro',
-  rarity: 5,
-  weaponType: 'Polearm',
   material: {
     ascension: [
       {
@@ -656,11 +638,8 @@ charactersElectroMap.set('Raiden Shogun', {
   },
 })
 
-charactersElectroMap.set('Razor', {
+CharactersElectroMap.set('Razor', {
   name: 'Razor',
-  vision: 'Electro',
-  rarity: 4,
-  weaponType: 'Claymore',
   material: {
     ascension: [
       {
@@ -765,11 +744,8 @@ charactersElectroMap.set('Razor', {
   },
 })
 
-charactersElectroMap.set('Traveler Electro', {
+CharactersElectroMap.set('Traveler Electro', {
   name: 'Traveler Electro',
-  vision: 'Electro',
-  rarity: 5,
-  weaponType: 'Sword',
   material: {
     ascension: [
       {
@@ -869,4 +845,4 @@ charactersElectroMap.set('Traveler Electro', {
   },
 })
 
-export default charactersElectroMap
+export default CharactersElectroMap

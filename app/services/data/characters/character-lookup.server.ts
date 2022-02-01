@@ -1,8 +1,8 @@
 import { ICharacterDetail } from '~/types/character'
 
-const CharacterLookup = new Map<string, ICharacterDetail>()
+const CharactersLookupMap = new Map<string, ICharacterDetail>()
 
-CharacterLookup.set('albedo', {
+CharactersLookupMap.set('albedo', {
   name: 'Albedo',
   vision: 'Geo',
   rarity: 5,
@@ -18,7 +18,7 @@ CharacterLookup.set('albedo', {
   },
 })
 
-CharacterLookup.set('aloy', {
+CharactersLookupMap.set('aloy', {
   name: 'Aloy',
   vision: 'Cryo',
   rarity: 5,
@@ -34,7 +34,7 @@ CharacterLookup.set('aloy', {
   },
 })
 
-CharacterLookup.set('amber', {
+CharactersLookupMap.set('amber', {
   name: 'Amber',
   vision: 'Pyro',
   rarity: 4,
@@ -50,7 +50,7 @@ CharacterLookup.set('amber', {
   },
 })
 
-CharacterLookup.set('arataki_itto', {
+CharactersLookupMap.set('arataki_itto', {
   name: 'Arataki Itto',
   vision: 'Geo',
   rarity: 5,
@@ -66,7 +66,7 @@ CharacterLookup.set('arataki_itto', {
   },
 })
 
-CharacterLookup.set('barbara', {
+CharactersLookupMap.set('barbara', {
   name: 'Barbara',
   vision: 'Hydro',
   rarity: 4,
@@ -82,7 +82,7 @@ CharacterLookup.set('barbara', {
   },
 })
 
-CharacterLookup.set('beidou', {
+CharactersLookupMap.set('beidou', {
   name: 'Beidou',
   vision: 'Electro',
   rarity: 4,
@@ -98,7 +98,7 @@ CharacterLookup.set('beidou', {
   },
 })
 
-CharacterLookup.set('bennett', {
+CharactersLookupMap.set('bennett', {
   name: 'Bennett',
   vision: 'Pyro',
   rarity: 4,
@@ -114,7 +114,7 @@ CharacterLookup.set('bennett', {
   },
 })
 
-CharacterLookup.set('chongyun', {
+CharactersLookupMap.set('chongyun', {
   name: 'Chongyun',
   vision: 'Cryo',
   rarity: 4,
@@ -130,7 +130,7 @@ CharacterLookup.set('chongyun', {
   },
 })
 
-CharacterLookup.set('diluc', {
+CharactersLookupMap.set('diluc', {
   name: 'Diluc',
   vision: 'Pyro',
   rarity: 5,
@@ -146,7 +146,7 @@ CharacterLookup.set('diluc', {
   },
 })
 
-CharacterLookup.set('diona', {
+CharactersLookupMap.set('diona', {
   name: 'Diona',
   vision: 'Cryo',
   rarity: 4,
@@ -162,7 +162,7 @@ CharacterLookup.set('diona', {
   },
 })
 
-CharacterLookup.set('eula', {
+CharactersLookupMap.set('eula', {
   name: 'Eula',
   vision: 'Cryo',
   rarity: 5,
@@ -178,7 +178,7 @@ CharacterLookup.set('eula', {
   },
 })
 
-CharacterLookup.set('fischl', {
+CharactersLookupMap.set('fischl', {
   name: 'Fischl',
   vision: 'Electro',
   rarity: 4,
@@ -194,7 +194,7 @@ CharacterLookup.set('fischl', {
   },
 })
 
-CharacterLookup.set('ganyu', {
+CharactersLookupMap.set('ganyu', {
   name: 'Ganyu',
   vision: 'Cryo',
   rarity: 5,
@@ -210,7 +210,7 @@ CharacterLookup.set('ganyu', {
   },
 })
 
-CharacterLookup.set('gorou', {
+CharactersLookupMap.set('gorou', {
   name: 'Gorou',
   vision: 'Geo',
   rarity: 4,
@@ -226,7 +226,7 @@ CharacterLookup.set('gorou', {
   },
 })
 
-CharacterLookup.set('hu_tao', {
+CharactersLookupMap.set('hu_tao', {
   name: 'Hu Tao',
   vision: 'Pyro',
   rarity: 5,
@@ -242,7 +242,7 @@ CharacterLookup.set('hu_tao', {
   },
 })
 
-CharacterLookup.set('jean', {
+CharactersLookupMap.set('jean', {
   name: 'Jean',
   vision: 'Anemo',
   rarity: 5,
@@ -258,7 +258,7 @@ CharacterLookup.set('jean', {
   },
 })
 
-CharacterLookup.set('kaedehara_kazuha', {
+CharactersLookupMap.set('kaedehara_kazuha', {
   name: 'Kaedehara Kazuha',
   vision: 'Anemo',
   rarity: 5,
@@ -274,7 +274,7 @@ CharacterLookup.set('kaedehara_kazuha', {
   },
 })
 
-CharacterLookup.set('kaeya', {
+CharactersLookupMap.set('kaeya', {
   name: 'Kaeya',
   vision: 'Cryo',
   rarity: 4,
@@ -290,7 +290,7 @@ CharacterLookup.set('kaeya', {
   },
 })
 
-CharacterLookup.set('kamisato_ayaka', {
+CharactersLookupMap.set('kamisato_ayaka', {
   name: 'Kamisato Ayaka',
   vision: 'Cryo',
   rarity: 5,
@@ -306,7 +306,7 @@ CharacterLookup.set('kamisato_ayaka', {
   },
 })
 
-CharacterLookup.set('keqing', {
+CharactersLookupMap.set('keqing', {
   name: 'Keqing',
   vision: 'Electro',
   rarity: 5,
@@ -322,7 +322,7 @@ CharacterLookup.set('keqing', {
   },
 })
 
-CharacterLookup.set('klee', {
+CharactersLookupMap.set('klee', {
   name: 'Klee',
   vision: 'Pyro',
   rarity: 5,
@@ -338,7 +338,7 @@ CharacterLookup.set('klee', {
   },
 })
 
-CharacterLookup.set('kujou_sara', {
+CharactersLookupMap.set('kujou_sara', {
   name: 'Kujou Sara',
   vision: 'Electro',
   rarity: 4,
@@ -354,7 +354,7 @@ CharacterLookup.set('kujou_sara', {
   },
 })
 
-CharacterLookup.set('lisa', {
+CharactersLookupMap.set('lisa', {
   name: 'Lisa',
   vision: 'Electro',
   rarity: 4,
@@ -370,7 +370,7 @@ CharacterLookup.set('lisa', {
   },
 })
 
-CharacterLookup.set('mona', {
+CharactersLookupMap.set('mona', {
   name: 'Mona',
   vision: 'Hydro',
   rarity: 5,
@@ -386,7 +386,7 @@ CharacterLookup.set('mona', {
   },
 })
 
-CharacterLookup.set('ningguang', {
+CharactersLookupMap.set('ningguang', {
   name: 'Ningguang',
   vision: 'Geo',
   rarity: 4,
@@ -402,7 +402,7 @@ CharacterLookup.set('ningguang', {
   },
 })
 
-CharacterLookup.set('noelle', {
+CharactersLookupMap.set('noelle', {
   name: 'Noelle',
   vision: 'Geo',
   rarity: 4,
@@ -418,7 +418,7 @@ CharacterLookup.set('noelle', {
   },
 })
 
-CharacterLookup.set('qiqi', {
+CharactersLookupMap.set('qiqi', {
   name: 'Qiqi',
   vision: 'Cryo',
   rarity: 5,
@@ -434,7 +434,7 @@ CharacterLookup.set('qiqi', {
   },
 })
 
-CharacterLookup.set('raiden_shogun', {
+CharactersLookupMap.set('raiden_shogun', {
   name: 'Raiden Shogun',
   vision: 'Electro',
   rarity: 5,
@@ -450,7 +450,7 @@ CharacterLookup.set('raiden_shogun', {
   },
 })
 
-CharacterLookup.set('razor', {
+CharactersLookupMap.set('razor', {
   name: 'Razor',
   vision: 'Electro',
   rarity: 4,
@@ -466,7 +466,7 @@ CharacterLookup.set('razor', {
   },
 })
 
-CharacterLookup.set('rosaria', {
+CharactersLookupMap.set('rosaria', {
   name: 'Rosaria',
   vision: 'Cryo',
   rarity: 4,
@@ -482,7 +482,7 @@ CharacterLookup.set('rosaria', {
   },
 })
 
-CharacterLookup.set('sangonomiya_kokomi', {
+CharactersLookupMap.set('sangonomiya_kokomi', {
   name: 'Sangonomiya Kokomi',
   vision: 'Hydro',
   rarity: 5,
@@ -498,7 +498,7 @@ CharacterLookup.set('sangonomiya_kokomi', {
   },
 })
 
-CharacterLookup.set('sayu', {
+CharactersLookupMap.set('sayu', {
   name: 'Sayu',
   vision: 'Anemo',
   rarity: 4,
@@ -514,7 +514,7 @@ CharacterLookup.set('sayu', {
   },
 })
 
-CharacterLookup.set('shenhe', {
+CharactersLookupMap.set('shenhe', {
   name: 'Shenhe',
   vision: 'Cryo',
   rarity: 5,
@@ -530,7 +530,7 @@ CharacterLookup.set('shenhe', {
   },
 })
 
-CharacterLookup.set('sucrose', {
+CharactersLookupMap.set('sucrose', {
   name: 'Sucrose',
   vision: 'Anemo',
   rarity: 4,
@@ -546,7 +546,7 @@ CharacterLookup.set('sucrose', {
   },
 })
 
-CharacterLookup.set('tartaglia', {
+CharactersLookupMap.set('tartaglia', {
   name: 'Tartaglia',
   vision: 'Hydro',
   rarity: 5,
@@ -562,7 +562,7 @@ CharacterLookup.set('tartaglia', {
   },
 })
 
-CharacterLookup.set('thoma', {
+CharactersLookupMap.set('thoma', {
   name: 'Thoma',
   vision: 'Pyro',
   rarity: 4,
@@ -578,7 +578,7 @@ CharacterLookup.set('thoma', {
   },
 })
 
-CharacterLookup.set('traveler_anemo', {
+CharactersLookupMap.set('traveler_anemo', {
   name: 'Traveler Anemo',
   vision: 'Anemo',
   rarity: 5,
@@ -594,7 +594,7 @@ CharacterLookup.set('traveler_anemo', {
   },
 })
 
-CharacterLookup.set('traveler_geo', {
+CharactersLookupMap.set('traveler_geo', {
   name: 'Traveler Geo',
   vision: 'Geo',
   rarity: 5,
@@ -610,7 +610,7 @@ CharacterLookup.set('traveler_geo', {
   },
 })
 
-CharacterLookup.set('traveler_electro', {
+CharactersLookupMap.set('traveler_electro', {
   name: 'Traveler Electro',
   vision: 'Electro',
   rarity: 5,
@@ -626,7 +626,7 @@ CharacterLookup.set('traveler_electro', {
   },
 })
 
-CharacterLookup.set('venti', {
+CharactersLookupMap.set('venti', {
   name: 'Venti',
   vision: 'Anemo',
   rarity: 5,
@@ -642,7 +642,7 @@ CharacterLookup.set('venti', {
   },
 })
 
-CharacterLookup.set('xiangling', {
+CharactersLookupMap.set('xiangling', {
   name: 'Xiangling',
   vision: 'Pyro',
   rarity: 4,
@@ -658,7 +658,7 @@ CharacterLookup.set('xiangling', {
   },
 })
 
-CharacterLookup.set('xiao', {
+CharactersLookupMap.set('xiao', {
   name: 'Xiao',
   vision: 'Anemo',
   rarity: 5,
@@ -674,7 +674,7 @@ CharacterLookup.set('xiao', {
   },
 })
 
-CharacterLookup.set('xingqiu', {
+CharactersLookupMap.set('xingqiu', {
   name: 'Xingqiu',
   vision: 'Hydro',
   rarity: 4,
@@ -690,7 +690,7 @@ CharacterLookup.set('xingqiu', {
   },
 })
 
-CharacterLookup.set('xinyan', {
+CharactersLookupMap.set('xinyan', {
   name: 'Xinyan',
   vision: 'Pyro',
   rarity: 4,
@@ -706,7 +706,7 @@ CharacterLookup.set('xinyan', {
   },
 })
 
-CharacterLookup.set('yanfei', {
+CharactersLookupMap.set('yanfei', {
   name: 'Yanfei',
   vision: 'Pyro',
   rarity: 4,
@@ -722,7 +722,7 @@ CharacterLookup.set('yanfei', {
   },
 })
 
-CharacterLookup.set('yoimiya', {
+CharactersLookupMap.set('yoimiya', {
   name: 'Yoimiya',
   vision: 'Pyro',
   rarity: 5,
@@ -738,7 +738,7 @@ CharacterLookup.set('yoimiya', {
   },
 })
 
-CharacterLookup.set('yun_jin', {
+CharactersLookupMap.set('yun_jin', {
   name: 'Yun Jin',
   vision: 'Geo',
   rarity: 4,
@@ -754,7 +754,7 @@ CharacterLookup.set('yun_jin', {
   },
 })
 
-CharacterLookup.set('zhongli', {
+CharactersLookupMap.set('zhongli', {
   name: 'Zhongli',
   vision: 'Geo',
   rarity: 5,
@@ -773,9 +773,9 @@ CharacterLookup.set('zhongli', {
 export function getAllCharacterDetail() {
   const characters: ICharacterDetail[] = []
 
-  CharacterLookup.forEach(entry => characters.push(entry))
+  CharactersLookupMap.forEach(entry => characters.push(entry))
 
   return characters
 }
 
-export default CharacterLookup
+export default CharactersLookupMap

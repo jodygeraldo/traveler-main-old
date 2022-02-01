@@ -1,12 +1,9 @@
 import { CharacterName, ICharacter } from '~/types/character'
 
-const charactersCryoMap = new Map<CharacterName, ICharacter>()
+const CharactersCryoMap = new Map<CharacterName, ICharacter>()
 
-charactersCryoMap.set('Aloy', {
+CharactersCryoMap.set('Aloy', {
   name: 'Aloy',
-  vision: 'Cryo',
-  rarity: 'aloy',
-  weaponType: 'Bow',
   material: {
     ascension: [
       {
@@ -111,11 +108,8 @@ charactersCryoMap.set('Aloy', {
   },
 })
 
-charactersCryoMap.set('Chongyun', {
+CharactersCryoMap.set('Chongyun', {
   name: 'Chongyun',
-  vision: 'Cryo',
-  rarity: 4,
-  weaponType: 'Claymore',
   material: {
     ascension: [
       {
@@ -220,11 +214,8 @@ charactersCryoMap.set('Chongyun', {
   },
 })
 
-charactersCryoMap.set('Diona', {
+CharactersCryoMap.set('Diona', {
   name: 'Diona',
-  vision: 'Cryo',
-  rarity: 4,
-  weaponType: 'Bow',
   material: {
     ascension: [
       {
@@ -329,11 +320,8 @@ charactersCryoMap.set('Diona', {
   },
 })
 
-charactersCryoMap.set('Eula', {
+CharactersCryoMap.set('Eula', {
   name: 'Eula',
-  vision: 'Cryo',
-  rarity: 5,
-  weaponType: 'Claymore',
   material: {
     ascension: [
       {
@@ -438,11 +426,8 @@ charactersCryoMap.set('Eula', {
   },
 })
 
-charactersCryoMap.set('Ganyu', {
+CharactersCryoMap.set('Ganyu', {
   name: 'Ganyu',
-  vision: 'Cryo',
-  rarity: 5,
-  weaponType: 'Bow',
   material: {
     ascension: [
       {
@@ -547,11 +532,8 @@ charactersCryoMap.set('Ganyu', {
   },
 })
 
-charactersCryoMap.set('Kaeya', {
+CharactersCryoMap.set('Kaeya', {
   name: 'Kaeya',
-  vision: 'Cryo',
-  rarity: 4,
-  weaponType: 'Sword',
   material: {
     ascension: [
       {
@@ -656,11 +638,8 @@ charactersCryoMap.set('Kaeya', {
   },
 })
 
-charactersCryoMap.set('Kamisato Ayaka', {
+CharactersCryoMap.set('Kamisato Ayaka', {
   name: 'Kamisato Ayaka',
-  vision: 'Cryo',
-  rarity: 5,
-  weaponType: 'Sword',
   material: {
     ascension: [
       {
@@ -765,11 +744,8 @@ charactersCryoMap.set('Kamisato Ayaka', {
   },
 })
 
-charactersCryoMap.set('Qiqi', {
+CharactersCryoMap.set('Qiqi', {
   name: 'Qiqi',
-  vision: 'Cryo',
-  rarity: 5,
-  weaponType: 'Sword',
   material: {
     ascension: [
       {
@@ -874,11 +850,8 @@ charactersCryoMap.set('Qiqi', {
   },
 })
 
-charactersCryoMap.set('Rosaria', {
+CharactersCryoMap.set('Rosaria', {
   name: 'Rosaria',
-  vision: 'Cryo',
-  rarity: 4,
-  weaponType: 'Polearm',
   material: {
     ascension: [
       {
@@ -983,11 +956,8 @@ charactersCryoMap.set('Rosaria', {
   },
 })
 
-charactersCryoMap.set('Shenhe', {
+CharactersCryoMap.set('Shenhe', {
   name: 'Shenhe',
-  vision: 'Cryo',
-  rarity: 5,
-  weaponType: 'Polearm',
   material: {
     ascension: [
       {
@@ -1092,4 +1062,4 @@ charactersCryoMap.set('Shenhe', {
   },
 })
 
-export default charactersCryoMap
+export default CharactersCryoMap

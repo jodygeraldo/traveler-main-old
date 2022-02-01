@@ -1,12 +1,9 @@
 import { CharacterName, ICharacter } from '~/types/character'
 
-const charactersGeoMap = new Map<CharacterName, ICharacter>()
+const CharactersGeoMap = new Map<CharacterName, ICharacter>()
 
-charactersGeoMap.set('Albedo', {
+CharactersGeoMap.set('Albedo', {
   name: 'Albedo',
-  vision: 'Geo',
-  rarity: 5,
-  weaponType: 'Sword',
   material: {
     ascension: [
       {
@@ -111,11 +108,8 @@ charactersGeoMap.set('Albedo', {
   },
 })
 
-charactersGeoMap.set('Arataki Itto', {
+CharactersGeoMap.set('Arataki Itto', {
   name: 'Arataki Itto',
-  vision: 'Geo',
-  rarity: 5,
-  weaponType: 'Claymore',
   material: {
     ascension: [
       {
@@ -220,11 +214,8 @@ charactersGeoMap.set('Arataki Itto', {
   },
 })
 
-charactersGeoMap.set('Gorou', {
+CharactersGeoMap.set('Gorou', {
   name: 'Gorou',
-  vision: 'Geo',
-  rarity: 4,
-  weaponType: 'Sword',
   material: {
     ascension: [
       {
@@ -329,11 +320,8 @@ charactersGeoMap.set('Gorou', {
   },
 })
 
-charactersGeoMap.set('Ningguang', {
+CharactersGeoMap.set('Ningguang', {
   name: 'Ningguang',
-  vision: 'Geo',
-  rarity: 4,
-  weaponType: 'Catalyst',
   material: {
     ascension: [
       {
@@ -438,11 +426,8 @@ charactersGeoMap.set('Ningguang', {
   },
 })
 
-charactersGeoMap.set('Noelle', {
+CharactersGeoMap.set('Noelle', {
   name: 'Noelle',
-  vision: 'Geo',
-  rarity: 4,
-  weaponType: 'Claymore',
   material: {
     ascension: [
       {
@@ -547,11 +532,8 @@ charactersGeoMap.set('Noelle', {
   },
 })
 
-charactersGeoMap.set('Traveler Geo', {
+CharactersGeoMap.set('Traveler Geo', {
   name: 'Traveler Geo',
-  vision: 'Geo',
-  rarity: 5,
-  weaponType: 'Sword',
   material: {
     ascension: [
       {
@@ -757,11 +739,8 @@ charactersGeoMap.set('Traveler Geo', {
   },
 })
 
-charactersGeoMap.set('Yun Jin', {
+CharactersGeoMap.set('Yun Jin', {
   name: 'Yun Jin',
-  vision: 'Geo',
-  rarity: 4,
-  weaponType: 'Polearm',
   material: {
     ascension: [
       {
@@ -866,11 +845,8 @@ charactersGeoMap.set('Yun Jin', {
   },
 })
 
-charactersGeoMap.set('Zhongli', {
+CharactersGeoMap.set('Zhongli', {
   name: 'Zhongli',
-  vision: 'Geo',
-  rarity: 5,
-  weaponType: 'Polearm',
   material: {
     ascension: [
       {
@@ -975,4 +951,4 @@ charactersGeoMap.set('Zhongli', {
   },
 })
 
-export default charactersGeoMap
+export default CharactersGeoMap

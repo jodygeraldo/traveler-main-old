@@ -1,12 +1,9 @@
 import { CharacterName, ICharacter } from '~/types/character'
 
-const charactersPyroMap = new Map<CharacterName, ICharacter>()
+const CharactersPyroMap = new Map<CharacterName, ICharacter>()
 
-charactersPyroMap.set('Amber', {
+CharactersPyroMap.set('Amber', {
   name: 'Amber',
-  vision: 'Pyro',
-  rarity: 4,
-  weaponType: 'Bow',
   material: {
     ascension: [
       {
@@ -111,11 +108,8 @@ charactersPyroMap.set('Amber', {
   },
 })
 
-charactersPyroMap.set('Bennett', {
+CharactersPyroMap.set('Bennett', {
   name: 'Bennett',
-  vision: 'Pyro',
-  rarity: 4,
-  weaponType: 'Sword',
   material: {
     ascension: [
       {
@@ -220,11 +214,8 @@ charactersPyroMap.set('Bennett', {
   },
 })
 
-charactersPyroMap.set('Diluc', {
+CharactersPyroMap.set('Diluc', {
   name: 'Diluc',
-  vision: 'Pyro',
-  rarity: 5,
-  weaponType: 'Claymore',
   material: {
     ascension: [
       {
@@ -329,11 +320,8 @@ charactersPyroMap.set('Diluc', {
   },
 })
 
-charactersPyroMap.set('Hu Tao', {
+CharactersPyroMap.set('Hu Tao', {
   name: 'Hu Tao',
-  vision: 'Pyro',
-  rarity: 5,
-  weaponType: 'Polearm',
   material: {
     ascension: [
       {
@@ -438,11 +426,8 @@ charactersPyroMap.set('Hu Tao', {
   },
 })
 
-charactersPyroMap.set('Klee', {
+CharactersPyroMap.set('Klee', {
   name: 'Klee',
-  vision: 'Pyro',
-  rarity: 5,
-  weaponType: 'Catalyst',
   material: {
     ascension: [
       {
@@ -547,11 +532,8 @@ charactersPyroMap.set('Klee', {
   },
 })
 
-charactersPyroMap.set('Thoma', {
+CharactersPyroMap.set('Thoma', {
   name: 'Thoma',
-  vision: 'Pyro',
-  rarity: 4,
-  weaponType: 'Polearm',
   material: {
     ascension: [
       {
@@ -656,11 +638,8 @@ charactersPyroMap.set('Thoma', {
   },
 })
 
-charactersPyroMap.set('Xiangling', {
+CharactersPyroMap.set('Xiangling', {
   name: 'Xiangling',
-  vision: 'Pyro',
-  rarity: 4,
-  weaponType: 'Polearm',
   material: {
     ascension: [
       {
@@ -765,11 +744,8 @@ charactersPyroMap.set('Xiangling', {
   },
 })
 
-charactersPyroMap.set('Xinyan', {
+CharactersPyroMap.set('Xinyan', {
   name: 'Xinyan',
-  vision: 'Pyro',
-  rarity: 4,
-  weaponType: 'Claymore',
   material: {
     ascension: [
       {
@@ -874,11 +850,8 @@ charactersPyroMap.set('Xinyan', {
   },
 })
 
-charactersPyroMap.set('Yanfei', {
+CharactersPyroMap.set('Yanfei', {
   name: 'Yanfei',
-  vision: 'Pyro',
-  rarity: 4,
-  weaponType: 'Catalyst',
   material: {
     ascension: [
       {
@@ -983,11 +956,8 @@ charactersPyroMap.set('Yanfei', {
   },
 })
 
-charactersPyroMap.set('Yoimiya', {
+CharactersPyroMap.set('Yoimiya', {
   name: 'Yoimiya',
-  vision: 'Pyro',
-  rarity: 5,
-  weaponType: 'Bow',
   material: {
     ascension: [
       {
@@ -1092,4 +1062,4 @@ charactersPyroMap.set('Yoimiya', {
   },
 })
 
-export default charactersPyroMap
+export default CharactersPyroMap

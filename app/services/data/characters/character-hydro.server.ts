@@ -1,12 +1,9 @@
 import { CharacterName, ICharacter } from '~/types/character'
 
-const charactersHydroMap = new Map<CharacterName, ICharacter>()
+const CharactersHydroMap = new Map<CharacterName, ICharacter>()
 
-charactersHydroMap.set('Barbara', {
+CharactersHydroMap.set('Barbara', {
   name: 'Barbara',
-  vision: 'Hydro',
-  rarity: 4,
-  weaponType: 'Catalyst',
   material: {
     ascension: [
       {
@@ -111,11 +108,8 @@ charactersHydroMap.set('Barbara', {
   },
 })
 
-charactersHydroMap.set('Mona', {
+CharactersHydroMap.set('Mona', {
   name: 'Mona',
-  vision: 'Hydro',
-  rarity: 5,
-  weaponType: 'Catalyst',
   material: {
     ascension: [
       {
@@ -220,11 +214,8 @@ charactersHydroMap.set('Mona', {
   },
 })
 
-charactersHydroMap.set('Sangonomiya Kokomi', {
+CharactersHydroMap.set('Sangonomiya Kokomi', {
   name: 'Sangonomiya Kokomi',
-  vision: 'Hydro',
-  rarity: 5,
-  weaponType: 'Catalyst',
   material: {
     ascension: [
       {
@@ -329,11 +320,8 @@ charactersHydroMap.set('Sangonomiya Kokomi', {
   },
 })
 
-charactersHydroMap.set('Tartaglia', {
+CharactersHydroMap.set('Tartaglia', {
   name: 'Tartaglia',
-  vision: 'Hydro',
-  rarity: 5,
-  weaponType: 'Bow',
   material: {
     ascension: [
       {
@@ -438,11 +426,8 @@ charactersHydroMap.set('Tartaglia', {
   },
 })
 
-charactersHydroMap.set('Xingqiu', {
+CharactersHydroMap.set('Xingqiu', {
   name: 'Xingqiu',
-  vision: 'Hydro',
-  rarity: 4,
-  weaponType: 'Sword',
   material: {
     ascension: [
       {
@@ -547,4 +532,4 @@ charactersHydroMap.set('Xingqiu', {
   },
 })
 
-export default charactersHydroMap
+export default CharactersHydroMap

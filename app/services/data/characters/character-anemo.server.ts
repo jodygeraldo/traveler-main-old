@@ -1,12 +1,9 @@
 import { CharacterName, ICharacter } from '~/types/character'
 
-const charactersAnemoMap = new Map<CharacterName, ICharacter>()
+const CharacterAnemoMap = new Map<CharacterName, ICharacter>()
 
-charactersAnemoMap.set('Jean', {
+CharacterAnemoMap.set('Jean', {
   name: 'Jean',
-  vision: 'Anemo',
-  rarity: 5,
-  weaponType: 'Sword',
   material: {
     ascension: [
       {
@@ -111,11 +108,8 @@ charactersAnemoMap.set('Jean', {
   },
 })
 
-charactersAnemoMap.set('Kaedehara Kazuha', {
+CharacterAnemoMap.set('Kaedehara Kazuha', {
   name: 'Kaedehara Kazuha',
-  vision: 'Anemo',
-  rarity: 5,
-  weaponType: 'Sword',
   material: {
     ascension: [
       {
@@ -220,11 +214,8 @@ charactersAnemoMap.set('Kaedehara Kazuha', {
   },
 })
 
-charactersAnemoMap.set('Sayu', {
+CharacterAnemoMap.set('Sayu', {
   name: 'Sayu',
-  vision: 'Anemo',
-  rarity: 4,
-  weaponType: 'Claymore',
   material: {
     ascension: [
       {
@@ -329,11 +320,8 @@ charactersAnemoMap.set('Sayu', {
   },
 })
 
-charactersAnemoMap.set('Sucrose', {
+CharacterAnemoMap.set('Sucrose', {
   name: 'Sucrose',
-  vision: 'Anemo',
-  rarity: 4,
-  weaponType: 'Catalyst',
   material: {
     ascension: [
       {
@@ -438,11 +426,8 @@ charactersAnemoMap.set('Sucrose', {
   },
 })
 
-charactersAnemoMap.set('Traveler Anemo', {
+CharacterAnemoMap.set('Traveler Anemo', {
   name: 'Traveler Anemo',
-  vision: 'Anemo',
-  rarity: 5,
-  weaponType: 'Sword',
   material: {
     ascension: [
       {
@@ -542,11 +527,8 @@ charactersAnemoMap.set('Traveler Anemo', {
   },
 })
 
-charactersAnemoMap.set('Venti', {
+CharacterAnemoMap.set('Venti', {
   name: 'Venti',
-  vision: 'Anemo',
-  rarity: 5,
-  weaponType: 'Bow',
   material: {
     ascension: [
       {
@@ -651,11 +633,8 @@ charactersAnemoMap.set('Venti', {
   },
 })
 
-charactersAnemoMap.set('Xiao', {
+CharacterAnemoMap.set('Xiao', {
   name: 'Xiao',
-  vision: 'Anemo',
-  rarity: 5,
-  weaponType: 'Polearm',
   material: {
     ascension: [
       {
@@ -760,4 +739,4 @@ charactersAnemoMap.set('Xiao', {
   },
 })
 
-export default charactersAnemoMap
+export default CharacterAnemoMap
