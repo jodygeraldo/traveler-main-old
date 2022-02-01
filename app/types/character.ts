@@ -1,9 +1,12 @@
 import {
   AscensionBossMaterial,
   AscensionGem,
+  AscensionGemGroup,
   CommonMaterial,
+  CommonMaterialGroup,
   LocalSpecialty,
   TalentBook,
+  TalentBookGroup,
   TalentBossMaterial,
 } from './item'
 
@@ -114,20 +117,34 @@ export type TalentType = [
 
 export interface ICharacter {
   name: CharacterName
-  vision: Vision
-  rarity: 4 | 5 | 'aloy'
-  weaponType: WeaponType
   material: {
     ascension: AscensionType
     talent:
       | TalentType
       | { normal: TalentType; skill: TalentType; burst: TalentType }
   }
-  id?: string
-  ownership?: boolean
   progression: {
     level: number
     ascension: number
     talent: [number, number, number]
   }
+  id?: string
+}
+
+export interface ICharacterDetail {
+  name: CharacterName
+  vision: Vision
+  rarity: 4 | 5
+  weapon: WeaponType
+  material: {
+    crown: 'Crown of Insight'
+    common: CommonMaterialGroup
+    talentBook: TalentBookGroup[]
+    talentBoss: TalentBossMaterial
+    talentCommon?: CommonMaterialGroup
+    ascensionGem: AscensionGemGroup
+    ascensionBoss?: AscensionBossMaterial
+    localSpecialty: LocalSpecialty
+  }
+  ownership?: boolean
 }
