@@ -1,10 +1,10 @@
 declare module "routes-gen" {
   export type RouteParams = {
     "/character": {};
-    "/character/:name": { name: string };
-    "/character/:name/edit-with-inventory": { name: string };
-    "/character/:name/edit-with-inventory/items": { name: string };
-    "/character/:name/edit-manual": { name: string };
+    "/character/:characterName": { characterName: string };
+    "/character/:characterName/edit-with-inventory": { characterName: string };
+    "/character/:characterName/edit-with-inventory/items": { characterName: string };
+    "/character/:characterName/edit-manual": { characterName: string };
     "/inventory": {};
     "/inventory/ascension-boss-material": {};
     "/inventory/talent-boss-material": {};
@@ -25,10 +25,10 @@ declare module "routes-gen" {
   export function route<
     T extends
       | ["/character"]
-      | ["/character/:name", RouteParams["/character/:name"]]
-      | ["/character/:name/edit-with-inventory", RouteParams["/character/:name/edit-with-inventory"]]
-      | ["/character/:name/edit-with-inventory/items", RouteParams["/character/:name/edit-with-inventory/items"]]
-      | ["/character/:name/edit-manual", RouteParams["/character/:name/edit-manual"]]
+      | ["/character/:characterName", RouteParams["/character/:characterName"]]
+      | ["/character/:characterName/edit-with-inventory", RouteParams["/character/:characterName/edit-with-inventory"]]
+      | ["/character/:characterName/edit-with-inventory/items", RouteParams["/character/:characterName/edit-with-inventory/items"]]
+      | ["/character/:characterName/edit-manual", RouteParams["/character/:characterName/edit-manual"]]
       | ["/inventory"]
       | ["/inventory/ascension-boss-material"]
       | ["/inventory/talent-boss-material"]

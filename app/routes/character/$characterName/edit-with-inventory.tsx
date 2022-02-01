@@ -4,7 +4,6 @@ import {
   LoaderFunction,
   Outlet,
   useCatch,
-  useLoaderData,
   useMatches,
   useOutletContext,
   useParams,
@@ -12,40 +11,39 @@ import {
 import { route } from 'routes-gen'
 import invariant from 'tiny-invariant'
 
-import { CharacterName, ICharacter } from '~/types/character'
-import { ItemTypes } from '~/types/item'
-import { characterName as characterNameHelper } from '~/utils/db/character.server'
-import { stringToCapitalized } from '~/utils/string'
+import CharactersMap from '~/services/data/characters/character-progression.server'
+import { ICharacterDetail } from '~/types/character'
 
 export const loader: LoaderFunction = ({ params }) => {
-  const { name } = params
+  const { characterName } = params
   invariant(
-    typeof name === 'string',
+    typeof characterName === 'string',
     'There is something wrong with the route params',
   )
 
-  const parsedName = stringToCapitalized(name) as CharacterName
+  console.log(characterName)
 
-  const characterName = characterNameHelper.includes(parsedName)
-  if (!characterName) {
+  if (!CharactersMap.has(characterName)) {
     throw json('Character not found', { status: 404 })
   }
 
-  return json<CharacterName>(parsedName, { status: 200 })
+  return 'ok'
 }
 
 export default function CharacterEditWithInventoryPage() {
-  const name = useLoaderData<CharacterName>()
-  const userItem = useMatches().filter(
-    match => match.id === 'routes/character/$name',
-  )[0].data.userItem as ItemTypes | undefined
+  const { characterName } = useParams()
+  invariant(characterName, 'There is something wrong with the route params')
 
-  const character = useOutletContext<ICharacter>()
+  const character = useOutletContext<ICharacterDetail>()
 
   return (
     <div>
       <div className="mb-6 flex gap-5">
-        <Link to={route('/character/:name/edit-with-inventory', { name })}>
+        <Link
+          to={route('/character/:characterName/edit-with-inventory', {
+            characterName,
+          })}
+        >
           <button className="rounded-lg bg-gray-800 py-2 px-4 font-bold text-white hover:bg-gray-900">
             Back
           </button>
@@ -56,7 +54,7 @@ export default function CharacterEditWithInventoryPage() {
           </button>
         </Link>
       </div>
-      <Outlet context={{ character, userItem }} />
+      <Outlet context={character} />
     </div>
   )
 }

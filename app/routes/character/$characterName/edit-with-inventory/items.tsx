@@ -1,16 +1,26 @@
 import { useEffect, useState } from 'react'
-import { useOutletContext } from 'remix'
+import {
+  json,
+  LoaderFunction,
+  useFetcher,
+  useLoaderData,
+  useLocation,
+  useOutletContext,
+} from 'remix'
+import invariant from 'tiny-invariant'
 
 import CharacterProgressionItem from '~/components/Character/CharacterProgressionTable/CharacterProgressionItem'
 import CharacterProgressionTable from '~/components/Character/CharacterProgressionTable/CharacterProgressionTable'
 import SwitchLabelDescriptionLeft from '~/components/UI/Form/Switch'
 import SectionHeading from '~/components/UI/Heading/SectionHeading'
+import { requireUserId } from '~/services/auth.server'
+import CharactersLookupMap from '~/services/data/characters/character-lookup.server'
+import CharactersMap from '~/services/data/characters/character-progression.server'
 import {
-  ascensionGemMap,
-  ascensionLocalSpecialtyMap,
-  commonMaterialMap,
-} from '~/services/data/items'
-import { ICharacter } from '~/types/character'
+  IAscensionMaterial,
+  ICharacterDetail,
+  ITalentMaterial,
+} from '~/types/character'
 import {
   getAscensionMaterial,
   getAscensionTableFooter,
@@ -26,26 +36,70 @@ import {
   sumTalentCommon,
   sumTalentCrown,
   sumTalentMora,
-} from '~/utils/character'
+} from '~/utils/character.server'
+import { getUserCharacter } from '~/utils/db/character.server'
+import { stringToCapitalized } from '~/utils/string'
 
-export default function EditWithInventoryItemsRoute() {
-  const { character } = useOutletContext<{
-    character: ICharacter
-  }>()
-  const [showAllItem, setShowAllItem] = useState(true)
-  const [ascensionLevel, setAscensionLevel] = useState<number | undefined>(
-    undefined,
+type Footer = {
+  name: string
+  amount: string | number
+}[][]
+
+interface LoaderData {
+  material: {
+    ascension: IAscensionMaterial[]
+    talent: {
+      talentNormal: ITalentMaterial[]
+      talentSkill: ITalentMaterial[]
+      talentBurst: ITalentMaterial[]
+    }
+  }
+  ascensionHeaderTable: string[]
+  ascensionFooter: (
+    | {
+        name: string
+        amount: string
+      }[]
+    | {
+        name: string
+        amount: number
+      }[]
+  )[]
+  talentNormalFooter: Footer
+  talentSkillFooter: Footer
+  talentBurstFooter: Footer
+}
+export const loader: LoaderFunction = async ({ request, params }) => {
+  const showAll = new URL(request.url).searchParams.get('showAll') === 'true'
+
+  const { characterName } = params
+  invariant(
+    typeof characterName === 'string',
+    'There is something wrong with the route params',
   )
-  const [talentLevel, setTalentLevel] = useState<
-    [number, number, number] | undefined
-  >(undefined)
+
+  const userId = await requireUserId(request)
+
+  const character = CharactersMap.get(characterName)
+  const characterDetail = CharactersLookupMap.get(characterName)
+  if (!character || !characterDetail) {
+    throw json('Character not found', { status: 404 })
+  }
+
+  const userCharacter = await getUserCharacter(
+    userId,
+    stringToCapitalized(characterName),
+  )
 
   const material = {
     ascension: getAscensionMaterial(
       character.material.ascension,
-      ascensionLevel,
+      showAll ? undefined : userCharacter?.progression.ascension,
     ),
-    talent: getTalentMaterial(character.material.talent, talentLevel),
+    talent: getTalentMaterial(
+      character.material.talent,
+      showAll ? undefined : userCharacter?.progression.talent,
+    ),
   }
 
   const total = {
@@ -61,17 +115,8 @@ export default function EditWithInventoryItemsRoute() {
     talentCrown: sumTalentCrown(material.talent),
   }
 
-  useEffect(() => {
-    if (showAllItem) {
-      setAscensionLevel(undefined)
-      setTalentLevel(undefined)
-    } else {
-      setAscensionLevel(character.progression.ascension)
-      setTalentLevel(character.progression.talent)
-    }
-  }, [showAllItem])
-
   const ascensionFooter = getAscensionTableFooter(character, total)
+
   const talentNormalFooter = getTalentTableFooter(
     character,
     {
@@ -109,20 +154,52 @@ export default function EditWithInventoryItemsRoute() {
   const ascensionHeaderTable = [
     `Level`,
     `Mora`,
-    `Gem (${
-      ascensionGemMap.get(character.material.ascension[0].gem.name)?.group
-    })`,
-    `Local Specialty (${character.material.ascension[0].localSpecialty.name})`,
-    `Common (${
-      commonMaterialMap.get(character.material.ascension[0].common.name)?.group
-    })`,
-    `Boss (${character.material.ascension[1].boss?.name})`,
+    `Gem (${characterDetail.material.ascensionGem})`,
+    `Local Specialty (${characterDetail.material.localSpecialty})`,
+    `Common (${characterDetail.material.common})`,
+    `Boss (${characterDetail.material.ascensionBoss})`,
   ]
 
   if (character.name.includes('Traveler')) {
     ascensionHeaderTable.pop()
     ascensionFooter.pop()
   }
+
+  return json<LoaderData>(
+    {
+      material,
+      ascensionHeaderTable,
+      ascensionFooter,
+      talentNormalFooter,
+      talentSkillFooter,
+      talentBurstFooter,
+    },
+    { status: 200 },
+  )
+}
+
+export default function EditWithInventoryItemsRoute() {
+  const {
+    material,
+    ascensionHeaderTable,
+    ascensionFooter,
+    talentNormalFooter,
+    talentSkillFooter,
+    talentBurstFooter,
+  } = useLoaderData<LoaderData>()
+  const character = useOutletContext<ICharacterDetail>()
+
+  const [showAllItem, setShowAllItem] = useState(true)
+
+  const { submit } = useFetcher()
+
+  function handleSubmit() {
+    submit({ showAll: `${showAllItem}` }, { method: 'get', replace: true })
+  }
+
+  useEffect(() => {
+    handleSubmit()
+  }, [showAllItem])
 
   return (
     <>

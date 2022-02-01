@@ -44,7 +44,10 @@ const CharacterProgressionTable: FC<Props> = ({
                           {item.map(({ name, amount }) =>
                             typeof amount === 'number' &&
                             amount === 0 ? null : (
-                              <div className="flex items-center gap-2">
+                              <div
+                                key={name}
+                                className="flex items-center gap-2"
+                              >
                                 {name === '' ? null : (
                                   <img
                                     className="h-6 w-6"

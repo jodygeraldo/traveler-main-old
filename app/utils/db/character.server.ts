@@ -49,7 +49,19 @@ export async function getUserCharacter(userId: string, name: string) {
     },
   })
 
-  return character
+  if (!character) {
+    return null
+  }
+
+  return {
+    name: character.name,
+    id: character.id,
+    progression: {
+      level: character.level,
+      ascension: character.ascension,
+      talent: character.talent as [number, number, number],
+    },
+  }
 }
 
 export async function addUserCharacterOwnership(userId: string, name: string) {

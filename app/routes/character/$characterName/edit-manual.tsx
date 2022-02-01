@@ -53,7 +53,7 @@ export const action: ActionFunction = async ({ request, params }) => {
     await updateUserCharacter(id, +level, +ascension, talent)
   }
 
-  return redirect(route('/character/:name', { name: characterName }))
+  return redirect(route('/character/:characterName', { characterName }))
 }
 
 export default function CharacterEditManualRoute() {

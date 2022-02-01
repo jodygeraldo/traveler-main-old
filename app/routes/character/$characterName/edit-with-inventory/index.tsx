@@ -1,15 +1,22 @@
 import { useState } from 'react'
-import { Form, useOutletContext } from 'remix'
+import { Form, useMatches, useOutletContext } from 'remix'
 
 import CharacterLevel from '~/components/Character/CharacterLevel/CharacterLevel'
 import CharacterLevelTalent from '~/components/Character/CharacterLevel/CharacterLevelTalent'
 import SwitchLabelDescriptionLeft from '~/components/UI/Form/Switch'
-import { ICharacter } from '~/types/character'
+import { ICharacter, ICharacterDetail } from '~/types/character'
 import { ItemTypes } from '~/types/item'
 
 export default function CharacterEditWithInventoryRoute() {
-  const { character, userItem } =
-    useOutletContext<{ character: ICharacter; userItem: ItemTypes }>()
+  const { userItems, progression, id } = useMatches().find(
+    match => match.id === 'routes/character/$characterName',
+  )?.data as {
+    userItems?: ItemTypes
+    progression: ICharacter['progression']
+    id?: string
+  }
+
+  const character = useOutletContext<ICharacterDetail>()
 
   const [returnItem, setReturnItem] = useState(true)
 
@@ -33,8 +40,8 @@ export default function CharacterEditWithInventoryRoute() {
       </div>
 
       <Form>
-        <CharacterLevel character={character} items={userItem} />
-        <CharacterLevelTalent talent={character.material.talent} />
+        <CharacterLevel character={character} items={userItems} />
+        <CharacterLevelTalent talent={progression.talent} />
       </Form>
     </>
   )

@@ -108,7 +108,7 @@ CharactersGeoMap.set('albedo', {
   },
 })
 
-CharactersGeoMap.set('arataki Itto', {
+CharactersGeoMap.set('arataki-itto', {
   name: 'Arataki Itto',
   material: {
     ascension: [

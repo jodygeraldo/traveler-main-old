@@ -53,11 +53,7 @@ export const loader: LoaderFunction = async ({ params, request }) => {
   if (userCharacter) {
     return json<LoaderData>({
       userItems,
-      progression: {
-        level: userCharacter.level,
-        ascension: userCharacter.ascension,
-        talent: userCharacter.talent as [number, number, number],
-      },
+      progression: userCharacter.progression,
       id: userCharacter.id,
     })
   } else {
