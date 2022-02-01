@@ -4,7 +4,7 @@ import { useOutletContext } from 'remix'
 
 import CharacterItem from '~/components/Character/CharacterItem'
 import FilterLabel from '~/components/UI/FilterLabel'
-import type { ICharacter } from '~/types/character'
+import type { ICharacterDetail } from '~/types/character'
 
 const vision = [
   { value: 'Anemo', label: 'Anemo' },
@@ -19,7 +19,7 @@ const vision = [
 const weaponType = ['Bow', 'Catalyst', 'Claymore', 'Polearm', 'Sword']
 
 export default function CharactersRoute() {
-  const initialCharacters = useOutletContext<ICharacter[]>()
+  const initialCharacters = useOutletContext<ICharacterDetail[]>()
   const [characters, setCharacters] = useState(initialCharacters)
 
   const [filterVision, setFilterVision] = useState([
@@ -55,7 +55,7 @@ export default function CharactersRoute() {
     setCharacters(() =>
       initialCharacters.filter(
         character =>
-          filterWeaponType.includes(character.weaponType) &&
+          filterWeaponType.includes(character.weapon) &&
           filterVision.includes(character.vision) &&
           parsedIntArrFilterRarity.includes(character.rarity),
       ),

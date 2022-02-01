@@ -1,40 +1,28 @@
 import { json, LoaderFunction, Outlet, useLoaderData } from 'remix'
 
 import { requireUserId } from '~/services/auth.server'
-import { ICharacter } from '~/types/character'
-import {
-  getCharacters,
-  getUpdatedCharacters,
-  getUserCharacters,
-} from '~/utils/db/character.server'
+import { getAllCharacterDetail } from '~/services/data/characters/character-lookup.server'
+import { ICharacterDetail } from '~/types/character'
+import { getUserCharacterOwnership } from '~/utils/db/character.server'
 
 export const loader: LoaderFunction = async ({ request }) => {
   const userId = await requireUserId(request)
 
-  const characters = getCharacters()
+  const characters = getAllCharacterDetail()
+  const userCharacterOwnership = await getUserCharacterOwnership(userId)
 
-  const userCharacters = (await getUserCharacters(userId)) as {
-    id: string
-    name: string
-    level: number
-    ascension: number
-    // its should be 3 number, prisma doesn't support it but I make it sure it's always 3 numbers
-    talent: [number, number, number]
-  }[]
-
-  if (userCharacters.length === 0) {
-    return json<ICharacter[]>(characters, { status: 200 })
-  }
-
-  const updatedCharacters = getUpdatedCharacters(userCharacters, characters)
-
-  return json<ICharacter[]>(updatedCharacters, {
-    status: 200,
+  const updatedCharacters: ICharacterDetail[] = characters.map(character => {
+    return {
+      ...character,
+      ownership: userCharacterOwnership.includes(character.name),
+    }
   })
+
+  return json<ICharacterDetail[]>(updatedCharacters, { status: 200 })
 }
 
 export default function CharactersPage() {
-  const characters = useLoaderData<ICharacter[]>()
+  const characters = useLoaderData<ICharacterDetail[]>()
 
   return <Outlet context={characters} />
 }
