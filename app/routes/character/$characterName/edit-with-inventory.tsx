@@ -3,6 +3,7 @@ import {
   Link,
   LoaderFunction,
   Outlet,
+  ShouldReloadFunction,
   useCatch,
   useMatches,
   useOutletContext,
@@ -20,8 +21,6 @@ export const loader: LoaderFunction = ({ params }) => {
     typeof characterName === 'string',
     'There is something wrong with the route params',
   )
-
-  console.log(characterName)
 
   if (!CharactersMap.has(characterName)) {
     throw json('Character not found', { status: 404 })
@@ -68,4 +67,8 @@ export function CatchBoundary() {
   }
 
   throw new Error(`Unexpected caught response with status: ${caught.status}`)
+}
+
+export const unstable_shouldReload: ShouldReloadFunction = ({ submission }) => {
+  return !!submission && submission.method !== 'GET'
 }

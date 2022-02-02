@@ -2,10 +2,9 @@ import { useEffect, useState } from 'react'
 import {
   json,
   LoaderFunction,
-  useFetcher,
   useLoaderData,
-  useLocation,
   useOutletContext,
+  useSubmit,
 } from 'remix'
 import invariant from 'tiny-invariant'
 
@@ -55,22 +54,15 @@ interface LoaderData {
     }
   }
   ascensionHeaderTable: string[]
-  ascensionFooter: (
-    | {
-        name: string
-        amount: string
-      }[]
-    | {
-        name: string
-        amount: number
-      }[]
-  )[]
+  ascensionFooter: Footer
   talentNormalFooter: Footer
   talentSkillFooter: Footer
   talentBurstFooter: Footer
 }
 export const loader: LoaderFunction = async ({ request, params }) => {
-  const showAll = new URL(request.url).searchParams.get('showAll') === 'true'
+  // TODO: Cache the showAll data
+  const showAllParam = new URL(request.url).searchParams.get('showAll')
+  const showAll = showAllParam === null ? true : showAllParam === 'true'
 
   const { characterName } = params
   invariant(
@@ -86,20 +78,26 @@ export const loader: LoaderFunction = async ({ request, params }) => {
     throw json('Character not found', { status: 404 })
   }
 
-  const userCharacter = await getUserCharacter(
-    userId,
-    stringToCapitalized(characterName),
-  )
+  let ascensionStart: number, talentStart: [number, number, number]
+
+  if (showAll) {
+    ascensionStart = 0
+    talentStart = [1, 1, 1]
+  } else {
+    const userCharacter = await getUserCharacter(
+      userId,
+      stringToCapitalized(characterName),
+    )
+    ascensionStart = userCharacter?.progression.ascension ?? 0
+    talentStart = userCharacter?.progression.talent ?? [1, 1, 1]
+  }
 
   const material = {
     ascension: getAscensionMaterial(
       character.material.ascension,
-      showAll ? undefined : userCharacter?.progression.ascension,
+      ascensionStart,
     ),
-    talent: getTalentMaterial(
-      character.material.talent,
-      showAll ? undefined : userCharacter?.progression.talent,
-    ),
+    talent: getTalentMaterial(character.material.talent, talentStart),
   }
 
   const total = {
@@ -190,14 +188,19 @@ export default function EditWithInventoryItemsRoute() {
   const character = useOutletContext<ICharacterDetail>()
 
   const [showAllItem, setShowAllItem] = useState(true)
+  const [initialRender, setInitialRender] = useState(true)
 
-  const { submit } = useFetcher()
+  const submit = useSubmit()
 
   function handleSubmit() {
     submit({ showAll: `${showAllItem}` }, { method: 'get', replace: true })
   }
 
   useEffect(() => {
+    if (initialRender) {
+      setInitialRender(false)
+      return
+    }
     handleSubmit()
   }, [showAllItem])
 

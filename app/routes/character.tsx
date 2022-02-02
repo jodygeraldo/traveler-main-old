@@ -1,4 +1,10 @@
-import { json, LoaderFunction, Outlet, useLoaderData } from 'remix'
+import {
+  json,
+  LoaderFunction,
+  Outlet,
+  ShouldReloadFunction,
+  useLoaderData,
+} from 'remix'
 
 import { requireUserId } from '~/services/auth.server'
 import { getAllCharacterDetail } from '~/services/data/characters/character-lookup.server'
@@ -25,4 +31,8 @@ export default function CharactersPage() {
   const characters = useLoaderData<ICharacterDetail[]>()
 
   return <Outlet context={characters} />
+}
+
+export const unstable_shouldReload: ShouldReloadFunction = ({ submission }) => {
+  return !!submission && submission.method !== 'GET'
 }
