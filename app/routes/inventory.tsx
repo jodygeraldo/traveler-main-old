@@ -35,9 +35,9 @@ export const loader: LoaderFunction = async ({ request }) => {
 
 const navigation = [
   { name: 'All', to: '' },
-  { name: 'Common Material', to: 'common-material' },
-  { name: 'Talent Boss Material', to: 'talent-boss-material' },
-  { name: 'Ascension Boss Material', to: 'ascension-boss-material' },
+  { name: 'Common', to: 'common-material' },
+  { name: 'Talent Boss', to: 'talent-boss-material' },
+  { name: 'Ascension Boss', to: 'ascension-boss-material' },
   { name: 'Ascension Gem', to: 'ascension-gem' },
   { name: 'Talent Book', to: 'talent-book' },
   { name: 'Crown', to: 'crown' },
