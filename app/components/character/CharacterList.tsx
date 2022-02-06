@@ -1,11 +1,13 @@
-import type { FC } from 'react'
-
-const CharacterList: FC = ({ children }) => {
+export default function CharacterList({
+  children,
+}: {
+  children: React.ReactNode
+}) {
   return (
-    <div className="grid grid-cols-4 xs:grid-cols-6 md:grid-cols-3 lg:grid-cols-4 gap-4">
-      {children}
+    <div className="bg-white shadow overflow-hidden sm:rounded-md">
+      <ul role="list" className="divide-y divide-gray-200">
+        {children}
+      </ul>
     </div>
   )
 }
-
-export default CharacterList
