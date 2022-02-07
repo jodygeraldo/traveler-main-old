@@ -4,18 +4,26 @@
 
 @layer components {
   .scrollbar::-webkit-scrollbar {
-    @apply w-3 h-3;
+    @apply h-3 w-3;
   }
 
   .scrollbar::-webkit-scrollbar-track {
-    @apply bg-primary-700 rounded-full;
+    @apply rounded-full bg-orange-700;
   }
 
   .scrollbar::-webkit-scrollbar-thumb {
-    @apply bg-primary-800 rounded-full border-2 border-solid border-primary-600;
+    @apply rounded-full border-2 border-solid border-orange-600 bg-orange-800;
   }
 
   .scrollbar::-webkit-scrollbar-thumb:hover {
-    @apply bg-primary-900;
+    @apply bg-orange-900;
+  }
+
+  .switch-root[data-state='checked'] {
+    @apply bg-orange-600;
+  }
+
+  .switch-thumb[data-state='checked'] {
+    @apply translate-x-5;
   }
 }
