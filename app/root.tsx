@@ -1,4 +1,3 @@
-import { MantineProvider } from '@mantine/core'
 import type { MetaFunction } from 'remix'
 import {
   Links,
@@ -10,7 +9,6 @@ import {
   ScrollRestoration,
 } from 'remix'
 
-import Layout from './components/Layout'
 import styles from './tailwind.css'
 
 export const links: LinksFunction = () => {
@@ -27,18 +25,14 @@ export const meta: MetaFunction = () => {
 export default function App() {
   return (
     <html lang="en">
-      <head>
+      <head className="h-full bg-gray-100">
         <meta charSet="utf-8" />
         <meta name="viewport" content="width=device-width,initial-scale=1" />
         <Meta />
         <Links />
       </head>
       <body className="h-full">
-        <MantineProvider theme={{ colorScheme: 'dark' }}>
-          <Layout>
-            <Outlet />
-          </Layout>
-        </MantineProvider>
+        <Outlet />
         <ScrollRestoration />
         <Scripts />
         {process.env.NODE_ENV === 'development' && <LiveReload />}
