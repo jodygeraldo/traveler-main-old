@@ -16,7 +16,7 @@ import TodoMap from '~/model/Todo/Todo.server'
 import { ITodo } from '~/model/Todo/TodoType'
 import { requireUser } from '~/services/auth.server'
 import { getWeeklyResetTime } from '~/utils/date'
-import { getUserTodo, updateUserTodo } from '~/utils/todo.server'
+import { getUserTodo, updateUserTodo } from '~/utils/db/todo.server'
 
 interface LoaderData {
   todos: ITodo[]
@@ -25,7 +25,7 @@ interface LoaderData {
 
 export const action: ActionFunction = async ({ request }) => {
   const user = await requireUser(request)
-  const { resetDate } = getWeeklyResetTime(user.server as Server)
+  const { resetDate } = getWeeklyResetTime(user.server)
 
   const formData = await request.formData()
   const todosId = formData.getAll('todos')
@@ -39,7 +39,7 @@ export const action: ActionFunction = async ({ request }) => {
 
 export const loader: LoaderFunction = async ({ request }) => {
   const user = await requireUser(request)
-  const { resetDate, diffInMil } = getWeeklyResetTime(user.server as Server)
+  const { resetDate, diffInMil } = getWeeklyResetTime(user.server)
 
   const todos = TodoMap.get(TodoType.Weekly)
   invariant(todos, 'Todos should be defined unless I messed up')
