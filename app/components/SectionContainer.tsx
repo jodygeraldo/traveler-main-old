@@ -1,15 +1,8 @@
-import clsx from 'clsx'
+import { toLowerKebabCase } from '~/utils/string'
 
 type SectionProps = {
   title: string
   hideTitle?: boolean
-}
-
-function lowerKebabCase(str: string) {
-  return str
-    .replace(/([a-z])([A-Z])/g, '$1-$2')
-    .replace(/\s+/g, '-')
-    .toLowerCase()
 }
 
 export default function SectionContainer({
@@ -18,10 +11,10 @@ export default function SectionContainer({
   children,
 }: SectionProps & { children: React.ReactNode }) {
   return (
-    <section aria-labelledby={`${lowerKebabCase(title)}-heading`}>
+    <section aria-labelledby={`${toLowerKebabCase(title)}-heading`}>
       <div className="shadow sm:overflow-hidden sm:rounded-md">
         {hideTitle ? (
-          <span className="sr-only" id={`${lowerKebabCase(title)}-heading`}>
+          <span className="sr-only" id={`${toLowerKebabCase(title)}-heading`}>
             {title}
           </span>
         ) : null}
@@ -29,11 +22,9 @@ export default function SectionContainer({
           {hideTitle ? null : (
             <div>
               <h2
-                id={`${lowerKebabCase(title)}-heading`}
-                className={clsx(
-                  hideTitle && 'sr-only',
-                  'text-lg font-medium leading-6 text-gray-900'
-                )}>
+                id={`${toLowerKebabCase(title)}-heading`}
+                className="text-lg font-medium leading-6 text-gray-900"
+              >
                 {title}
               </h2>
             </div>

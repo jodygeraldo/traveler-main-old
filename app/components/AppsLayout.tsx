@@ -31,7 +31,7 @@ export default function AppsLayout({
               <div className="relative flex h-16 justify-between">
                 <div className="relative z-10 flex px-2 lg:px-0">
                   <div className="flex flex-shrink-0 items-center">
-                    <span className="text-xl font-semibold text-orange-600 leading-5 sm:text-2xl">
+                    <span className="text-xl font-semibold leading-5 text-orange-600 sm:text-2xl">
                       Traveler Main
                     </span>
                     {/* <img
@@ -66,7 +66,7 @@ export default function AppsLayout({
                       <Menu.Button className="flex bg-white">
                         <span className="sr-only">Open user menu</span>
                         <span>Hi,&nbsp;</span>
-                        <span className="text-orange-600 underline underline-offset-4 decoration-dotted">{`${email}`}</span>
+                        <span className="text-orange-600 underline decoration-dotted underline-offset-4">{`${email}`}</span>
                       </Menu.Button>
                     </div>
                     <Transition
@@ -76,17 +76,19 @@ export default function AppsLayout({
                       enterTo="transform opacity-100 scale-100"
                       leave="transition ease-in duration-75"
                       leaveFrom="transform opacity-100 scale-100"
-                      leaveTo="transform opacity-0 scale-95">
+                      leaveTo="transform opacity-0 scale-95"
+                    >
                       <Menu.Items className="absolute right-0 mt-2 w-48 origin-top-right rounded-md bg-white py-1 shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none">
-                        {userNavigation.map((item) => (
+                        {userNavigation.map(item => (
                           <Menu.Item key={item.name}>
                             {({ active }) => (
                               <Link
                                 to={item.href}
                                 className={clsx(
                                   active ? 'bg-gray-100' : '',
-                                  'block py-2 px-4 text-sm text-gray-700'
-                                )}>
+                                  'block py-2 px-4 text-sm text-gray-700',
+                                )}
+                              >
                                 {item.name}
                               </Link>
                             )}
@@ -99,12 +101,14 @@ export default function AppsLayout({
               </div>
               <nav
                 className="hidden lg:flex lg:space-x-8 lg:py-2"
-                aria-label="Global">
-                {navigation.map((item) => (
+                aria-label="Global"
+              >
+                {navigation.map(item => (
                   <Link
                     key={item.name}
                     to={item.href}
-                    className="inline-flex items-center rounded-md py-2 px-3 text-sm font-medium text-gray-900 hover:bg-gray-50 hover:text-gray-900">
+                    className="inline-flex items-center rounded-md py-2 px-3 text-sm font-medium text-gray-900 hover:bg-gray-50 hover:text-gray-900"
+                  >
                     {item.name}
                   </Link>
                 ))}
@@ -114,23 +118,25 @@ export default function AppsLayout({
             <Disclosure.Panel
               as="nav"
               className="lg:hidden"
-              aria-label="Global">
+              aria-label="Global"
+            >
               <div className="space-y-1 px-2 pt-2 pb-3">
-                {navigation.map((item) => (
+                {navigation.map(item => (
                   <Disclosure.Button
                     key={item.name}
                     as={Link}
                     to={item.href}
-                    className="block rounded-md py-2 px-3 text-base font-medium text-gray-900 hover:bg-gray-50 hover:text-gray-900">
+                    className="block rounded-md py-2 px-3 text-base font-medium text-gray-900 hover:bg-gray-50 hover:text-gray-900"
+                  >
                     {item.name}
                   </Disclosure.Button>
                 ))}
               </div>
               <div className="border-t border-gray-200 pt-4 pb-3">
                 <div className="flex items-center px-4">
-                  <div className="text-base font-medium text-gray-800 px-1">
+                  <div className="px-1 text-base font-medium text-gray-800">
                     <span>Hi,&nbsp;</span>
-                    <span className="text-orange-600 underline underline-offset-4 decoration-dotted">{`${email}`}</span>
+                    <span className="text-orange-600 underline decoration-dotted underline-offset-4">{`${email}`}</span>
                   </div>
                   {/* <button
                       type="button"
@@ -140,12 +146,13 @@ export default function AppsLayout({
                     </button> */}
                 </div>
                 <div className="mt-3 space-y-1 px-2">
-                  {userNavigation.map((item) => (
+                  {userNavigation.map(item => (
                     <Disclosure.Button
                       key={item.name}
                       as={Link}
                       to={item.href}
-                      className="block rounded-md py-2 px-3 text-base font-medium text-gray-500 hover:bg-gray-50 hover:text-gray-900">
+                      className="block rounded-md py-2 px-3 text-base font-medium text-gray-500 hover:bg-gray-50 hover:text-gray-900"
+                    >
                       {item.name}
                     </Disclosure.Button>
                   ))}
@@ -159,7 +166,7 @@ export default function AppsLayout({
       {children}
 
       <div className="mx-auto max-w-7xl px-2 sm:px-4 lg:px-8">
-        <p className="py-8 text-base text-gray-400 border-t border-gray-200">
+        <p className="border-t border-gray-200 py-8 text-base text-gray-400">
           Travelermain.com is unofficial fan site for Genshin Impact Game. All
           the Genshin impact related content and materials is copyrighted by
           miHoYo.
