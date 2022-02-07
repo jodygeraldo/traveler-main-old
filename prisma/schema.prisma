@@ -16,6 +16,12 @@ enum Server {
   Asia
 }
 
+enum TodoType {
+  Daily
+  Weekly
+  Others
+}
+
 model User {
   id           String      @id @default(uuid())
   email        String      @unique
@@ -25,6 +31,16 @@ model User {
   updatedAt    DateTime    @updatedAt
   characters   Character[]
   item         Item?
+  todo         Todo[]
+}
+
+model Todo {
+  id           String      @id @default(uuid())
+  type         TodoType
+  completed    String[]
+  expire       DateTime
+  userId       String
+  user         User        @relation(fields: [userId], references: [id])
 }
 
 model Character {
