@@ -1,5 +1,11 @@
 import { Server } from '@prisma/client'
-import { addDays, differenceInSeconds, getDay, nextMonday, set } from 'date-fns'
+import {
+  addDays,
+  differenceInMilliseconds,
+  getDay,
+  nextMonday,
+  set,
+} from 'date-fns'
 import { utcToZonedTime } from 'date-fns-tz'
 
 import { DayOfWeek } from '~/types/farmable'
@@ -16,33 +22,41 @@ function getCurrentTime(server: Server) {
 
 export function getDailyResetTime(server: Server) {
   const time = getCurrentTime(server)
-  const nextReset = set(time, {
+  let nextReset = set(time, {
     hours: 4,
     minutes: 0,
     seconds: 0,
     milliseconds: 0,
   })
-  const diffSec = differenceInSeconds(nextReset, time)
-  if (diffSec <= 0) {
-    return differenceInSeconds(addDays(nextReset, 1), time)
+
+  if (time > nextReset) {
+    nextReset = addDays(nextReset, 1)
   }
-  return diffSec
+
+  return {
+    resetDate: nextReset,
+    diffInMil: differenceInMilliseconds(nextReset, time),
+  }
 }
 
 export function getWeeklyResetTime(server: Server) {
   const time = getCurrentTime(server)
   const nextMondayTime = nextMonday(time)
-  const nextReset = set(nextMondayTime, {
+  let nextReset = set(nextMondayTime, {
     hours: 4,
     minutes: 0,
     seconds: 0,
     milliseconds: 0,
   })
-  const diffSec = differenceInSeconds(nextReset, time)
-  if (diffSec <= 0) {
-    return differenceInSeconds(addDays(nextReset, 7), time)
+
+  if (time > nextReset) {
+    nextReset = addDays(nextReset, 7)
   }
-  return diffSec
+
+  return {
+    resetDate: nextReset,
+    diffInMil: differenceInMilliseconds(nextReset, time),
+  }
 }
 
 export function getCurrentDay(server: Server) {
