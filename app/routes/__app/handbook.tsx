@@ -1,10 +1,11 @@
-import { json, LoaderFunction, Outlet, useLoaderData, useLocation } from 'remix'
+import { json, LoaderFunction, Outlet, useLoaderData } from 'remix'
 import invariant from 'tiny-invariant'
 
 import FarmableItem from '~/components/Farmable/FarmableItem'
 import ListContainer from '~/components/ListContainer'
 import VerticalNavigation from '~/components/Navigation/VerticalNavigation'
 import SectionContainer from '~/components/SectionContainer'
+import useSubNavigation from '~/hooks/useSubNavigation'
 import FarmableMap, { getFarmables } from '~/model/Farmable/Farmable.server'
 import { FarmDayTypeEnum, IFarmable } from '~/model/Farmable/FarmableType'
 import { requireUserServer } from '~/services/auth.server'
@@ -45,26 +46,10 @@ export const loader: LoaderFunction = async ({ request }) => {
 
 export default function HandbookPage() {
   const { todayFarmable } = useLoaderData<LoaderData>()
-  const location = useLocation()
-  const basePathname = location.pathname.split('/')[1]
-
-  const subNavigation = [
-    {
-      name: 'Daily',
-      to: '.',
-      current: location.pathname === '/handbook',
-    },
-    {
-      name: 'Weekly',
-      to: `/${basePathname}/weekly`,
-      current: location.pathname === '/handbook/weekly',
-    },
-    {
-      name: 'Others',
-      to: `/${basePathname}/others`,
-      current: location.pathname === '/handbook/others',
-    },
-  ]
+  const subNavigation = useSubNavigation(1, 'Daily', [
+    { name: 'Weekly', urlPathname: 'weekly' },
+    { name: 'Others', urlPathname: 'others' },
+  ])
 
   return (
     <main className="mx-auto max-w-7xl pb-10 lg:py-12 lg:px-8">
