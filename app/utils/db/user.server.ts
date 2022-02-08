@@ -4,6 +4,14 @@ import invariant from 'tiny-invariant'
 
 import { db } from '~/services/db.server'
 
+export async function getUserData(userId: string) {
+  return db.user.findUnique({
+    where: {
+      id: userId,
+    },
+  })
+}
+
 export async function login(email: string, password: string) {
   const user = await db.user.findUnique({
     where: {
