@@ -1,34 +1,30 @@
+/**
+ * !!! THIS WHOLE UTILS FUNCTION IS A FUCKING MISTAKE
+ * !!! FIND A BETTER WAY TO DO THIS SHIT LATER ON
+ */
+
 import { Item, Prisma } from '@prisma/client'
 
-import {
-  ascensionBossMaterialMap,
-  ascensionGemMap,
-  ascensionLocalSpecialtyMap,
-  commonMaterialMap,
-  talentBookMap,
-  talentBossMaterialMap,
-  talentCrownMap,
-} from '~/services/data/items'
-import { db } from '~/services/db.server'
 import {
   AscensionBossMaterial,
   AscensionGem,
   CommonMaterial,
+  Crown,
   IAscensionBossMaterial,
   IAscensionGem,
   ICommonMaterial,
+  ICrown,
   ILocalSpecialty,
   ITalentBook,
   ITalentBossMaterial,
-  ITalentCrown,
   ItemTypes,
   LocalSpecialty,
   TalentBook,
   TalentBossMaterial,
-  TalentCrown,
-} from '~/types/item'
+} from '~/model/Item/ItemType'
+import { db } from '~/services/db.server'
 
-const dummyCrownName: TalentCrown[] = ['Crown of Insight']
+const dummyCrownName: Crown[] = ['Crown of Insight']
 const dummyTalentBookName: TalentBook[] = [
   'Guide of Ballad',
   'Guide of Diligence',
@@ -206,58 +202,6 @@ const dummyCommonName: CommonMaterial[] = [
   'Concealed Talon',
 ]
 
-export function getItems() {
-  const talentCrown: ITalentCrown[] = []
-  talentCrownMap.forEach(value => talentCrown.push(value))
-  const talentBook: ITalentBook[] = []
-  talentBookMap.forEach(value => talentBook.push(value))
-  const talentBossMaterial: ITalentBossMaterial[] = []
-  talentBossMaterialMap.forEach(value => talentBossMaterial.push(value))
-  const commonMaterial: ICommonMaterial[] = []
-  commonMaterialMap.forEach(value => commonMaterial.push(value))
-  const ascensionBossMaterial: IAscensionBossMaterial[] = []
-  ascensionBossMaterialMap.forEach(value => ascensionBossMaterial.push(value))
-  const ascensionGem: IAscensionGem[] = []
-  ascensionGemMap.forEach(value => ascensionGem.push(value))
-  const ascensionLocalSpecialty: ILocalSpecialty[] = []
-  ascensionLocalSpecialtyMap.forEach(value =>
-    ascensionLocalSpecialty.push(value),
-  )
-
-  const itemsArray: ItemTypes = [
-    {
-      name: 'Common Material',
-      items: commonMaterial,
-    },
-    {
-      name: 'Talent Boss Material',
-      items: talentBossMaterial,
-    },
-    {
-      name: 'Ascension Boss Material',
-      items: ascensionBossMaterial,
-    },
-    {
-      name: 'Ascension Gem',
-      items: ascensionGem,
-    },
-    {
-      name: 'Talent Book',
-      items: talentBook,
-    },
-    {
-      name: 'Crown',
-      items: talentCrown,
-    },
-    {
-      name: 'Local Specialty',
-      items: ascensionLocalSpecialty,
-    },
-  ]
-
-  return itemsArray
-}
-
 export async function getUserItems(userId: string) {
   return db.item.findUnique({
     where: {
@@ -279,15 +223,15 @@ function getUpdatedUserItem(
   items: ItemTypes,
 ) {
   let newUpdatedItem:
-    | ITalentCrown[]
+    | ICrown[]
     | ITalentBook[]
     | ITalentBossMaterial[]
     | IAscensionGem[]
     | IAscensionBossMaterial[]
     | ICommonMaterial[]
-    | ILocalSpecialty[] = items[6].items
+    | ILocalSpecialty[] = items.common.items
   let dummy:
-    | TalentCrown[]
+    | Crown[]
     | TalentBook[]
     | TalentBossMaterial[]
     | AscensionGem[]
@@ -297,32 +241,32 @@ function getUpdatedUserItem(
 
   switch (category) {
     case 'common':
-      newUpdatedItem = items[0].items
+      newUpdatedItem = items.common.items
       dummy = dummyCommonName
       break
     case 'talentBoss':
-      newUpdatedItem = items[1].items
+      newUpdatedItem = items.talentBoss.items
       dummy = dummyTalentBossName
       break
     case 'ascensionBoss':
-      newUpdatedItem = items[2].items
+      newUpdatedItem = items.ascensionBoss.items
       dummy = dummyAscensionBossName
       break
     case 'ascensionGem':
-      newUpdatedItem = items[3].items
+      newUpdatedItem = items.ascensionGem.items
       dummy = dummyAscensionGemName
       break
     case 'talentBook':
-      newUpdatedItem = items[4].items
+      newUpdatedItem = items.talentBook.items
       dummy = dummyTalentBookName
       break
     case 'crown':
-      newUpdatedItem = items[5].items
+      newUpdatedItem = items.crown.items
       dummy = dummyCrownName
       break
     case 'localSpecialty':
     default:
-      newUpdatedItem = items[6].items
+      newUpdatedItem = items.localSpecialty.items
       dummy = dummyLocalSpecialtyName
       break
   }
@@ -333,23 +277,17 @@ function getUpdatedUserItem(
       | AscensionBossMaterial
       | AscensionGem
       | LocalSpecialty
-      | TalentCrown
+      | Crown
       | TalentBook
       | TalentBossMaterial]?: number
   }[]
 
-  let iterationNumber = 0
-
   userIt.forEach(v => {
     dummy.forEach(name => {
-      if (iterationNumber === userIt.length) {
-        return
-      }
       if (v[name] !== undefined) {
         const index = newUpdatedItem.findIndex(item => item.name === name)
         if (index !== -1) {
           newUpdatedItem[index].count = v[name] ?? 0
-          iterationNumber++
         }
       }
     })
@@ -362,12 +300,13 @@ export function getUpdatedUserItems(
   userItem: Item,
   items: ItemTypes,
 ): ItemTypes {
-  const itemsHolders = items
+  const updatedItems: ItemTypes = items
 
   if (userItem.common) {
     // I MAKE SURE THIS IS RETURN THE SAME ARRAY
     // @ts-ignore
-    itemsHolders['0'].items = getUpdatedUserItem(
+    // eslint-disable-next-line
+    updatedItems.common.items = getUpdatedUserItem(
       'common',
       userItem.common,
       items,
@@ -377,7 +316,8 @@ export function getUpdatedUserItems(
   if (userItem.talentBoss) {
     // I MAKE SURE THIS IS RETURN THE SAME ARRAY
     // @ts-ignore
-    itemsHolders['1'].items = getUpdatedUserItem(
+    // eslint-disable-next-line
+    updatedItems.talentBoss.items = getUpdatedUserItem(
       'talentBoss',
       userItem.talentBoss,
       items,
@@ -386,7 +326,8 @@ export function getUpdatedUserItems(
   if (userItem.ascensionBoss) {
     // I MAKE SURE THIS IS RETURN THE SAME ARRAY
     // @ts-ignore
-    itemsHolders['2'].items = getUpdatedUserItem(
+    // eslint-disable-next-line
+    updatedItems.ascensionBoss.items = getUpdatedUserItem(
       'ascensionBoss',
       userItem.ascensionBoss,
       items,
@@ -395,7 +336,8 @@ export function getUpdatedUserItems(
   if (userItem.ascensionGem) {
     // I MAKE SURE THIS IS RETURN THE SAME ARRAY
     // @ts-ignore
-    itemsHolders['3'].items = getUpdatedUserItem(
+    // eslint-disable-next-line
+    updatedItems.ascensionGem.items = getUpdatedUserItem(
       'ascensionGem',
       userItem.ascensionGem,
       items,
@@ -404,7 +346,8 @@ export function getUpdatedUserItems(
   if (userItem.talentBook) {
     // I MAKE SURE THIS IS RETURN THE SAME ARRAY
     // @ts-ignore
-    itemsHolders['4'].items = getUpdatedUserItem(
+    // eslint-disable-next-line
+    updatedItems.talentBook.items = getUpdatedUserItem(
       'talentBook',
       userItem.talentBook,
       items,
@@ -413,27 +356,30 @@ export function getUpdatedUserItems(
   if (userItem.crown) {
     // I MAKE SURE THIS IS RETURN THE SAME ARRAY
     // @ts-ignore
-    itemsHolders['5'].items = getUpdatedUserItem('crown', userItem.crown, items)
+    // eslint-disable-next-line
+    updatedItems.crown.items = getUpdatedUserItem(
+      'crown',
+      userItem.crown,
+      items,
+    )
   }
   if (userItem.localSpecialty) {
     // I MAKE SURE THIS IS RETURN THE SAME ARRAY
     // @ts-ignore
-    itemsHolders['6'].items = getUpdatedUserItem(
+    // eslint-disable-next-line
+    updatedItems.localSpecialty.items = getUpdatedUserItem(
       'localSpecialty',
       userItem.localSpecialty,
       items,
     )
   }
 
-  return itemsHolders
+  return updatedItems
 }
 
-export async function upsertCrown(
-  userId: string,
-  userItem: Item | null,
-  name: string,
-  count: number,
-) {
+export async function upsertCrown(userId: string, name: string, count: number) {
+  const userItem = await getUserItems(userId)
+
   if (!userItem) {
     return db.item.create({
       data: {
@@ -457,10 +403,11 @@ export async function upsertCrown(
 
 export async function upsertTalentBook(
   userId: string,
-  userItem: Item | null,
   name: string,
   count: number,
 ) {
+  const userItem = await getUserItems(userId)
+
   if (!userItem) {
     return db.item.create({
       data: {
@@ -484,10 +431,11 @@ export async function upsertTalentBook(
 
 export async function upsertTalentBossMaterial(
   userId: string,
-  userItem: Item | null,
   name: string,
   count: number,
 ) {
+  const userItem = await getUserItems(userId)
+
   if (!userItem) {
     return db.item.create({
       data: {
@@ -511,10 +459,11 @@ export async function upsertTalentBossMaterial(
 
 export async function upsertAscensionGem(
   userId: string,
-  userItem: Item | null,
   name: string,
   count: number,
 ) {
+  const userItem = await getUserItems(userId)
+
   if (!userItem) {
     return db.item.create({
       data: {
@@ -543,10 +492,11 @@ export async function upsertAscensionGem(
 
 export async function upsertAscensionBossMaterial(
   userId: string,
-  userItem: Item | null,
   name: string,
   count: number,
 ) {
+  const userItem = await getUserItems(userId)
+
   if (!userItem) {
     return db.item.create({
       data: {
@@ -575,10 +525,11 @@ export async function upsertAscensionBossMaterial(
 
 export async function upsertLocalSpecialty(
   userId: string,
-  userItem: Item | null,
   name: string,
   count: number,
 ) {
+  const userItem = await getUserItems(userId)
+
   if (!userItem) {
     return db.item.create({
       data: {
@@ -607,10 +558,11 @@ export async function upsertLocalSpecialty(
 
 export async function upsertCommonMaterial(
   userId: string,
-  userItem: Item | null,
   name: string,
   count: number,
 ) {
+  const userItem = await getUserItems(userId)
+
   if (!userItem) {
     return db.item.create({
       data: {
@@ -650,7 +602,7 @@ function getUpdatedItemArray(
     | AscensionBossMaterial
     | AscensionGem
     | LocalSpecialty
-    | TalentCrown
+    | Crown
     | TalentBook
     | TalentBossMaterial
 
@@ -661,7 +613,7 @@ function getUpdatedItemArray(
           | AscensionBossMaterial
           | AscensionGem
           | LocalSpecialty
-          | TalentCrown
+          | Crown
           | TalentBook
           | TalentBossMaterial]?: number
       }[]
