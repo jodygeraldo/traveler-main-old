@@ -1,3 +1,4 @@
+import { Server } from '@prisma/client'
 import { Authenticator } from 'remix-auth'
 import { FormStrategy } from 'remix-auth-form'
 import invariant from 'tiny-invariant'
@@ -56,7 +57,10 @@ export async function requireUser(request: Request) {
     failureRedirect: '/login',
   })
 
-  return user
+  return {
+    id: user.id,
+    server: user.server as Server,
+  }
 }
 
 export async function requireUserId(request: Request) {
@@ -72,5 +76,7 @@ export async function requireUserServer(request: Request) {
     failureRedirect: '/login',
   })
 
-  return user.server
+  const server = user.server as Server
+
+  return server
 }
