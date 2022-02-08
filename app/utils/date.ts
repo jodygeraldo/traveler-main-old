@@ -8,7 +8,7 @@ import {
 } from 'date-fns'
 import { utcToZonedTime } from 'date-fns-tz'
 
-import { DayOfWeek } from '~/types/farmable'
+import { DayOfWeek } from '~/model/Todo/TodoType'
 
 function getCurrentTime(server: Server) {
   const regionTz: Record<Server, string> = {
