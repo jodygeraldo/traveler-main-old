@@ -1,4 +1,10 @@
-import { json, LoaderFunction, Outlet, useLoaderData } from 'remix'
+import {
+  json,
+  LoaderFunction,
+  Outlet,
+  ShouldReloadFunction,
+  useLoaderData,
+} from 'remix'
 import invariant from 'tiny-invariant'
 
 import AppsLayout from '~/components/AppsLayout'
@@ -27,3 +33,5 @@ export default function AppLayout() {
     </AppsLayout>
   )
 }
+
+export const unstable_shouldReload: ShouldReloadFunction = () => false
