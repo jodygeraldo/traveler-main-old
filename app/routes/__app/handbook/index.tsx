@@ -1,4 +1,4 @@
-import { Server, TodoType } from '@prisma/client'
+import { TodoType } from '@prisma/client'
 import {
   ActionFunction,
   json,
