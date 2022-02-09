@@ -17,7 +17,7 @@ import {
   ITalentBossMaterial,
   ItemCategory,
 } from '~/model/Item/ItemType'
-import { stringToLowerSnake } from '~/utils/string'
+import { toLowerSnake } from '~/utils/string'
 
 type InventoryListItemProps = {
   category: ItemCategory
@@ -53,7 +53,7 @@ export default function InventoryListItem({
             <div className="flex-shrink-0">
               <img
                 className="h-12 w-12"
-                src={`/images/items/${stringToLowerSnake(item.name)}.png`}
+                src={`/images/items/${toLowerSnake(item.name)}.png`}
                 alt=""
               />
             </div>

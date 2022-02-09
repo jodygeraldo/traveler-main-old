@@ -1,5 +1,5 @@
 import { CharacterName } from '~/model/Character/CharacterType'
-import { TalentBookGroup } from '~/types/item'
+import { TalentBookGroup } from '~/model/Item/ItemType'
 
 export enum FarmDayTypeEnum {
   MT = 'MondayThursday',

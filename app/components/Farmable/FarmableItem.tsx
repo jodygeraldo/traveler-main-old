@@ -1,7 +1,7 @@
 import clsx from 'clsx'
 
 import { IFarmable } from '~/model/Farmable/FarmableType'
-import { stringToLowerSnake } from '~/utils/string'
+import { toLowerSnake } from '~/utils/string'
 
 import Tooltip from '../Primitive/Tooltip'
 
@@ -43,7 +43,7 @@ export default ({ item }: FarmableItemProps) => (
               <img
                 width={80}
                 height={80}
-                src={`/images/characters/close/${stringToLowerSnake(
+                src={`/images/characters/close/${toLowerSnake(
                   character.name,
                 )}.png`}
                 alt={character.name}

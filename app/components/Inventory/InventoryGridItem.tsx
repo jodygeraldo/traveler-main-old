@@ -12,7 +12,7 @@ import {
   ITalentBossMaterial,
   ItemCategory,
 } from '~/model/Item/ItemType'
-import { stringToLowerSnake } from '~/utils/string'
+import { toLowerSnake } from '~/utils/string'
 
 type InventoryGridItemProps = {
   category: ItemCategory
@@ -62,7 +62,7 @@ export default function InventoryGridItem({
         </div>
         <img
           className="h-10 w-10 flex-shrink-0"
-          src={`/images/items/${stringToLowerSnake(item.name)}.png`}
+          src={`/images/items/${toLowerSnake(item.name)}.png`}
           alt=""
         />
       </div>
