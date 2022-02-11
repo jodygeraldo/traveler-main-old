@@ -1,9 +1,9 @@
 import { json, LoaderFunction, Outlet, useLoaderData } from 'remix'
 
 import Alert from '~/components/Alert/Alert'
-import InventoryButtonGroup from '~/components/Inventory/InventoryButtonGroup'
 import VerticalNavigation from '~/components/Navigation/VerticalNavigation'
 import SectionContainer from '~/components/SectionContainer'
+import ViewButtonGroup from '~/components/ViewButtonGroup'
 import useSubNavigation from '~/hooks/useSubNavigation'
 import { getItems } from '~/model/Item/Item.server'
 import { ItemTypes } from '~/model/Item/ItemType'
@@ -53,7 +53,7 @@ export default function InventoryPage() {
           </span>
 
           <SectionContainer title="Inventory View">
-            <InventoryButtonGroup />
+            <ViewButtonGroup />
           </SectionContainer>
 
           <Outlet context={{ ...items }} />

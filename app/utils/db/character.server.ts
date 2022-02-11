@@ -1,36 +1,51 @@
+import { getCharacters } from '~/model/Character/Character.server'
+import { ICharacterData } from '~/model/Character/CharacterType'
 import { db } from '~/services/db.server'
-import { ICharacter } from '~/types/character'
 
-export async function getUserCharacterOwnership(userId: string) {
-  const characterNames = await db.character.findMany({
-    where: {
-      userId,
-      deleted: false,
-    },
-    select: {
-      name: true,
-    },
-  })
-
-  return characterNames.map(character => character.name)
-}
-
-export async function getUserCharacters(userId: string) {
+export async function getUserCharactersData(userId: string) {
   const userCharacters = await db.character.findMany({
     where: {
       userId,
-      deleted: false,
     },
     select: {
       id: true,
       name: true,
       level: true,
       ascension: true,
-      talent: true,
+      deleted: true,
+      tracked: true,
     },
   })
 
-  return userCharacters
+  const characters = getCharacters()
+
+  if (userCharacters.length === 0) {
+    return characters.map(character => {
+      return {
+        name: character.name,
+        vision: character.vision,
+      }
+    }) as ICharacterData[]
+  }
+
+  return characters.map(character => {
+    const userCharacter = userCharacters.find(c => c.name === character.name)
+    if (!userCharacter) {
+      return {
+        name: character.name,
+        vision: character.vision,
+      }
+    }
+    return {
+      characterUserId: userCharacter.id,
+      level: userCharacter.level,
+      ascension: userCharacter.ascension,
+      ownership: !userCharacter.deleted,
+      tracked: userCharacter.tracked,
+      name: character.name,
+      vision: character.vision,
+    }
+  }) as ICharacterData[]
 }
 
 export async function getUserCharacter(userId: string, name: string) {
@@ -64,28 +79,49 @@ export async function getUserCharacter(userId: string, name: string) {
   }
 }
 
-export async function addUserCharacterOwnership(userId: string, name: string) {
-  await db.character.create({
-    data: {
+export async function createOrUpdateCharacterOwnership(
+  userId: string,
+  name: string,
+  id?: string,
+  deleted?: boolean,
+) {
+  await db.character.upsert({
+    where: {
+      id,
+    },
+    create: {
       name,
       level: 1,
       ascension: 0,
       talent: [1, 1, 1],
       userId,
     },
+    update: {
+      deleted,
+    },
   })
 }
 
-export async function updateUserCharacterOwnership(
-  id: string,
-  deleted: boolean,
+export async function createOrUpdateTracked(
+  userId: string,
+  name: string,
+  tracked: boolean,
+  id?: string,
 ) {
-  await db.character.update({
+  await db.character.upsert({
     where: {
       id,
     },
-    data: {
-      deleted,
+    create: {
+      name,
+      level: 1,
+      ascension: 0,
+      talent: [1, 1, 1],
+      userId,
+      tracked,
+    },
+    update: {
+      tracked,
     },
   })
 }
@@ -95,7 +131,7 @@ export async function addUserCharacter(
   name: string,
   level: number,
   ascension: number,
-  talent: ICharacter['progression']['talent'],
+  talent: [number, number, number],
 ) {
   await db.character.create({
     data: {
@@ -112,7 +148,7 @@ export async function updateUserCharacter(
   id: string,
   level: number,
   ascension: number,
-  talent: ICharacter['progression']['talent'],
+  talent: [number, number, number],
 ) {
   await db.character.update({
     where: {
