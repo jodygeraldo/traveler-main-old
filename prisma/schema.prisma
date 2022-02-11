@@ -54,6 +54,7 @@ model Character {
   userId    String
   user      User     @relation(fields: [userId], references: [id])
   deleted   Boolean  @default(false)
+  tracked   Boolean  @default(false)
 }
 
 model Item {
