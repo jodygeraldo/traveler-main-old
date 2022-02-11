@@ -24,17 +24,19 @@ export function useBasePathname(pathDeep: number = 1) {
 export default function useSubNavigation(
   pathDeep: number = 1,
   indexPathname: string,
-  subPathnames: { name: string; urlPathname: string }[],
+  subPathnames: { name: string; urlPathname: string; searchParams?: string }[],
 ) {
   const [pathname, basePathname] = useBasePathname(pathDeep)
 
-  const subPathnameArray = subPathnames.map(({ name, urlPathname }) => {
-    return {
-      name,
-      to: `${basePathname}/${urlPathname}`,
-      active: pathname === `${basePathname}/${urlPathname}`,
-    }
-  })
+  const subPathnameArray = subPathnames.map(
+    ({ name, urlPathname, searchParams }) => {
+      return {
+        name,
+        to: `${basePathname}/${urlPathname}${searchParams}`,
+        active: pathname === `${basePathname}/${urlPathname}`,
+      }
+    },
+  )
   const indexPathnameArray = [
     {
       name: indexPathname,
