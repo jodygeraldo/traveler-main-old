@@ -1,81 +1,34 @@
-import { useState } from 'react'
-import {
-  ActionFunction,
-  json,
-  LoaderFunction,
-  Outlet,
-  useLoaderData,
-} from 'remix'
-import invariant from 'tiny-invariant'
+import { json, LoaderFunction, Outlet, useLoaderData } from 'remix'
 
 import Alert from '~/components/Alert/Alert'
 import InventoryButtonGroup from '~/components/Inventory/InventoryButtonGroup'
 import VerticalNavigation from '~/components/Navigation/VerticalNavigation'
 import SectionContainer from '~/components/SectionContainer'
-import { userViewPrefs } from '~/cookies'
 import useSubNavigation from '~/hooks/useSubNavigation'
 import { getItems } from '~/model/Item/Item.server'
 import { ItemTypes } from '~/model/Item/ItemType'
 import { requireUserId } from '~/services/auth.server'
 import { getUpdatedUserItems, getUserItems } from '~/utils/db/item.server'
-import getUserPref from '~/utils/user-pref.server'
-
-export const action: ActionFunction = async ({ request }) => {
-  const formData = await request.formData()
-  const view = formData.get('view')
-
-  const viewPref = await getUserPref(request)
-
-  invariant(
-    (typeof view === 'string' && view === 'grid') || view === 'list',
-    'view must be a string',
-  )
-
-  viewPref.itemView = view
-
-  return json(null, {
-    status: 201,
-    headers: {
-      'Set-Cookie': await userViewPrefs.serialize(viewPref),
-    },
-  })
-}
 
 interface LoaderData {
-  view: 'grid' | 'list'
   items: ItemTypes
 }
 
 export const loader: LoaderFunction = async ({ request }) => {
   const userId = await requireUserId(request)
 
-  // eslint-disable-next-line
-  const viewPref =
-    (await userViewPrefs.parse(request.headers.get('Cookie'))) || {}
-
   const items = getItems()
   const userItems = await getUserItems(userId)
-
   if (!userItems) {
-    return json<LoaderData>(
-      // eslint-disable-next-line
-      { view: viewPref.itemView || 'grid', items },
-      { status: 200 },
-    )
+    return json<LoaderData>({ items }, { status: 200 })
   }
 
   const updatedItems = getUpdatedUserItems(userItems, items)
-
-  return json<LoaderData>(
-    // eslint-disable-next-line
-    { view: viewPref.itemView || 'grid', items: updatedItems },
-    { status: 200 },
-  )
+  return json<LoaderData>({ items: updatedItems }, { status: 200 })
 }
 
 export default function InventoryPage() {
-  const { view, items } = useLoaderData<LoaderData>()
-  const [selectedView, setSelectedView] = useState<'grid' | 'list'>(view)
+  const { items } = useLoaderData<LoaderData>()
 
   const subNavigation = useSubNavigation(1, 'All', [
     { name: 'Common', urlPathname: 'common' },
@@ -100,13 +53,10 @@ export default function InventoryPage() {
           </span>
 
           <SectionContainer title="Inventory View">
-            <InventoryButtonGroup
-              selectedView={selectedView}
-              onChangeView={setSelectedView}
-            />
+            <InventoryButtonGroup />
           </SectionContainer>
 
-          <Outlet context={{ selectedView, ...items }} />
+          <Outlet context={{ ...items }} />
         </div>
       </div>
     </main>
