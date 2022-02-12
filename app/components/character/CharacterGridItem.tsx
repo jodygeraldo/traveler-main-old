@@ -177,9 +177,11 @@ export default function CharacterGridItem({
                   : Actions.MARK_TRACKED
               }
               className="relative inline-flex w-0 flex-1 items-center justify-center gap-3 rounded-br-lg border border-transparent py-4 text-sm font-medium text-gray-700 hover:text-gray-500"
+              disabled
             >
-              <BookmarkIcon className="h-5 w-5 text-gray-400" aria-hidden />
-              {character.tracked ? 'Untrack Character' : 'Track Character'}
+              Coming Soon
+              {/* <BookmarkIcon className="h-5 w-5 text-gray-400" aria-hidden />
+              {character.tracked ? 'Untrack Character' : 'Track Character'} */}
             </button>
           </Form>
         </div>

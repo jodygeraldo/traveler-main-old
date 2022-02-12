@@ -1,3 +1,5 @@
+import invariant from 'tiny-invariant'
+
 import CharacterMap, { getCharacters } from '~/model/Character/Character.server'
 import { ICharacterData } from '~/model/Character/CharacterType'
 import {
@@ -6,7 +8,62 @@ import {
   getTravelerMaterial,
   TalentMaterialType,
 } from '~/model/Character/Material.server'
+import {
+  bookGroupMap,
+  commonGroupMap,
+  gemGroupMap,
+} from '~/model/Item/Group.server'
 import { db } from '~/services/db.server'
+
+export async function getUserTrackedCharacter(userId: string) {
+  const characters = await db.character.findMany({
+    where: {
+      userId,
+      tracked: true,
+    },
+    select: {
+      name: true,
+      ascension: true,
+      talent: true,
+    },
+  })
+
+  if (characters.length === 0) {
+    return []
+  }
+
+  const characterData = characters.map(character => {
+    const characterLookup = CharacterMap.get(character.name)
+    invariant(characterLookup, `Character ${character.name} not found`)
+    const common = commonGroupMap.get(characterLookup.material.common)
+    const gem = gemGroupMap.get(characterLookup.material.ascensionGem)
+    const talentBook = bookGroupMap.get(characterLookup.material.talentBook[0])
+    invariant(
+      common,
+      `Unknown common material: ${characterLookup.material.common}`,
+    )
+    invariant(
+      gem,
+      `Unknown ascension gem material: ${characterLookup.material.ascensionGem}`,
+    )
+    invariant(
+      talentBook,
+      `Unknown talent book material: ${characterLookup.material.talentBook[0]}`,
+    )
+
+    return {
+      ...characters,
+      material: {
+        ...characterLookup.material,
+        common,
+        ascensionGem: gem,
+        talentBook,
+      },
+    }
+  })
+
+  return characterData
+}
 
 export async function getUserCharactersData(userId: string) {
   const userCharacters = await db.character.findMany({
