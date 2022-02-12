@@ -70,7 +70,7 @@ export default function HandbookPage() {
   const { todayFarmable } = useLoaderData<LoaderData>()
   const subNavigation = useSubNavigation(1, 'Daily', [
     { name: 'Weekly', urlPathname: 'weekly' },
-    { name: 'Others', urlPathname: 'others' },
+    // { name: 'Others', urlPathname: 'others' },
   ])
 
   return (

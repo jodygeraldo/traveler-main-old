@@ -21,6 +21,7 @@ import { getUserTodo, updateUserTodo } from '~/utils/db/todo.server'
 interface LoaderData {
   todos: ITodo[]
   resetIn: number
+  server: string
 }
 
 export const action: ActionFunction = async ({ request }) => {
@@ -56,18 +57,21 @@ export const loader: LoaderFunction = async ({ request }) => {
     }
   })
 
-  return json<LoaderData>({ todos, resetIn: diffInMil }, { status: 200 })
+  return json<LoaderData>(
+    { todos, resetIn: diffInMil, server: user.server },
+    { status: 200 },
+  )
 }
 
 export default function HandbookIndex() {
-  const { todos, resetIn } = useLoaderData<LoaderData>()
+  const { todos, resetIn, server } = useLoaderData<LoaderData>()
   const fetcher = useFetcher()
 
   return (
     <>
       <Alert
         variant="info"
-        text={`America server daily reset in ${new Date(
+        text={`${server} server weekly reset on ${new Date(
           new Date().getTime() + resetIn,
         ).toLocaleDateString()}`}
         smallText
