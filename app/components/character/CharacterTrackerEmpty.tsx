@@ -13,9 +13,10 @@ export default function CharacterTrackerEmpty() {
       <div className="mt-6">
         <Link
           to="/character"
-          className="inline-flex items-center px-4 py-2 border border-gray-300 shadow-sm text-sm font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
+          className="inline-flex items-center rounded-md border border-gray-300 bg-white px-4 py-2 text-sm font-medium text-gray-700 shadow-sm hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
+        >
           Character List
-          <ArrowNarrowRightIcon className="h-5 w-5 ml-3 -mr-1" />
+          <ArrowNarrowRightIcon className="ml-3 -mr-1 h-5 w-5" />
         </Link>
       </div>
     </div>

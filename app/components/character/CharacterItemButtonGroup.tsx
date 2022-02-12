@@ -1,53 +1,26 @@
-import { Switch } from '@headlessui/react'
-import clsx from 'clsx'
-import { Fragment, useEffect, useState } from 'react'
-import { useFetcher } from 'remix'
+import { Form, useSearchParams } from 'remix'
 
-export default function CharacterItemButtonGroup() {
-  const fetcher = useFetcher()
-  const [enabled, setEnabled] = useState(true)
+import Label from '~/components/Primitive/Label'
+import Switch from '~/components/Primitive/Switch'
 
-  useEffect(() => {
-    fetcher.submit(
-      { showFull: JSON.stringify(enabled) },
-      { method: 'post', replace: true }
-    )
-  }, [enabled])
+export default function CharacterItemButtonGroup({ name }: { name: string }) {
+  const [searchParams] = useSearchParams()
 
   return (
-    <Switch.Group as={Fragment}>
-      <Switch.Label
-        as="h3"
-        className="text-lg leading-6 font-medium text-gray-900"
-        passive>
-        Show full items
-      </Switch.Label>
-      <div className="mt-2 sm:flex sm:items-start sm:justify-between">
+    <Form method="get" replace>
+      <Label htmlFor="show-all-switch">Show full items</Label>
+      <div className="mt-5 sm:flex sm:items-start sm:justify-between">
         <div className="max-w-xl text-sm text-gray-500">
-          <Switch.Description>
-            Disable this option to show only the items needed for character next
-            level.
-          </Switch.Description>
+          <p>{`Enable to show full items for ${name}.`}</p>
         </div>
-        <div className="mt-5 sm:mt-0 sm:ml-6 sm:flex-shrink-0 sm:flex sm:items-center">
+        <div className="mt-5 sm:mt-0 sm:ml-6 sm:flex sm:flex-shrink-0 sm:items-center">
           <Switch
-            checked={enabled}
-            onChange={setEnabled}
-            type="submit"
-            className={clsx(
-              enabled ? 'bg-indigo-600' : 'bg-gray-200',
-              'relative inline-flex flex-shrink-0 h-6 w-11 border-2 border-transparent rounded-full cursor-pointer transition-colors ease-in-out duration-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500'
-            )}>
-            <span
-              aria-hidden="true"
-              className={clsx(
-                enabled ? 'translate-x-5' : 'translate-x-0',
-                'inline-block h-5 w-5 rounded-full bg-white shadow transform ring-0 transition ease-in-out duration-200'
-              )}
-            />
-          </Switch>
+            id="show-all-switch"
+            name="all"
+            defaultChecked={searchParams.has('all')}
+          />
         </div>
       </div>
-    </Switch.Group>
+    </Form>
   )
 }

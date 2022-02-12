@@ -1,29 +1,52 @@
-import {
-  CheckCircleIcon,
-  XCircleIcon,
-  StarIcon,
-  ChevronRightIcon,
-} from '@heroicons/react/solid'
+import { ChevronRightIcon, StarIcon } from '@heroicons/react/solid'
 import clsx from 'clsx'
 import { Form, Link } from 'remix'
 
-const ascensionVariant: Record<'Pyro', string> = {
-  Pyro: 'text-red-200',
-}
-const ascensionPassVariant: Record<'Pyro', string> = {
-  Pyro: 'text-red-600',
+import { Actions } from '~/actions/actions'
+import Tooltip from '~/components/Primitive/Tooltip'
+import { ICharacterData } from '~/model/Character/CharacterType'
+import { toLowerSnake } from '~/utils/string'
+
+const visionVariant: Record<ICharacterData['vision'], string> = {
+  Pyro: 'bg-red-100 text-red-800',
+  Anemo: 'bg-emerald-100 text-emerald-800',
+  Cryo: 'bg-cyan-100 text-cyan-800',
+  Dendro: 'bg-green-100 text-green-800',
+  Electro: 'bg-violet-100 text-violet-800',
+  Hydro: 'bg-blue-100 text-blue-800',
+  Geo: 'bg-yellow-100 text-yellow-800',
 }
 
-const renderStars = (ascension: number, vision: string) => {
+const ascensionVariant: Record<ICharacterData['vision'], string> = {
+  Pyro: 'text-red-200',
+  Anemo: 'text-emerald-200',
+  Cryo: 'text-cyan-200',
+  Dendro: 'text-green-200',
+  Electro: 'text-violet-200',
+  Hydro: 'text-blue-200',
+  Geo: 'text-yellow-200',
+}
+const ascensionPassVariant: Record<ICharacterData['vision'], string> = {
+  Pyro: 'text-red-600',
+  Anemo: 'text-emerald-600',
+  Cryo: 'text-cyan-600',
+  Dendro: 'text-green-600',
+  Electro: 'text-violet-600',
+  Hydro: 'text-blue-600',
+  Geo: 'text-yellow-600',
+}
+
+const renderStars = (ascension: number, vision: ICharacterData['vision']) => {
   const starsToRender = []
   for (let index = 0; index < 6; index++) {
     const element = (
       <StarIcon
+        key={index}
         className={clsx(
           ascension > index
             ? ascensionPassVariant[vision]
             : ascensionVariant[vision],
-          'w-5 h-5 inline-block'
+          'inline-block h-5 w-5',
         )}
         aria-hidden="true"
       />
@@ -36,42 +59,55 @@ const renderStars = (ascension: number, vision: string) => {
 export default function CharacterListItem({
   character,
 }: {
-  character: {
-    name: string
-    vision: string
-    level: number
-    ascension: number
-    ownership: boolean
-    imageUrl: string
-  }
+  character: ICharacterData
 }) {
   return (
-    <li className={clsx(!character.ownership && 'opacity-50', 'sm:flex')}>
+    <li className={clsx(!character.ownership && 'opacity-75', 'sm:flex')}>
       <Link
         to={`/character/${character.name}`}
-        className="flex flex-1 hover:bg-gray-50">
-        <div className="flex items-center px-4 py-4 sm:px-6 justify-between w-full">
-          <div className="min-w-0 flex-1 flex items-center">
+        className="flex flex-1 hover:bg-gray-50"
+      >
+        <div className="flex w-full items-center justify-between px-4 py-4 sm:px-6">
+          <div className="flex min-w-0 flex-1 items-center">
             <div className="flex-shrink-0">
               <img
-                className="h-12 w-12 rounded-full"
-                src={character.imageUrl}
+                className="h-12 w-12"
+                src={`/images/characters/close/${toLowerSnake(
+                  character.name,
+                )}.png`}
                 alt=""
               />
             </div>
             <div className="min-w-0 flex-1 px-4">
-              <div>
-                <p className="text-sm font-medium text-orange-600 truncate">
+              <div className="flex items-center space-x-3">
+                <p className="truncate text-sm font-medium text-orange-600">
                   {character.name}
                 </p>
-                <div className="md:flex items-end gap-3">
-                  <p className="mt-2 text-sm text-gray-500">
-                    Lv.{character.level}
-                  </p>
-                  <span aria-label={`ascension ${character.ascension}`}>
-                    {renderStars(character.ascension, character.vision)}
+                <Tooltip content={character.vision}>
+                  <span
+                    aria-label={character.vision}
+                    className={clsx(
+                      visionVariant[character.vision],
+                      'hint--bottom-left hint--rounded inline-flex flex-shrink-0 rounded-full px-2 py-0.5 text-xs font-medium',
+                    )}
+                  >
+                    <img
+                      className="h-4 w-4"
+                      width={16}
+                      height={16}
+                      src={`/images/elements/${character.vision.toLowerCase()}.png`}
+                      alt=""
+                    />
                   </span>
-                </div>
+                </Tooltip>
+              </div>
+              <div className="items-end gap-3 md:flex">
+                <p className="mt-2 text-sm text-gray-500">
+                  Lv.{character.level ?? 1}
+                </p>
+                <span aria-label={`ascension ${character.ascension ?? 0}`}>
+                  {renderStars(character.ascension ?? 0, character.vision)}
+                </span>
               </div>
             </div>
           </div>
@@ -83,21 +119,33 @@ export default function CharacterListItem({
           </div>
         </div>
       </Link>
-      <div className="flex items-center p-4 gap-4 sm:w-48 flex-wrap sm:justify-end">
+      <div className="flex flex-wrap items-center gap-4 p-4 sm:w-48 sm:justify-end">
         <Form method="post" replace>
+          <input type="hidden" name="name" value={character.name} />
+          <input type="hidden" name="id" value={character.characterUserId} />
           <button
             type="submit"
-            name="ownership"
-            value={JSON.stringify(!character.ownership)}
-            className="inline-flex items-center shadow-sm px-2.5 py-0.5 border border-gray-300 text-sm leading-5 font-medium rounded-full text-gray-700 bg-white hover:bg-gray-50">
+            name="_action"
+            value={
+              character.ownership ? Actions.UNMARK_OWNED : Actions.MARK_OWNED
+            }
+            className="inline-flex items-center rounded-full border border-gray-300 bg-white px-2.5 py-0.5 text-sm font-medium leading-5 text-gray-700 shadow-sm hover:bg-gray-50"
+          >
             {character.ownership ? 'Revert ownership' : 'Check as own'}
           </button>
         </Form>
         <Form method="post" replace>
+          <input type="hidden" name="name" value={character.name} />
+          <input type="hidden" name="id" value={character.characterUserId} />
           <button
             type="submit"
-            className="inline-flex items-center shadow-sm px-2.5 py-0.5 border border-gray-300 text-sm leading-5 font-medium rounded-full text-gray-700 bg-white hover:bg-gray-50">
-            Track Character
+            name="_action"
+            value={
+              character.tracked ? Actions.UNMARK_TRACKED : Actions.MARK_TRACKED
+            }
+            className="inline-flex items-center rounded-full border border-gray-300 bg-white px-2.5 py-0.5 text-sm font-medium leading-5 text-gray-700 shadow-sm hover:bg-gray-50"
+          >
+            {character.tracked ? 'Untrack Character' : 'Track Character'}
           </button>
         </Form>
       </div>
