@@ -32,7 +32,7 @@ export default function useSubNavigation(
     ({ name, urlPathname, searchParams }) => {
       return {
         name,
-        to: `${basePathname}/${urlPathname}${searchParams}`,
+        to: `${basePathname}/${urlPathname}${searchParams ?? ''}`,
         active: pathname === `${basePathname}/${urlPathname}`,
       }
     },
