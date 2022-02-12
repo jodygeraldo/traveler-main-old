@@ -1,5 +1,11 @@
-import { getCharacters } from '~/model/Character/Character.server'
+import CharacterMap, { getCharacters } from '~/model/Character/Character.server'
 import { ICharacterData } from '~/model/Character/CharacterType'
+import {
+  AscensionMaterialType,
+  getCharacterMaterial,
+  getTravelerMaterial,
+  TalentMaterialType,
+} from '~/model/Character/Material.server'
 import { db } from '~/services/db.server'
 
 export async function getUserCharactersData(userId: string) {
@@ -46,6 +52,81 @@ export async function getUserCharactersData(userId: string) {
       vision: character.vision,
     }
   }) as ICharacterData[]
+}
+
+export async function getUserCharacterItem(
+  userId: string,
+  name: string,
+  skipDbCheck: boolean,
+) {
+  const character = CharacterMap.get(name)
+
+  if (!character) {
+    return undefined
+  }
+
+  let material: {
+    ascension: AscensionMaterialType[]
+    talent: {
+      normal: TalentMaterialType[]
+      skill: TalentMaterialType[]
+      burst: TalentMaterialType[]
+    }
+  }
+
+  if (character.name.includes('Traveler')) {
+    if (character.vision === 'Geo') {
+      material = getTravelerMaterial('Geo')
+    } else if (character.vision === 'Electro') {
+      material = getTravelerMaterial('Electro')
+    } else {
+      material = getTravelerMaterial('Anemo')
+    }
+  } else {
+    material = getCharacterMaterial(character.material)
+  }
+
+  if (skipDbCheck) {
+    return {
+      name: character.name,
+      fullMaterial: material,
+      cutMaterial: undefined,
+    }
+  }
+
+  const userCharacter = await db.character.findFirst({
+    where: {
+      name: character.name,
+      userId,
+    },
+    select: {
+      ascension: true,
+      talent: true,
+    },
+  })
+
+  if (!userCharacter) {
+    return {
+      name: character.name,
+      fullMaterial: material,
+      cutMaterial: undefined,
+    }
+  }
+
+  const cutMaterial = {
+    ascension: material.ascension.slice(userCharacter.ascension),
+    talent: {
+      normal: material.talent.normal.slice(userCharacter.talent[0] - 1),
+      skill: material.talent.skill.slice(userCharacter.talent[1] - 1),
+      burst: material.talent.burst.slice(userCharacter.talent[2] - 1),
+    },
+  }
+
+  return {
+    name: character.name,
+    fullMaterial: material,
+    cutMaterial,
+  }
 }
 
 export async function getUserCharacter(userId: string, name: string) {
