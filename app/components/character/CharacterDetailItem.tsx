@@ -1,106 +1,166 @@
 import { PaperClipIcon } from '@heroicons/react/solid'
+import clsx from 'clsx'
 
-export default function CharacterDetailItems() {
+import { ICharacter } from '~/model/Character/CharacterType'
+import { toLowerSnake } from '~/utils/string'
+
+export default function CharacterDetailItems({
+  character,
+}: {
+  character: ICharacter
+}) {
+  const characterArray = [
+    { kind: 'Vision', value: character.vision, image: true },
+    { kind: 'Weapon', value: character.weapon, image: true },
+    { kind: 'Rarity', value: character.rarity, image: false },
+    { kind: 'Level', value: character.progression?.level ?? 1, image: false },
+    {
+      kind: 'Ascension',
+      value: character.progression?.ascension ?? 0,
+      image: false,
+    },
+    {
+      kind: 'Normal Attack Level',
+      value: character.progression?.talent[0] ?? 1,
+      image: false,
+    },
+    {
+      kind: 'Elemental Skill Level',
+      value: character.progression?.talent[1] ?? 1,
+      image: false,
+    },
+    {
+      kind: 'Elemental Burst Level',
+      value: character.progression?.talent[2] ?? 1,
+      image: false,
+    },
+  ]
+
+  const ascensionMaterial = [
+    { kind: 'Common', value: character.material.common },
+    { kind: 'Boss', value: character.material.ascensionBoss },
+    { kind: 'Gem', value: character.material.ascensionGem },
+    { kind: 'Local Specialty', value: character.material.localSpecialty },
+  ]
+
+  const talentMaterial = [
+    {
+      kind: 'Common',
+      value: character.material.talentCommon ?? character.material.common,
+    },
+    { kind: 'Boss', value: character.material.talentBoss },
+    { kind: 'Book', value: character.material.talentBook },
+    { kind: 'Crown', value: character.material.crown },
+  ]
+
   return (
-    <div className="overflow-hidden bg-white shadow sm:rounded-lg">
-      <div className="px-4 py-5 sm:px-6">
-        <h3 className="text-lg font-medium leading-6 text-gray-900">
-          Applicant Information
-        </h3>
-        <p className="mt-1 max-w-2xl text-sm text-gray-500">
-          Personal details and application.
-        </p>
-      </div>
-      <div className="border-t border-gray-200 px-4 py-5 sm:p-0">
-        <dl className="sm:divide-y sm:divide-gray-200">
-          <div className="py-4 sm:grid sm:grid-cols-3 sm:gap-4 sm:py-5 sm:px-6">
-            <dt className="text-sm font-medium text-gray-500">Full name</dt>
-            <dd className="mt-1 text-sm text-gray-900 sm:col-span-2 sm:mt-0">
-              Margot Foster
-            </dd>
-          </div>
-          <div className="py-4 sm:grid sm:grid-cols-3 sm:gap-4 sm:py-5 sm:px-6">
-            <dt className="text-sm font-medium text-gray-500">
-              Application for
-            </dt>
-            <dd className="mt-1 text-sm text-gray-900 sm:col-span-2 sm:mt-0">
-              Backend Developer
-            </dd>
-          </div>
-          <div className="py-4 sm:grid sm:grid-cols-3 sm:gap-4 sm:py-5 sm:px-6">
-            <dt className="text-sm font-medium text-gray-500">Email address</dt>
-            <dd className="mt-1 text-sm text-gray-900 sm:col-span-2 sm:mt-0">
-              margotfoster@example.com
-            </dd>
-          </div>
-          <div className="py-4 sm:grid sm:grid-cols-3 sm:gap-4 sm:py-5 sm:px-6">
-            <dt className="text-sm font-medium text-gray-500">
-              Salary expectation
-            </dt>
-            <dd className="mt-1 text-sm text-gray-900 sm:col-span-2 sm:mt-0">
-              $120,000
-            </dd>
-          </div>
-          <div className="py-4 sm:grid sm:grid-cols-3 sm:gap-4 sm:py-5 sm:px-6">
-            <dt className="text-sm font-medium text-gray-500">About</dt>
-            <dd className="mt-1 text-sm text-gray-900 sm:col-span-2 sm:mt-0">
-              Fugiat ipsum ipsum deserunt culpa aute sint do nostrud anim
-              incididunt cillum culpa consequat. Excepteur qui ipsum aliquip
-              consequat sint. Sit id mollit nulla mollit nostrud in ea officia
-              proident. Irure nostrud pariatur mollit ad adipisicing
-              reprehenderit deserunt qui eu.
-            </dd>
-          </div>
-          <div className="py-4 sm:grid sm:grid-cols-3 sm:gap-4 sm:py-5 sm:px-6">
-            <dt className="text-sm font-medium text-gray-500">Attachments</dt>
-            <dd className="mt-1 text-sm text-gray-900 sm:col-span-2 sm:mt-0">
-              <ul
-                role="list"
-                className="divide-y divide-gray-200 rounded-md border border-gray-200"
-              >
-                <li className="flex items-center justify-between py-3 pl-3 pr-4 text-sm">
+    <>
+      {characterArray.map(({ kind, value, image }, idx) => (
+        <div
+          key={kind}
+          className={clsx(
+            idx % 2 === 0 ? 'bg-gray-50' : 'bg-white',
+            'px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6',
+          )}
+        >
+          <dt className="text-sm font-medium text-gray-500">{kind}</dt>
+          <dd className="mt-1 flex items-center gap-3 text-sm text-gray-900 sm:col-span-2 sm:mt-0">
+            {image ? (
+              kind === 'Vision' ? (
+                <img
+                  className="w-8 sm:w-10"
+                  height={40}
+                  src={`/images/elements/${value}.png`}
+                  alt=""
+                />
+              ) : (
+                <img
+                  className="w-8 sm:w-10"
+                  height={40}
+                  src={`/images/weapon_types/${value}.png`}
+                  alt=""
+                />
+              )
+            ) : null}
+            <span>{value}</span>
+          </dd>
+        </div>
+      ))}
+      <div className="bg-white px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
+        <dt className="text-sm font-medium text-gray-500">
+          Ascension Material
+        </dt>
+        <dd className="mt-1 text-sm text-gray-900 sm:col-span-2 sm:mt-0">
+          <ul
+            role="list"
+            className="divide-y divide-gray-200 rounded-md border border-gray-200"
+          >
+            {ascensionMaterial.map(({ value }) =>
+              value === undefined ? null : (
+                <li
+                  key={value}
+                  className="flex items-center justify-between py-3 pl-3 pr-4 text-sm"
+                >
                   <div className="flex w-0 flex-1 items-center">
-                    <PaperClipIcon
-                      className="h-5 w-5 flex-shrink-0 text-gray-400"
-                      aria-hidden="true"
+                    <img
+                      className="w-8 sm:w-10"
+                      height={40}
+                      src={`/images/items/${toLowerSnake(value)}.png`}
+                      alt=""
                     />
-                    <span className="ml-2 w-0 flex-1 truncate">
-                      resume_back_end_developer.pdf
-                    </span>
-                  </div>
-                  <div className="ml-4 flex-shrink-0">
-                    <a
-                      href="#"
-                      className="font-medium text-indigo-600 hover:text-indigo-500"
-                    >
-                      Download
-                    </a>
+                    <span className="ml-2 w-0 flex-1 truncate">{value}</span>
                   </div>
                 </li>
-                <li className="flex items-center justify-between py-3 pl-3 pr-4 text-sm">
+              ),
+            )}
+          </ul>
+        </dd>
+      </div>
+      <div className="bg-gray-50 px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
+        <dt className="text-sm font-medium text-gray-500">Talent Material</dt>
+        <dd className="mt-1 text-sm text-gray-900 sm:col-span-2 sm:mt-0">
+          <ul
+            role="list"
+            className="divide-y divide-gray-200 rounded-md border border-gray-200"
+          >
+            {talentMaterial.map(({ value }) =>
+              Array.isArray(value) ? (
+                value.map(v => (
+                  <li
+                    key={v}
+                    className="flex items-center justify-between py-3 pl-3 pr-4 text-sm"
+                  >
+                    <div className="flex w-0 flex-1 items-center">
+                      <img
+                        className="w-8 sm:w-10"
+                        height={40}
+                        src={`/images/items/${toLowerSnake(v)}.png`}
+                        alt=""
+                      />
+                      <span className="ml-2 w-0 flex-1 truncate">{v}</span>
+                    </div>
+                  </li>
+                ))
+              ) : (
+                <li
+                  key={value}
+                  className="flex items-center justify-between py-3 pl-3 pr-4 text-sm"
+                >
                   <div className="flex w-0 flex-1 items-center">
-                    <PaperClipIcon
-                      className="h-5 w-5 flex-shrink-0 text-gray-400"
-                      aria-hidden="true"
+                    <img
+                      className="w-8 sm:w-10"
+                      height={40}
+                      src={`/images/items/${toLowerSnake(value)}.png`}
+                      alt=""
                     />
-                    <span className="ml-2 w-0 flex-1 truncate">
-                      coverletter_back_end_developer.pdf
-                    </span>
-                  </div>
-                  <div className="ml-4 flex-shrink-0">
-                    <a
-                      href="#"
-                      className="font-medium text-indigo-600 hover:text-indigo-500"
-                    >
-                      Download
-                    </a>
+                    <span className="ml-2 w-0 flex-1 truncate">{value}</span>
                   </div>
                 </li>
-              </ul>
-            </dd>
-          </div>
-        </dl>
+              ),
+            )}
+          </ul>
+        </dd>
       </div>
-    </div>
+    </>
   )
 }

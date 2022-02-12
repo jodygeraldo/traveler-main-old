@@ -14,9 +14,8 @@ import CharacterMap from '~/model/Character/Character.server'
 import { ICharacter } from '~/model/Character/CharacterType'
 import { requireUserId } from '~/services/auth.server'
 import {
-  addUserCharacter,
+  createOrUpdateCharacter,
   getUserCharacter,
-  updateUserCharacter,
 } from '~/utils/db/character.server'
 
 export const action: ActionFunction = async ({ params, request }) => {
@@ -45,22 +44,21 @@ export const action: ActionFunction = async ({ params, request }) => {
   const skill = formData.get('skill')
   const burst = formData.get('burst')
 
+  invariant(typeof id === 'string', 'id is required')
   invariant(typeof level === 'string', 'level is required')
   invariant(typeof ascension === 'string', 'ascension is required')
   invariant(typeof normal === 'string', 'normal is required')
   invariant(typeof skill === 'string', 'skill is required')
   invariant(typeof burst === 'string', 'burst is required')
 
-  if (id === null) {
-    await addUserCharacter(userId, characterName, +level, +ascension, [
-      +normal,
-      +skill,
-      +burst,
-    ])
-  } else {
-    invariant(typeof id === 'string', 'Data not sync properly')
-    await updateUserCharacter(id, +level, +ascension, [+normal, +skill, +burst])
-  }
+  await createOrUpdateCharacter(
+    userId,
+    character.name,
+    +level,
+    +ascension,
+    [+normal, +skill, +burst],
+    id,
+  )
 
   return redirect(`/character/${characterName}`)
 }
@@ -102,7 +100,8 @@ export default function CharacterLevelUp() {
   return (
     <SectionContainer title={`${name} Manual Level Up`}>
       <Form method="post" className="space-y-8 divide-y divide-gray-200">
-        <CharacterLevelUpForm id={id} progression={progression} />
+        <input type="hidden" name="id" value={id ?? 'NEW'} />
+        <CharacterLevelUpForm progression={progression} />
       </Form>
     </SectionContainer>
   )

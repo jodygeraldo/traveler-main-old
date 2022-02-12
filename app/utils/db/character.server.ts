@@ -207,35 +207,26 @@ export async function createOrUpdateTracked(
   })
 }
 
-export async function addUserCharacter(
+export async function createOrUpdateCharacter(
   userId: string,
   name: string,
   level: number,
   ascension: number,
   talent: [number, number, number],
+  id?: string,
 ) {
-  await db.character.create({
-    data: {
-      userId,
+  await db.character.upsert({
+    where: {
+      id,
+    },
+    create: {
       name,
       level,
       ascension,
       talent,
+      userId,
     },
-  })
-}
-
-export async function updateUserCharacter(
-  id: string,
-  level: number,
-  ascension: number,
-  talent: [number, number, number],
-) {
-  await db.character.update({
-    where: {
-      id,
-    },
-    data: {
+    update: {
       level,
       ascension,
       talent,

@@ -3,12 +3,10 @@ import { Link, useParams, useTransition } from 'remix'
 import { ICharacter } from '~/model/Character/CharacterType'
 
 interface CharacterLevelUpFormProps {
-  id?: string
   progression?: ICharacter['progression']
 }
 
 export default function CharacterLevelUpForm({
-  id,
   progression,
 }: CharacterLevelUpFormProps) {
   const transition = useTransition()
@@ -17,7 +15,6 @@ export default function CharacterLevelUpForm({
 
   return (
     <fieldset disabled={transition.state === 'submitting'}>
-      <input type="hidden" name="id" value={id} />
       <div className="space-y-8 divide-y divide-gray-200">
         <div>
           <div>
