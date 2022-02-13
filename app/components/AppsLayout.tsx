@@ -2,7 +2,7 @@ import { Disclosure, Menu, Transition } from '@headlessui/react'
 import { MenuIcon, XIcon } from '@heroicons/react/outline'
 import clsx from 'clsx'
 import { Fragment } from 'react'
-import { Link } from 'remix'
+import { Form, Link } from 'remix'
 
 const navigation = [
   { name: 'Handbook', href: '/handbook' },
@@ -10,9 +10,8 @@ const navigation = [
   { name: 'Inventory', href: '/inventory' },
 ]
 const userNavigation = [
-  { name: 'Your Profile', href: '/profile' },
-  { name: 'Settings', href: '/settings' },
-  { name: 'Sign out', href: '/signout' },
+  { name: 'Your Profile', href: '#' },
+  { name: 'Settings', href: '#' },
 ]
 
 export default function AppsLayout({
@@ -94,6 +93,21 @@ export default function AppsLayout({
                             )}
                           </Menu.Item>
                         ))}
+                        <Menu.Item>
+                          {({ active }) => (
+                            <Form method="post" action="/logout">
+                              <button
+                                type="submit"
+                                className={clsx(
+                                  active ? 'bg-gray-100' : '',
+                                  'block w-full py-2 px-4 text-left text-sm text-gray-700',
+                                )}
+                              >
+                                Sign out
+                              </button>
+                            </Form>
+                          )}
+                        </Menu.Item>
                       </Menu.Items>
                     </Transition>
                   </Menu>
