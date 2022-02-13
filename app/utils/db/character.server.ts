@@ -2,12 +2,7 @@ import invariant from 'tiny-invariant'
 
 import CharacterMap, { getCharacters } from '~/model/Character/Character.server'
 import { ICharacterData } from '~/model/Character/CharacterType'
-import {
-  AscensionMaterialType,
-  getCharacterMaterial,
-  getTravelerMaterial,
-  TalentMaterialType,
-} from '~/model/Character/Material.server'
+import { getCharacterMaterial } from '~/model/Character/Material.server'
 import {
   bookGroupMap,
   commonGroupMap,
@@ -122,26 +117,11 @@ export async function getUserCharacterItem(
     return undefined
   }
 
-  let material: {
-    ascension: AscensionMaterialType[]
-    talent: {
-      normal: TalentMaterialType[]
-      skill: TalentMaterialType[]
-      burst: TalentMaterialType[]
-    }
-  }
-
-  if (character.name.includes('Traveler')) {
-    if (character.vision === 'Geo') {
-      material = getTravelerMaterial('Geo')
-    } else if (character.vision === 'Electro') {
-      material = getTravelerMaterial('Electro')
-    } else {
-      material = getTravelerMaterial('Anemo')
-    }
-  } else {
-    material = getCharacterMaterial(character.material)
-  }
+  const material = getCharacterMaterial(
+    character.name,
+    character.vision,
+    character.material,
+  )
 
   if (skipDbCheck) {
     return {
@@ -157,6 +137,8 @@ export async function getUserCharacterItem(
       userId,
     },
     select: {
+      id: true,
+      level: true,
       ascension: true,
       talent: true,
     },
@@ -164,7 +146,13 @@ export async function getUserCharacterItem(
 
   if (!userCharacter) {
     return {
+      id: 'NEW',
       name: character.name,
+      progression: {
+        level: 1,
+        ascension: 0,
+        talent: [1, 1, 1] as [number, number, number],
+      },
       fullMaterial: material,
       cutMaterial: undefined,
     }
@@ -180,7 +168,13 @@ export async function getUserCharacterItem(
   }
 
   return {
+    id: userCharacter.id,
     name: character.name,
+    progression: {
+      level: userCharacter.level,
+      ascension: userCharacter.ascension,
+      talent: userCharacter.talent as [number, number, number],
+    },
     fullMaterial: material,
     cutMaterial,
   }

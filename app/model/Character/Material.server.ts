@@ -1,280 +1,13 @@
 import invariant from 'tiny-invariant'
 
-import {
-  AscensionBossMaterial,
-  AscensionGem,
-  CommonMaterial,
-  Crown,
-  LocalSpecialty,
-  TalentBook,
-  TalentBossMaterial,
-} from '~/model/Item/ItemType'
-
 import { bookGroupMap, commonGroupMap, gemGroupMap } from '../Item/Group.server'
-import { CharacterVision, ICharacter } from './CharacterType'
-
-export type AscensionMaterialType =
-  | [
-      {
-        name: 'Level'
-        amount: number
-      },
-      {
-        name: 'Mora'
-        amount: number
-      },
-      {
-        name: AscensionGem
-        amount: number
-      },
-      {
-        name: LocalSpecialty
-        amount: number
-      },
-      {
-        name: CommonMaterial
-        amount: number
-      },
-    ]
-  | [
-      {
-        name: 'Level'
-        amount: number
-      },
-      {
-        name: 'Mora'
-        amount: number
-      },
-      {
-        name: AscensionGem
-        amount: number
-      },
-      {
-        name: LocalSpecialty
-        amount: number
-      },
-      {
-        name: CommonMaterial
-        amount: number
-      },
-      {
-        name: AscensionBossMaterial
-        amount: number
-      },
-    ]
-
-export type TalentMaterialType =
-  | [
-      {
-        name: 'Level'
-        amount: number
-      },
-      {
-        name: 'Mora'
-        amount: number
-      },
-      {
-        name: CommonMaterial
-        amount: number
-      },
-      {
-        name: TalentBook
-        amount: number
-      },
-    ]
-  | [
-      {
-        name: 'Level'
-        amount: number
-      },
-      {
-        name: 'Mora'
-        amount: number
-      },
-      {
-        name: CommonMaterial
-        amount: number
-      },
-      {
-        name: TalentBook
-        amount: number
-      },
-      {
-        name: TalentBossMaterial
-        amount: number
-      },
-    ]
-  | [
-      {
-        name: 'Level'
-        amount: number
-      },
-      {
-        name: 'Mora'
-        amount: number
-      },
-      {
-        name: CommonMaterial
-        amount: number
-      },
-      {
-        name: TalentBook
-        amount: number
-      },
-      {
-        name: TalentBossMaterial
-        amount: number
-      },
-      {
-        name: Crown
-        amount: number
-      },
-    ]
-
-export function getCharacterMaterial(material: ICharacter['material']): {
-  ascension: AscensionMaterialType[]
-  talent: {
-    normal: TalentMaterialType[]
-    skill: TalentMaterialType[]
-    burst: TalentMaterialType[]
-  }
-} {
-  const common = commonGroupMap.get(material.common)
-  const gem = gemGroupMap.get(material.ascensionGem)
-  const talentBook = bookGroupMap.get(material.talentBook[0])
-  invariant(common, `Unknown common material: ${material.common}`)
-  invariant(gem, `Unknown ascension gem material: ${material.ascensionGem}`)
-  invariant(
-    talentBook,
-    `Unknown talent book material: ${material.talentBook[0]}`,
-  )
-
-  const ascension: AscensionMaterialType[] = [
-    [
-      { name: 'Level', amount: 1 },
-      { name: 'Mora', amount: 20_000 },
-      { name: gem[0], amount: 1 },
-      { name: material.localSpecialty, amount: 3 },
-      { name: common[0], amount: 3 },
-    ],
-
-    [
-      { name: 'Level', amount: 2 },
-      { name: 'Mora', amount: 40_000 },
-      { name: gem[1], amount: 3 },
-      { name: material.localSpecialty, amount: 10 },
-      { name: common[0], amount: 15 },
-      { name: material.ascensionBoss!, amount: 2 },
-    ],
-
-    [
-      { name: 'Level', amount: 3 },
-      { name: 'Mora', amount: 60_000 },
-      { name: gem[1], amount: 6 },
-      { name: material.localSpecialty, amount: 20 },
-      { name: common[1], amount: 12 },
-      { name: material.ascensionBoss!, amount: 4 },
-    ],
-
-    [
-      { name: 'Level', amount: 4 },
-      { name: 'Mora', amount: 80_000 },
-      { name: gem[2], amount: 3 },
-      { name: material.localSpecialty, amount: 30 },
-      { name: common[1], amount: 18 },
-      { name: material.ascensionBoss!, amount: 8 },
-    ],
-
-    [
-      { name: 'Level', amount: 5 },
-      { name: 'Mora', amount: 100_000 },
-      { name: gem[2], amount: 6 },
-      { name: material.localSpecialty, amount: 45 },
-      { name: common[2], amount: 12 },
-      { name: material.ascensionBoss!, amount: 12 },
-    ],
-
-    [
-      { name: 'Level', amount: 6 },
-      { name: 'Mora', amount: 120_000 },
-      { name: gem[3], amount: 6 },
-      { name: material.localSpecialty, amount: 60 },
-      { name: common[2], amount: 24 },
-      { name: material.ascensionBoss!, amount: 20 },
-    ],
-  ]
-
-  const talent: TalentMaterialType[] = [
-    [
-      { name: 'Level', amount: 2 },
-      { name: 'Mora', amount: 12_500 },
-      { name: common[0], amount: 3 },
-      { name: talentBook[0], amount: 3 },
-    ],
-    [
-      { name: 'Level', amount: 3 },
-      { name: 'Mora', amount: 17_500 },
-      { name: common[1], amount: 3 },
-      { name: talentBook[1], amount: 2 },
-    ],
-    [
-      { name: 'Level', amount: 4 },
-      { name: 'Mora', amount: 25_000 },
-      { name: common[1], amount: 4 },
-      { name: talentBook[1], amount: 4 },
-    ],
-    [
-      { name: 'Level', amount: 5 },
-      { name: 'Mora', amount: 30_000 },
-      { name: common[1], amount: 6 },
-      { name: talentBook[1], amount: 6 },
-    ],
-    [
-      { name: 'Level', amount: 6 },
-      { name: 'Mora', amount: 37_500 },
-      { name: common[1], amount: 9 },
-      { name: talentBook[1], amount: 9 },
-    ],
-    [
-      { name: 'Level', amount: 7 },
-      { name: 'Mora', amount: 120_000 },
-      { name: common[2], amount: 4 },
-      { name: talentBook[2], amount: 4 },
-      { name: material.talentBoss, amount: 1 },
-    ],
-    [
-      { name: 'Level', amount: 8 },
-      { name: 'Mora', amount: 260_000 },
-      { name: common[2], amount: 6 },
-      { name: talentBook[2], amount: 6 },
-      { name: material.talentBoss, amount: 1 },
-    ],
-    [
-      { name: 'Level', amount: 9 },
-      { name: 'Mora', amount: 450_000 },
-      { name: common[2], amount: 9 },
-      { name: talentBook[2], amount: 12 },
-      { name: material.talentBoss, amount: 2 },
-    ],
-    [
-      { name: 'Level', amount: 10 },
-      { name: 'Mora', amount: 700_000 },
-      { name: common[2], amount: 12 },
-      { name: talentBook[2], amount: 16 },
-      { name: material.talentBoss, amount: 2 },
-      { name: material.crown, amount: 1 },
-    ],
-  ]
-
-  return {
-    ascension,
-    talent: {
-      normal: talent,
-      skill: talent,
-      burst: talent,
-    },
-  }
-}
+import {
+  AscensionMaterialType,
+  CharacterName,
+  CharacterVision,
+  ICharacter,
+  TalentMaterialType,
+} from './CharacterType'
 
 const travelerAscension: AscensionMaterialType[] = [
   [
@@ -635,7 +368,7 @@ const travelerElectroTalent: TalentMaterialType[] = [
   ],
 ]
 
-export function getTravelerMaterial(vision: CharacterVision): {
+function getTravelerMaterial(vision: CharacterVision): {
   ascension: AscensionMaterialType[]
   talent: {
     normal: TalentMaterialType[]
@@ -676,5 +409,158 @@ export function getTravelerMaterial(vision: CharacterVision): {
           burst: travelerAnemoTalent,
         },
       }
+  }
+}
+
+export function getCharacterMaterial(
+  name: CharacterName,
+  vision: CharacterVision,
+  material: ICharacter['material'],
+): {
+  ascension: AscensionMaterialType[]
+  talent: {
+    normal: TalentMaterialType[]
+    skill: TalentMaterialType[]
+    burst: TalentMaterialType[]
+  }
+} {
+  const common = commonGroupMap.get(material.common)
+  const gem = gemGroupMap.get(material.ascensionGem)
+  const talentBook = bookGroupMap.get(material.talentBook[0])
+  invariant(common, `Unknown common material: ${material.common}`)
+  invariant(gem, `Unknown ascension gem material: ${material.ascensionGem}`)
+  invariant(
+    talentBook,
+    `Unknown talent book material: ${material.talentBook[0]}`,
+  )
+
+  if (name.includes('Traveler')) {
+    return getTravelerMaterial(vision)
+  }
+
+  const ascension: AscensionMaterialType[] = [
+    [
+      { name: 'Level', amount: 1 },
+      { name: 'Mora', amount: 20_000 },
+      { name: gem[0], amount: 1 },
+      { name: material.localSpecialty, amount: 3 },
+      { name: common[0], amount: 3 },
+    ],
+
+    [
+      { name: 'Level', amount: 2 },
+      { name: 'Mora', amount: 40_000 },
+      { name: gem[1], amount: 3 },
+      { name: material.localSpecialty, amount: 10 },
+      { name: common[0], amount: 15 },
+      { name: material.ascensionBoss!, amount: 2 },
+    ],
+
+    [
+      { name: 'Level', amount: 3 },
+      { name: 'Mora', amount: 60_000 },
+      { name: gem[1], amount: 6 },
+      { name: material.localSpecialty, amount: 20 },
+      { name: common[1], amount: 12 },
+      { name: material.ascensionBoss!, amount: 4 },
+    ],
+
+    [
+      { name: 'Level', amount: 4 },
+      { name: 'Mora', amount: 80_000 },
+      { name: gem[2], amount: 3 },
+      { name: material.localSpecialty, amount: 30 },
+      { name: common[1], amount: 18 },
+      { name: material.ascensionBoss!, amount: 8 },
+    ],
+
+    [
+      { name: 'Level', amount: 5 },
+      { name: 'Mora', amount: 100_000 },
+      { name: gem[2], amount: 6 },
+      { name: material.localSpecialty, amount: 45 },
+      { name: common[2], amount: 12 },
+      { name: material.ascensionBoss!, amount: 12 },
+    ],
+
+    [
+      { name: 'Level', amount: 6 },
+      { name: 'Mora', amount: 120_000 },
+      { name: gem[3], amount: 6 },
+      { name: material.localSpecialty, amount: 60 },
+      { name: common[2], amount: 24 },
+      { name: material.ascensionBoss!, amount: 20 },
+    ],
+  ]
+
+  const talent: TalentMaterialType[] = [
+    [
+      { name: 'Level', amount: 2 },
+      { name: 'Mora', amount: 12_500 },
+      { name: common[0], amount: 3 },
+      { name: talentBook[0], amount: 3 },
+    ],
+    [
+      { name: 'Level', amount: 3 },
+      { name: 'Mora', amount: 17_500 },
+      { name: common[1], amount: 3 },
+      { name: talentBook[1], amount: 2 },
+    ],
+    [
+      { name: 'Level', amount: 4 },
+      { name: 'Mora', amount: 25_000 },
+      { name: common[1], amount: 4 },
+      { name: talentBook[1], amount: 4 },
+    ],
+    [
+      { name: 'Level', amount: 5 },
+      { name: 'Mora', amount: 30_000 },
+      { name: common[1], amount: 6 },
+      { name: talentBook[1], amount: 6 },
+    ],
+    [
+      { name: 'Level', amount: 6 },
+      { name: 'Mora', amount: 37_500 },
+      { name: common[1], amount: 9 },
+      { name: talentBook[1], amount: 9 },
+    ],
+    [
+      { name: 'Level', amount: 7 },
+      { name: 'Mora', amount: 120_000 },
+      { name: common[2], amount: 4 },
+      { name: talentBook[2], amount: 4 },
+      { name: material.talentBoss, amount: 1 },
+    ],
+    [
+      { name: 'Level', amount: 8 },
+      { name: 'Mora', amount: 260_000 },
+      { name: common[2], amount: 6 },
+      { name: talentBook[2], amount: 6 },
+      { name: material.talentBoss, amount: 1 },
+    ],
+    [
+      { name: 'Level', amount: 9 },
+      { name: 'Mora', amount: 450_000 },
+      { name: common[2], amount: 9 },
+      { name: talentBook[2], amount: 12 },
+      { name: material.talentBoss, amount: 2 },
+    ],
+    [
+      { name: 'Level', amount: 10 },
+      { name: 'Mora', amount: 700_000 },
+      { name: common[2], amount: 12 },
+      { name: talentBook[2], amount: 16 },
+      { name: material.talentBoss, amount: 2 },
+      { name: material.crown, amount: 1 },
+    ],
+  ]
+
+  return {
+    ascension,
+    talent: {
+      normal: talent,
+      skill: talent,
+      burst: talent,
+    },
   }
 }

@@ -1,7 +1,6 @@
 import { json, LoaderFunction, useLoaderData, useTransition } from 'remix'
 import invariant from 'tiny-invariant'
 
-import CharacterDetailItem from '~/components/Character/CharacterDetailItem'
 import CharacterItemButtonGroup from '~/components/Character/CharacterItemButtonGroup'
 import CharacterItemTable from '~/components/Character/CharacterTable'
 import CharacterTableAscensionItem from '~/components/Character/CharacterTableAscensionItem'
@@ -10,7 +9,7 @@ import SectionContainer from '~/components/SectionContainer'
 import {
   AscensionMaterialType,
   TalentMaterialType,
-} from '~/model/Character/Material.server'
+} from '~/model/Character/CharacterType'
 import { requireUserId } from '~/services/auth.server'
 import { getUserCharacterItem } from '~/utils/db/character.server'
 

@@ -7,7 +7,7 @@ export default function CharacterDetailPage() {
   const subNavigation = useSubNavigation(2, 'Character Detail', [
     { name: 'Character Items Table', urlPathname: 'items' },
     { name: 'Manual Level Up', urlPathname: 'level-up' },
-    { name: 'Level Up With Inventory', urlPathname: 'level-with-inventory' },
+    // { name: 'Level Up With Inventory', urlPathname: 'level-with-inventory' },
   ])
 
   return (

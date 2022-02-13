@@ -1,9 +1,12 @@
 import {
   AscensionBossMaterial,
+  AscensionGem,
   AscensionGemGroup,
+  CommonMaterial,
   CommonMaterialGroup,
   Crown,
   LocalSpecialty,
+  TalentBook,
   TalentBookGroup,
   TalentBossMaterial,
 } from '~/model/Item/ItemType'
@@ -108,3 +111,121 @@ export interface ICharacterData {
   tracked?: boolean
   characterUserId?: string
 }
+
+export type AscensionMaterialType =
+  | [
+      {
+        name: 'Level'
+        amount: number
+      },
+      {
+        name: 'Mora'
+        amount: number
+      },
+      {
+        name: AscensionGem
+        amount: number
+      },
+      {
+        name: LocalSpecialty
+        amount: number
+      },
+      {
+        name: CommonMaterial
+        amount: number
+      },
+    ]
+  | [
+      {
+        name: 'Level'
+        amount: number
+      },
+      {
+        name: 'Mora'
+        amount: number
+      },
+      {
+        name: AscensionGem
+        amount: number
+      },
+      {
+        name: LocalSpecialty
+        amount: number
+      },
+      {
+        name: CommonMaterial
+        amount: number
+      },
+      {
+        name: AscensionBossMaterial
+        amount: number
+      },
+    ]
+
+export type TalentMaterialType =
+  | [
+      {
+        name: 'Level'
+        amount: number
+      },
+      {
+        name: 'Mora'
+        amount: number
+      },
+      {
+        name: CommonMaterial
+        amount: number
+      },
+      {
+        name: TalentBook
+        amount: number
+      },
+    ]
+  | [
+      {
+        name: 'Level'
+        amount: number
+      },
+      {
+        name: 'Mora'
+        amount: number
+      },
+      {
+        name: CommonMaterial
+        amount: number
+      },
+      {
+        name: TalentBook
+        amount: number
+      },
+      {
+        name: TalentBossMaterial
+        amount: number
+      },
+    ]
+  | [
+      {
+        name: 'Level'
+        amount: number
+      },
+      {
+        name: 'Mora'
+        amount: number
+      },
+      {
+        name: CommonMaterial
+        amount: number
+      },
+      {
+        name: TalentBook
+        amount: number
+      },
+      {
+        name: TalentBossMaterial
+        amount: number
+      },
+      {
+        name: Crown
+        amount: number
+      },
+    ]
