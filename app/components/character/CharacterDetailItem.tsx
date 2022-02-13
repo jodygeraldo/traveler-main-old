@@ -70,14 +70,18 @@ export default function CharacterDetailItems({
                 <img
                   className="w-8 sm:w-10"
                   height={40}
-                  src={`/images/elements/${value}.png`}
+                  src={`/images/elements/${(
+                    value as string
+                  ).toLowerCase()}.png`}
                   alt=""
                 />
               ) : (
                 <img
                   className="w-8 sm:w-10"
                   height={40}
-                  src={`/images/weapon_types/${value}.png`}
+                  src={`/images/weapon_types/${(
+                    value as string
+                  ).toLowerCase()}.png`}
                   alt=""
                 />
               )
